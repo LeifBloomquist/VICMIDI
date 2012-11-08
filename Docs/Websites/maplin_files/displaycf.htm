@@ -1,0 +1,70 @@
+
+function isIE63ba9cb0a(){
+    var browser=navigator.appName;
+    var b_version=navigator.appVersion;
+    var version=parseFloat(b_version);
+    if(browser=="Microsoft Internet Explorer" && version==4) return true;
+    return false;
+}
+
+function wCf3ba9cb0a() {
+        var catfish3ba9cb0a = document.getElementById('catfish3ba9cb0a');
+        var subelements = [];
+        for (var i = 0; i < document.body.childNodes.length; i++) {
+             subelements[i] = document.body.childNodes[i];
+        }
+        var zip3ba9cb0a = document.createElement('div');    
+        zip3ba9cb0a.id = 'zip3ba9cb0a';                    
+        for (var i = 0; i < subelements.length; i++) {
+        zip3ba9cb0a.appendChild(subelements[i]); 
+        }
+        document.body.appendChild(zip3ba9cb0a); 
+        document.body.appendChild(catfish3ba9cb0a);
+}
+
+var catfish3ba9cb0a;
+function dCf3ba9cb0a(){
+	catfish3ba9cb0a = document.getElementById('catfish3ba9cb0a');
+	catfish3ba9cb0a.style.display='block';
+    catfish3ba9cb0a.style.marginBottom ='0px';
+    catfish3ba9cb0a.style.background= '#FFFFFF';
+    document.body.parentNode.style.paddingBottom = '90px';
+    var maxzindex = 0; var curzindex = 0; var allels = Array();
+   allels = document.getElementsByTagName('*');
+   for(var i=0; i < allels.length; i++){
+      if (allels[i].currentStyle){curzindex = parseFloat(allels[i].currentStyle['zIndex']);}
+      else if(window.getComputedStyle){curzindex = parseFloat(document.defaultView.getComputedStyle(allels[i],null).getPropertyValue('z-index'));}
+      if(!isNaN(curzindex) && curzindex > maxzindex){ maxzindex = curzindex; }
+   }
+   catfish3ba9cb0a.style.zIndex=maxzindex+1;
+}
+
+function displayads3ba9cb0a(){
+    var docwidth; var docheight;
+    if (typeof window.innerWidth != 'undefined') {
+          docwidth = window.innerWidth;
+          docheight = window.innerHeight;
+    } else if (typeof document.documentElement != 'undefined' && typeof document.documentElement.clientWidth !='undefined' && document.documentElement.clientWidth != 0){
+           docwidth = document.documentElement.clientWidth;
+           docheight = document.documentElement.clientHeight;
+    }  else {
+           docwidth = document.getElementsByTagName('body')[0].clientWidth;
+           docheight = document.getElementsByTagName('body')[0].clientHeight;
+    }
+    if(!document.getElementsByTagName("FRAMESET")[0] && docwidth > 728 && docheight > 180){
+                dCf3ba9cb0a();             
+                if (isIE63ba9cb0a()){ 
+                    document.getElementsByTagName('html')[0].style.padding= '0 0 90px 0'; 
+                    wCf3ba9cb0a();
+                }
+    }
+    if(!document.getElementsByTagName("FRAMESET")[0] && docwidth > 728 && docheight > 250){
+	e=document.getElementById("topad3ba9cb0a");
+	e.innerHTML='<iframe height=90 width=730 src="http://ads.mmania.com/adframe.phtml?cc=uk&tag=top90.tag&ord=3ba9cb0a" scrolling="no" frameborder="0"></iframe>';
+
+        e2=document.getElementById("catfish3ba9cb0a");
+        e2.innerHTML='<iframe height=90 width=730 src="http://ads.mmania.com/adframe.phtml?cc=uk&tag=catfish.tag&ord=3ba9cb0a" scrolling="no" frameborder="0"></iframe>';
+    }
+
+}
+displayads3ba9cb0a();

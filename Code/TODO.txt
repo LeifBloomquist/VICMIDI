@@ -1,0 +1,29 @@
+PAL/NTSC detection
+PAL or NTSC lookup tables
+Alternate lookup tables for internal scale 
+Space bar kills sound
+Debug polymode
+MIDI “Running Status”
+MIDI-Out (use the VIC keyboard to control external hardware)
+Fix up viznut's waveforms - call on every note change, if set
+
+
+  
+  ; DEBUG
+  ;lda poly_flags+0
+  ;sta screen_start+0
+  
+  ;lda poly_flags+1
+  ;sta screen_start+1
+  
+  ;lda poly_flags+2
+  ;sta screen_start+2
+  
+  ;lda lastnote+0
+  ;sta screen_start+3
+  
+  ;lda lastnote+1
+  ;sta screen_start+4
+  
+  ;lda lastnote+2
+  ;sta screen_start+5

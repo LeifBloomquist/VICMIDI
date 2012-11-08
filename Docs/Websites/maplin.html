@@ -1,0 +1,1956 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"><script type="text/javascript">
+window.google_analytics_uacct = "UA-7539432-13";
+</script>
+<style>
+#catfish3ba9cb0a{PADDING: 0px;MARGIN: 0px 0px -90px;WIDTH: 100%;HEIGHT: 90px;BOTTOM: 0px;POSITION: fixed;}
+</style>
+<!--[if IE]>
+<style>
+#catfish3ba9cb0a{ Z-INDEX: 1000; OVERFLOW: hidden; POSITION: absolute;}
+HTML,BODY {OVERFLOW: hidden;WIDTH: auto;HEIGHT: 100%;}
+DIV#zip3ba9cb0a{PADDING: 0px;MARGIN: 0px;OVERFLOW: auto;WIDTH: 100%;HEIGHT: 100%;POSITION: relative;}
+</style>
+<![endif]-->
+<style type="Text/css">
+<!- A:Hover {Text-Decoration: None; Color: Orange;}-></style><title>How to add MIDI to a VIC-20</title></head><body bgcolor="#800000" link="#ff8000" text="#ffffff" vlink="#ff8080"><div id="topad3ba9cb0a"></div>
+
+
+  <!-- Created with AOLpress/2.0 -->
+  
+  
+
+<p align="Center">
+<a href="http://www.maplin.co.uk/"><img alt="Maplin Electronics" src="maplin_files/VIC20MID.gif" height="322" width="500"></a>
+</p><h1 align="Center">
+  How to add MIDI to a
+  <a href="http://members.lycos.co.uk/templarseries/vic20.html"><img src="maplin_files/VIC20.gif" border="0" height="98" width="316"></a><br>
+</h1>
+<p>
+<b><i>The following article appeared in "Electronics" the Maplin magazine.I
+will also add my own comments and photographs of the completed unit,and tips
+about problems I encountered whilst building it.</i></b>
+</p><p align="Center">
+<u>by LD. Ball</u>
+</p><p align="Center">
+<a href="http://old-computers.com/museum/computer.asp?c=252"><img alt="The Old Computer Museum" src="maplin_files/MAPLIN1.gif" height="199" width="300"></a><br>
+</p><p align="Left">
+<b>The System</b>
+</p><p>
+<font size="2">
+<a href="http://members.fortunecity.com/templarser/midi.html">MIDI </a>is
+the acronym for &nbsp;<b>Musical Instrument Digital Interface</b>, MIDI is
+now the universal standard for connecting and controlling electronic musical
+instruments. <br>
+Originally, synthesisers were controlled using two signals 'gate' and 'CV',
+the 'CV' signal is simply a DC voltage corresponding to the pitch of the
+note, a change of 1v would give a change in pitch of one octave. The 'gate'
+signal is used to control the sample and hold circuitry, ie. it gates the
+control voltage. It is also used to trigger the
+<b><a href="http://members.fortunecity.com/templarser/synth1.html">envelope
+generator</a></b>. This system suited monophonic analogue synthesisers but
+is not really practical for modern polyphonic digital synthesisers. <br>
+Fortunately,synthesiser manufacturers adopted a single standard, this system
+was developed by Roland in conjunction with other manufacturers. MIDI was
+the result. <br>
+The outline of MIDI is that all synthesisers and drum machines (or any other
+MIDI compatible device) use the same set of codes to &nbsp;initiate and stop
+notes. If certain information does not apply to a particular machine (i.e.
+velocity information on a non-velocity sensitive synthesiser) it is ignored.
+<br>
+The system outline may seem limited at first, but special functions exclusive
+to a particular manufacturer or machine are incorporated using special
+'<b>system exclusive</b>' codes to indicate a non-standard function. <br>
+To allow easy connection between devices, a serial system is used. Operation
+is similar to RS423, except that MIDI uses a current rather than voltage
+loop, however the main difference is speed; most serial systems have a maximum
+speed of 9600 BAUD. MIDI uses an incredible 3125 kiloBAUD!<br>
+The system runs at this speed to avoid apparent gaps between simultaneous
+events. The data word format is 8 bits, 1 stop bit and no parity. <br>
+A full implementation of MIDI utilises three sockets on the equipment. These
+are MIDI IN, MIDI OUT and MIDI THRU. MIDI IN is the serial data into the
+equipment. MIDI OUT is the serial data from the equipment. MIDI THRU is a
+buffered version of the data that appears at MIDI IN. The connection between
+equipment is similar to the way that Commodore printers and disk drives may
+be chained together. <br>
+To prevent possible hum and earth loop problems all MIDI inputs are Opto
+Isolated. Connection between equipment is usually via 5 pin 180<sup>o</sup>
+DIN leads (with some equipment intended for use 'on the road' XLR connectors
+may be found), only two cores and screen are used on 5 pin leads though.
+Ready made MIDI leads can be purchased or leads may be made up using good
+quality screened cable and connectors. MIDI leads should not be longer than
+50 metres. <br>
+</font>
+</p><p>
+<img alt="A MIDI interface box" src="maplin_files/MAPLIN2.gif" align="Left" height="158" width="300"><b>What
+can MIDI be used for? </b><br>
+</p><dl>
+  <dt>
+  </dt><dt>
+    <font size="2"><b>(a) Producing a 'thicker' sound </b><br>
+    This means connecting two or more synthesisers together so that notes played
+    on the MASTER synth will also be played on the SLAVE synth(s). This can be
+    very effective, especially if the attack rate of the envelope generator on
+    the SLAVE is considerably slower than that of the MASTER This effect is generally
+    termed layering or doubling. <br>
+    </font>
+  </dt><dt>
+    <font size="2"><b>(b) Allowing computer control</b><br>
+    By using MIDI, electronic musical instruments can be controlled by a home
+    computer. This means that synths can 'talk' to computers and vice-versa This
+    opens up possibilities of using the computer as a sequencer or to produce
+    effects such as arpeggiation of chords or even to act as an extra modulation
+    generator. This does however require the computer to be MIDI compatible,
+    this article also includes a circuit for a MIDI interface and it is hoped
+    that this will provide a stepping stone into computer controlled electronic
+    music. <br>
+    </font>
+  </dt><dt>
+    <font size="2"><b>(c) Reducing equipment space and cost </b><br>
+    By using a master keyboard a number of slave synths can be driven, since
+    the slave synths do not need keyboards, the keyboards can be omitted.
+    Keyboardless synths are much cheaper and occupy a lot less space than full
+    synths. The master keyboard may be a special MIDI MASTER KEYBOARD which has
+    no sound generation circuitry; just MIDI sockets. Master keyboards generally
+    feel and respond more like a real piano keyboard and normally include good
+    facilities for program and parameter changes on slaves Some also allow the
+    keyboard to be 'split' so that different octaves transmit on different MIDI
+    channels. A good master keyboard will transmit velocity and aftertouch
+    information as well as note information. <br>
+    </font>
+  </dt><dt>
+    <font size="2"><b>(d) Reducing obsolescence </b><br>
+    All MIDI equipment is compatible, so that old equipment will quite happily
+    work along side the very latest equipment and that applies to all equipment
+    yet to be designed.Even old analogue synths can join the MIDI revolution
+    as MIDI to CV converter boxes are now available.<br>
+    </font>
+  </dt><dt>
+    <font size="2"><b>(e) The MIDI studio </b><br>
+    By using a sequencer, different instruments can be recorded into memory,
+    just like multi-track recording on tape. Each 'track' is assigned to a different
+    MIDI channel allowing simultaneous playback, and because the information
+    is in memory it can easily be modified or edited. It is also possible to
+    change instruments once tracks have been recorded. One great advantage is
+    the total absence of recording medium noise. Once multiple tracks have been
+    laid down, the slave devices can now be mixed onto conventional tape. <br>
+    </font>
+</dt></dl>
+<p>
+<b>MIDI Modes <font size="2"> </font></b>
+</p><p>
+</p><dl>
+  <dt>
+    <font size="2"><b>Mode 1: OMNI ON/POLY (OMNI MODE)</b> <br>
+    In OMNI MODE, the MIDI device receives data transmitted on all 16 MIDI channels,
+    note data is assigned to the device's voices polyphonically. <br>
+    This means that whether the transmitting device sends data down channel 1
+    or 16 (or any channel for that matter), the device in omni mode will receive
+    it. Data corresponding to notes will turn on and off the devices voices
+    polyphonically, i.e. a number of different notes simultaneously sounding;
+    as in a chord. The degree of polyphony will depend on the device and is
+    &nbsp;usually around six or eight notes. </font>
+  </dt><dd>
+    <font size="2"></font>
+  </dd><dt>
+    <font size="2"><b>Mode 2: OMNI ON/MONO </b><br>
+    In this mode, data is received from any channel as above, but note data is
+    assigned to only one voice (monophonically). <br>
+    If multi note information is sent, the device will either respond to the
+    highest, lowest or last note to be received, this depends on the device and
+    some manufacturers allow the assignment to be changed. Simply, regardless
+    of how many notes are played, only one will sound. </font>
+  </dt><dd>
+    <font size="2"></font>
+  </dd><dt>
+    <font size="2"><b>Mode 3: OMNI OFF/POLY (POLY MODE) <br>
+    </b>In POLY MODE, the device only responds to data being sent down a particular
+    channel and note data will be assigned polyphonically (as in Mode 1). With
+    POLY Mode the receiving device has to be assigned to a channel, obviously
+    the receiving and transmitting devices must be on the same channel otherwise
+    nothing will happen. </font>
+  </dt><dd>
+    <font size="2"></font>
+  </dd><dt>
+    <font size="2"><b>Mode 4: OMNI OFF/MONO (MONO MODE)<br>
+    </b> In MONO MODE each voice is assigned to its own channel, ie. if a six
+    voice synth was assigned so the basic channel is 1, then successive voices
+    would be assigned to channels 2 through to 6. Synths with multi timbral
+    facilities allow each voice to have a different sound, for these reasons
+    MONO mode is very powerful but needs careful use to get good results. Facilities
+    in this mode can vary and the owners manual should outline how to use this
+    mode fully. <br>
+    </font>
+</dt></dl>
+<p>
+<b><img alt="Inside the box" src="maplin_files/MAPLIN3.gif" align="Left" height="378" width="300">MIDI
+Data Messages</b>
+</p><p>
+<font size="2"><b> NOTE ON </b><br>
+The follow:ng sequence of data will initiate a note. Exchange consists of
+a three byte transfer. <br>
+<i>BYTE 1</i> Channel No. (0 to 15) and NOTE ON command. <br>
+<i>BYTE 2</i> Key No. (0 to 127) 0=lowest, 127-highest. MID 'C' = 60. <br>
+<i>BYTE 3</i> Key Velocity; how hard key is pressed, (0 to 127) 0=no velocity,
+127=max velocity. Non-velocity keyboards use 64. </font>
+</p><p>
+<font size="2"><b>NOTE OFF </b><br>
+The following sequence of data will stop a note. Exchange consists of a three
+byte transfer. <br>
+<i>BYTE 1 </i>Channel No. and NOTE OFF command. <br>
+<i>BYTE 2 </i>Key No. <br>
+<i>BYTE 3</i> Key Release Velocity; how quickly key is released, (0 to 127).
+<br>
+<br>
+<b>POLYPHONIC KEY PRESSURE (AFTERTOUCH) </b><br>
+Some keyboards also respond to the pressure applied to the key after the
+key has been pressed .Exchange consists of a three byte transfer. <br>
+<i>BYTE 1</i> Channel No. and KEY PRESSURE command. <br>
+<i>BYTE 2</i> Key No. <br>
+<i>BYTE 3 </i>Key Pressure (0 to 127) 0=no pressure, 127= max pressure. <br>
+<br>
+<b>OVERALL PRESSURE (AFTERTOUCH)</b> <br>
+Similar to above, but is the overall pressure of all the notes down. Exchange
+consists of a two byte transfer.<br>
+<i>BYTE 1 </i>Channel No. and OVERALL PRESSURE command. <br>
+<i>BYTE 2 </i>Overall Pressure (0 to 127) 0=no pressure, 127 = max pressure.
+<br>
+<br>
+<b>CONTROLLERS</b> <br>
+These are used to transmit information corresponding to operation of such
+things as portamento, damper and operation of modulation wheels or joysticks.
+This means, for example, that when the damper is operated on the master,
+it is also operated on the slave. <br>
+There are two main types of controller command: <br>
+<i>CONTINUOUS</i> - these correspond to turning a pot on the control panel
+or operating a modulation wheel, ie. anything that needs to have a continuous
+value corresponding to position, to be transmitted. <br>
+<i>ON/OFF </i>- these correspond to switch operations such as the damper
+pedal being pressed. For the different types of controllers a set of sub-channels
+or controller numbers are used: </font>
+</p><ul>
+  <li>
+    <font size="2">0 to 31 for continuous controllers (low and high resolution).
+    </font>
+  </li><li>
+    <font size="2">32 to 63 for continuous controllers (high resolution). </font>
+  </li><li>
+    <font size="2">64 to 95 for on/off controllers. </font>
+  </li><li>
+    <font size="2">96 to l2l undefined.</font>
+  </li><li>
+    <font size="2"> 122 to 127 for channel mode messages. <br>
+    </font>
+</li></ul>
+<p>
+<font size="2">Controller messages consist of a three byte transfer. <br>
+<i>BYTE 1</i> Channel No. and CONTROLLER message. <br>
+<i>BYTE 2 </i>Controller No. (0 to 127). <br>
+<i>BYTE 3 </i>Controller Value (0 to 127) 0=full off, 127=full on. </font>
+</p><p>
+<font size="2"><br>
+<br>
+<b>PITCH BEND</b> <br>
+Pitch bend is considered such an important controller it is assigned as a
+separate message. Pitch bend is a three byte transfer.<br>
+<i>BYTE 1 </i>Channel No. and PITCH BEND command.<br>
+<i>BYTE 2 </i>Pitch Bend value (0 to 127) LSB. <br>
+<i>BYTE 3 </i>Pitch Bend value (0 to 127) MSB. <br>
+<br>
+<b>PROGRAM CHANGE </b>This enables program or patches corresponding to different
+sounds to be selected, this is a two byte transfer. <br>
+<i>BYTE 1</i> Channel No. and PROGRAM CHANGE command. <br>
+<i>BYTE 2</i> Program No. (0 to 127). <br>
+<br>
+<b>MODE MESSAGES</b> <br>
+This group of messages affect the modes of operation and are under the class
+of controllers. <br>
+<br>
+<b>LOCAL/REMOTE</b> <br>
+This is used for selecting whether note data for voices within the synth
+is obtained from the keyboard and MIDI or just MIDI. In the second option,
+operation of the keyboard just sends out MIDI data. This option is useful
+for adding such features as arpeggiation, auto chording or other MIDI effects
+and is achieved by using a MIDI effects box or micro computer. <br>
+<br>
+<b>ALL NOTES OFF</b> <br>
+Causes all notes on that channel to cease sounding. This command should be
+used with some care as not all devices respond to it.<br>
+<br>
+<b>OMNI/POLY/MONO SELECT </b><br>
+This allows selection of the channel and note assignment mode as
+previously.<br>
+<br>
+<b>SYSTEM EXCLUSIVE (*)</b> This allows totally non-standard information
+to be exchanged between compatible equipment. Such as data for a particular
+patch or even data for a sampled sound. The exclusive message was provided
+for manufacturers different needs and is one facility that means MIDI cannot
+become obsolete. The exclusive message is a multi byte transfer and the length
+depends on the application. <br>
+<i>BYTE 1</i> SYSTEM EXCLUSIVE Command. <br>
+<i>BYTE 2</i> MANUFACTURERS ID No. <br>
+<i>BYTE 3</i> .........'data'<br>
+<i>BYTE n</i> ........'data'&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; <br>
+<i>BYTE n+1</i> END OF EXCHANGE Command. <br>
+<br>
+<b>SYSTEM RESET (*) </b><br>
+Puts all the equipment into the reset state, as if it had just been powered
+up. There are many other messages but only the main ones have been covered
+here. NB (*) = Any 'SYSTEM message that is transmitted, is received on all
+channels. <br>
+</font>
+</p><p>
+<b>MIDI Requirements <font size="2"> </font></b><font size="2"><br>
+</font>
+</p><p>
+<font size="2"><b>INTERFACE HARDWARE</b><br>
+Data rate 31.25 K BAUD </font>±<font size="2">1%, Asynchronous. <br>
+1 start bit, 8 data bits, 1 stop bit.<br>
+Total 10 bits, one complete word takes 320<font face="Symbol">m</font>s to
+transmit. <br>
+Circuit operates using 5mA current loop. <br>
+The receiver must be opto-isolated. Opto isolator must require less than
+5mA to turn on.</font>
+</p><p>
+<font size="2"><b>MESSAGES</b><br>
+<i>i) Channel messages</i><br>
+The status byte contains a four bit number corresponding to the MIDI channel
+required (1 to 16); the number transmitted is 0 to 15 (0000<sub>2</sub> to
+1111<sub>2</sub>) <br>
+<i>ii) System messages</i><br>
+These are not given a channel number and are received on all channels.<br>
+COMMON - for all devices connected.<br>
+REAL TIME - for timing and synchronisation purposes.<br>
+EXCLUSIVE - manufacturers exclusive data exchange.<br>
+</font>
+</p><p>
+<img alt="Figure 1.Block Diagram" src="maplin_files/MAPLIN4.gif" align="Left" height="193" width="438"><b>Block
+Diagram</b>
+</p><p>
+<font size="2">Figure 1 centres around the 6850 Universal Asynchronous Receiver
+Transmitter; this device is used to convert parallel data from the computer
+to serial MIDI data and also to convert serial MiDI data to parallel data
+for the computer. <br>
+The data from the 6850 UART is not suitable to directly drive a MIDI device.
+The data has to be buffered to drive the MIDI bus. The buffer has quite a
+low output impedance so as to prevent problems caused by induced noise or
+a low cable capacitance. The output is current limited to protect the equipment.
+<br>
+As previously mentioned, MIDI inputs need to be Opto Isolated, this gives
+added safety and prevents troublesome (and annoying) hum loops from being
+formed through cables and equipment. After data is passed through the Opto
+Isolator it follows two routes; into the 6850 UART and via an inverter into
+another buffer (duplicate of MIDI OUT buffer) to provide MIDI THRU data.The
+data rate is derived from a 2Mhz crystal oscillator, this is subsequently
+divided by &nbsp;64 in the 6850 to give the 31.25 K BAUD data rate used in
+the MIDI system. Connection to the computer data bus is via the tri-state
+buffers in the 6850, data transfer is controlled by read/write, enable and
+select signals. Register selection is achieved by using read/write and register
+select lines.<br>
+</font>
+</p><p align="Center">
+<img alt="Figure2. Circuit" src="maplin_files/MAPLIN5.gif" height="282" width="552">
+</p><p align="Left">
+<b>Circuit Description</b>
+</p><p align="Left">
+<font size="2">In Figure 2, IC1a, IC1b, R1, R2, R3 and Xl form a conventional
+two inverter crystal oscillator which runs at 2MHz. The output of which is
+fed to IC2's transmit and receive clock inputs, the 31.25KHz data clock is
+obtained by an internal divide by 64 circuit in 1C2. In the interface, IC2
+does most of the work; parallel/serial and serial/parallel conversion, as
+well as interfacing to the computer expansion bus. Bus control is achieved
+using 'E' (enable) and 'R/W' (read/write). The E line is normally connected
+to the processors
+'</font><font face="Symbol" size="2">Æ</font><font size="2">2' (phase 2)
+system clock. <br>
+Data transfer takes place when the
+</font><font face="Symbol" size="2">Æ</font><font size="2">2 line is high.
+The R/W line controls the data direction. With R/W high data is read from
+the 6850's registers and with R/W low data is written to the 6850's registers.
+Since the 6850 has two pairs of registers, a selection signal is required,
+this is the 'RS' (register select) line, and is connected to the least
+significant bit of the address bus. Data is exchanged via 8 bi-directional
+lines (D0-D7), when IC2 is de-selected D0-D7 are in the tri-state mode. To
+insert the 6850 into the computer's memory map, 3 select lines are provided;
+two active high (CS0 and CS1) and one active low (CS2), these lines may have
+to be fed from a separate address decoder if suitable memory map decode lines
+are not available on the computer. <br>
+Serial data transmitted from the 6850 is not suitable to directly drive the
+MIDI bus, so it has to be buffered. This is achieved using IC1f, since this
+is an inverting buffer, the data has to be first inverted using IC1e. By
+taking the MIDI output from between the +5V line and IC1f, IC1f is sinking
+rather than sourcing current. R8 and R9 limit the maximum current that can
+be drawn under possible fault conditions, protecting the computer, interface
+and MIDI device.<br>
+IC1f forms the MIDI OUT buffer. Data received drives the LED half of OPTO1.
+R5 serves to limit current and D1 affords reverse bias protection for the
+LED. When the LED turns on, the transistor half of OPTO1 is biased on, and
+pulls the input to IC1c and the receive data input of IC2, low. When the
+LED is off, the transistor is also off, the input to IC1c and the receive
+data input of IC2 are pulled high via R4. IC1c, IC1d, R6 and R7 form the
+MIDI THRU buffer, operation is identical to the MIDI OUT buffer except that
+data is obtained from the opto isolator instead of the transmit data output
+of IC2. <br>
+</font>
+</p><p>
+<b>6850 UART Registers </b>
+</p><p>
+<font size="2"><br>
+Table 1 shows the registers contents on all 8 data lines. Table 2 shows the
+reset and divide settings in the Control register and Table 3 gives the various
+settings required for various word formats. Bit D7 of the Control register
+is the Receive Interrupt Enable bit and if bit D7 is set, an interrupt will
+be generated when RX Register Full bit goes high. If bit D7 is not set, receive
+interrupts are disabled. To RESET 6850 UART; set bits D0 and Dl to 1(i.e.
+<b>decimal 3</b>). To ENABLE 6850 UART; set bit D0 to 0, bit D1 to 1, bit
+D2 t0 1, bit D3 to 0, bit D4 to 1 (i.e. <b>decimal 22</b>). (This corresponds
+to Divide by 64 and 8 bits, No Parity, 1 Stop Bit). To TRANSMIT data; check
+that the TX Register Empty bit, D1; Control Register) is high,if not wait
+until bit D1 is high,then place transmit data into bits D0-D7 of TX Register.
+To RECEIVE data; check that the RX Register Full bit, D0; Control Register)
+is high, if not wait until D0 is high, then retrieve data from bits D0-D7
+of RX Register.<br>
+</font>
+</p><p align="Center">
+<table align="center" bgcolor="gray" cellpadding="2">
+  <tbody><tr>
+    <td bgcolor="black"><font size="2"><b>Data Bus</b></font></td>
+    <td bgcolor="black"><font size="2"><b>Addr+1 (TX)<br>
+      Transmit</b></font></td>
+    <td bgcolor="black"><font size="2"><b>Addr+2 (RX)<br>
+      Receive</b></font></td>
+    <td bgcolor="black"><font size="2"><b>Addr+0 (WR)<br>
+      Control</b></font></td>
+    <td bgcolor="black"><font size="2"><b>Addr+0 (RD)<br>
+      Status</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>D0</b></font></td>
+    <td><font size="2">Data Bit 0</font></td>
+    <td><font size="2">Data Bit 0</font></td>
+    <td><font size="2">CK divide</font></td>
+    <td><font size="2">RX reg&nbsp;full</font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>D1</b></font></td>
+    <td><font size="2">Data Bit 1</font></td>
+    <td><font size="2">Data Bit 1</font></td>
+    <td><font size="2">CK divide</font></td>
+    <td><font size="2">TX reg empty</font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>D2</b></font></td>
+    <td><font size="2">Data Bit 2</font></td>
+    <td><font size="2">Data Bit 2</font></td>
+    <td><font size="2">Word Form</font></td>
+    <td><font size="2">*not used*</font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>D3</b></font></td>
+    <td><font size="2">Data Bit 3</font></td>
+    <td><font size="2">Data Bit 3</font></td>
+    <td><font size="2">Word Form</font></td>
+    <td><font size="2">*not used*</font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>D4</b></font></td>
+    <td><font size="2">Data Bit 4</font></td>
+    <td><font size="2">Data Bit 4</font></td>
+    <td><font size="2">Word Form</font></td>
+    <td><font size="2">Framing err</font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>D5</b></font></td>
+    <td><font size="2">Data Bit 5</font></td>
+    <td><font size="2">Data Bit 5</font></td>
+    <td><font size="2">(TX cntrl)</font></td>
+    <td><font size="2">RX overrun</font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>D6</b></font></td>
+    <td><font size="2">Data Bit 6</font></td>
+    <td><font size="2">Data Bit 6</font></td>
+    <td><font size="2">(TX cntrl)</font></td>
+    <td><font size="2">Parity err</font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>D7</b></font></td>
+    <td><font size="2">Data Bit 7</font></td>
+    <td><font size="2">Data Bit 7</font></td>
+    <td>(<font size="2">INT en)</font></td>
+    <td>(<font size="2">INT requ)</font></td>
+  </tr>
+  <tr>
+    <td colspan="5" bgcolor="black"><p align="Center">
+      <font size="2"><b>Table 1.Register Contents</b></font></p></td>
+  </tr>
+</tbody></table>
+</p><p align="Center">
+<table align="center" bgcolor="gray" cellpadding="2">
+  <tbody><tr>
+    <td bgcolor="black"><font size="2"><b>Function</b></font></td>
+    <td bgcolor="black"><font size="2"><b>D0</b></font></td>
+    <td bgcolor="black"><font size="2"><b>D1</b></font></td>
+    <td bgcolor="black"><font size="2"><b>D2</b></font></td>
+    <td bgcolor="black"><font size="2"><b>D3</b></font></td>
+    <td bgcolor="black"><font size="2"><b>D4</b></font></td>
+    <td bgcolor="black"><font size="2"><b>D5</b></font></td>
+    <td bgcolor="black"><font size="2"><b>D6</b></font></td>
+    <td bgcolor="black"><font size="2"><b>D7</b></font></td>
+    <td bgcolor="black"><font size="2"><b>Decimal&nbsp;Value</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>Reset</b></font></td>
+    <td><font size="2">1</font></td>
+    <td><font size="2">1</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2"><b>3</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>Divide by 64</b></font></td>
+    <td><font size="2">0</font></td>
+    <td><font size="2">1</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2"><b>2</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>Divide by 16</b></font></td>
+    <td><font size="2">1</font></td>
+    <td><font size="2">0</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2"><b>1</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>Divide by 1</b></font></td>
+    <td><font size="2">0</font></td>
+    <td><font size="2">0</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2"><b>0</b></font></td>
+  </tr>
+  <tr>
+    <td colspan="10" bgcolor="black"><p align="Center">
+      <font size="2"><b>Table 2.Control Register (Reset and&nbsp;Divide)</b></font></p></td>
+  </tr>
+</tbody></table>
+</p><p align="Center">
+<table align="center" bgcolor="gray" cellpadding="2">
+  <tbody><tr>
+    <td bgcolor="black"><font size="2"><b>Word Format</b></font></td>
+    <td bgcolor="black"><font size="2"><b>D0</b></font></td>
+    <td bgcolor="black"><font size="2"><b>D1</b></font></td>
+    <td bgcolor="black"><font size="2"><b>D2</b></font></td>
+    <td bgcolor="black"><font size="2"><b>D3</b></font></td>
+    <td bgcolor="black"><font size="2"><b>D4</b></font></td>
+    <td bgcolor="black"><font size="2"><b>D5</b></font></td>
+    <td bgcolor="black"><font size="2"><b>D6</b></font></td>
+    <td bgcolor="black"><font size="2"><b>D7</b></font></td>
+    <td bgcolor="black"><font size="2"><b>Decimal&nbsp;Value</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>7 bits,even&nbsp;parity,2 stop bits</b></font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">0</font></td>
+    <td><font size="2">0</font></td>
+    <td><font size="2">0</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2"><b>0</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>7 bits,odd&nbsp;parity,2 stop bits</b></font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">1</font></td>
+    <td><font size="2">0</font></td>
+    <td><font size="2">0</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2"><b>4</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>7 bits,even&nbsp;parity,1 stop bit</b></font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">0</font></td>
+    <td><font size="2">1</font></td>
+    <td><font size="2">0</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2"><b>8</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>7 bits,odd&nbsp;parity,1 stop bit</b></font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">1</font></td>
+    <td><font size="2">1</font></td>
+    <td><font size="2">0</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2"><b>12</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>8 bits,no&nbsp;parity,2 stop bits</b></font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">0</font></td>
+    <td><font size="2">0</font></td>
+    <td><font size="2">1</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2"><b>16</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>8 bits,no&nbsp;parity,1 stop bit</b></font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">1</font></td>
+    <td><font size="2">0</font></td>
+    <td><font size="2">1</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2"><b>20</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>8 bits,even&nbsp;parity,1 stop bit</b></font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">0</font></td>
+    <td><font size="2">1</font></td>
+    <td><font size="2">1</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2"><b>24</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>8 bits,odd&nbsp;parity,1 stop bit</b></font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">1</font></td>
+    <td><font size="2">1</font></td>
+    <td><font size="2">1</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2">*</font></td>
+    <td><font size="2"><b>28</b></font></td>
+  </tr>
+  <tr>
+    <td colspan="10" bgcolor="black"><p align="Center">
+      <font size="2"><b>Table 3.Control Register (Word Format)</b></font></p></td>
+  </tr>
+</tbody></table>
+</p><p align="Center">
+<table align="center" bgcolor="gray" cellpadding="2">
+  <tbody><tr>
+    <td><font size="2"><b>Base Address</b></font></td>
+    <td><font size="2">(read)</font></td>
+    <td colspan="3" bgcolor="black"><p align="Center">
+      <font size="2"><b>Status Register</b></font></p></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>Base Address</b></font></td>
+    <td><font size="2">(write)</font></td>
+    <td colspan="3" bgcolor="black"><p align="Center">
+      <font size="2"><b>Control Register</b></font></p></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>Base Address+1</b></font></td>
+    <td><font size="2">(read)</font></td>
+    <td colspan="3" bgcolor="black"><p align="Center">
+      <font size="2"><b>Receive Data Register</b></font></p></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>Base Address+1</b></font></td>
+    <td><font size="2">(write)</font></td>
+    <td colspan="3" bgcolor="black"><p align="Center">
+      <font size="2"><b>Transmit Data Register</b></font></p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td colspan="2" bgcolor="black"><p align="Center">
+      <font size="2"><b>VIC-20</b></font></p></td>
+    <td colspan="2" bgcolor="black"><p align="Center">
+      <font size="2"><b>CBM-64</b></font></p></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><p align="Center">
+      <font size="2"><b>(dec)</b></font></p></td>
+    <td><p align="Center">
+      <font size="2"><b>(hex)</b></font></p></td>
+    <td><p align="Center">
+      <font size="2"><b>(dec)</b></font></p></td>
+    <td><p align="Center">
+      <font size="2"><b>(hex)</b></font></p></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>Base Address</b></font> <font size="2"><b> =</b></font></td>
+    <td><font size="2">39936</font></td>
+    <td><font size="2">$9C00</font></td>
+    <td><font size="2">57088</font></td>
+    <td><font size="2">$DF00</font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>Base Address+1 =</b></font></td>
+    <td><font size="2">39937</font></td>
+    <td><font size="2">$9C01</font></td>
+    <td><font size="2">57089</font></td>
+    <td><font size="2">$DF01</font></td>
+  </tr>
+  <tr>
+    <td colspan="5"><font size="2">The base address is the position in memory where
+      the 6850 has been placed</font>.</td>
+  </tr>
+  <tr>
+    <td colspan="5" bgcolor="black"><p align="Center">
+      <font size="2"><b>Table 4. Register Memory Map</b></font></p></td>
+  </tr>
+</tbody></table>
+</p><p align="Center">
+<table align="center" bgcolor="gray" cellpadding="2" width="500">
+  <tbody><tr>
+    <td colspan="4"><p>
+      <table align="center" bgcolor="white" border="1" cellpadding="2">
+	<tbody><tr>
+	  <td bgcolor="black"><font size="2">A</font></td>
+	  <td bgcolor="black"><font size="2">B</font></td>
+	  <td bgcolor="black"><font size="2">C</font></td>
+	  <td bgcolor="black"><font size="2">D</font></td>
+	  <td bgcolor="black"><font size="2">E</font></td>
+	  <td bgcolor="black"><font size="2">F</font></td>
+	  <td bgcolor="black"><font size="2">G</font></td>
+	  <td bgcolor="black"><font size="2">H</font></td>
+	  <td bgcolor="black"><font size="2">I</font></td>
+	  <td bgcolor="black"><font size="2">J</font></td>
+	  <td bgcolor="black"><font size="2">K</font></td>
+	  <td bgcolor="black"><font size="2">L</font></td>
+	  <td bgcolor="black"><font size="2">M</font></td>
+	  <td bgcolor="black"><font size="2">N</font></td>
+	  <td bgcolor="black"><font size="2">O</font></td>
+	  <td bgcolor="black"><font size="2">P</font></td>
+	  <td bgcolor="black"><font size="2">Q</font></td>
+	  <td bgcolor="black"><font size="2">R</font></td>
+	  <td bgcolor="black"><font size="2">S</font></td>
+	  <td bgcolor="black"><font size="2">T</font></td>
+	  <td bgcolor="black"><font size="2">U</font></td>
+	  <td bgcolor="black"><font size="2">V</font></td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	</tr>
+	<tr>
+	  <td bgcolor="black"><font size="2">A</font></td>
+	  <td bgcolor="black"><font size="2">B</font></td>
+	  <td bgcolor="black"><font size="2">C</font></td>
+	  <td bgcolor="black"><font size="2">D</font></td>
+	  <td bgcolor="black"><font size="2">E</font></td>
+	  <td bgcolor="black"><font size="2">F</font></td>
+	  <td bgcolor="black"><font size="2">G</font></td>
+	  <td bgcolor="black"><font size="2">H</font></td>
+	  <td bgcolor="black"><font size="2">I</font></td>
+	  <td bgcolor="black"><font size="2">J</font></td>
+	  <td bgcolor="black"><font size="2">K</font></td>
+	  <td bgcolor="black"><font size="2">L</font></td>
+	  <td bgcolor="black"><font size="2">M</font></td>
+	  <td bgcolor="black"><font size="2">N</font></td>
+	  <td bgcolor="black"><font size="2">O</font></td>
+	  <td bgcolor="black"><font size="2">P</font></td>
+	  <td bgcolor="black"><font size="2">Q</font></td>
+	  <td bgcolor="black"><font size="2">R</font></td>
+	  <td bgcolor="black"><font size="2">S</font></td>
+	  <td bgcolor="black"><font size="2">T</font></td>
+	  <td bgcolor="black"><font size="2">U</font></td>
+	  <td bgcolor="black"><font size="2">V</font></td>
+	</tr>
+      </tbody></table>
+      </p><p align="Center">
+      (Viewed looking INTO expansion slot)</p></td>
+  </tr>
+  <tr>
+    <td colspan="2" bgcolor="black"><p align="Center">
+      TOP</p></td>
+    <td colspan="2" bgcolor="black"><p align="Center">
+      BOTTOM</p></td>
+  </tr>
+  <tr>
+    <td><b>A</b> GND</td>
+    <td><b>L</b> BLK 3</td>
+    <td><b>A</b> GND</td>
+    <td><b>L</b> CA10</td>
+  </tr>
+  <tr>
+    <td><b>B</b> CD0</td>
+    <td><b>M</b> BLK 5</td>
+    <td><b>B</b> CA0</td>
+    <td><b>M</b> CA11</td>
+  </tr>
+  <tr>
+    <td><b>C</b> CD1</td>
+    <td><b>N</b> RAM 1</td>
+    <td><b>C</b> CA1</td>
+    <td><b>N</b> CA12</td>
+  </tr>
+  <tr>
+    <td><b>D</b> CD2</td>
+    <td><b>O</b> RAM 2</td>
+    <td><b>D</b> CA2</td>
+    <td><b>O</b> CA13</td>
+  </tr>
+  <tr>
+    <td><b>E</b> CD3</td>
+    <td><b>P</b> RAM3</td>
+    <td><b>E</b> CA3</td>
+    <td><b>P</b> I/O 2</td>
+  </tr>
+  <tr>
+    <td><b>F</b> CD4</td>
+    <td><b>Q</b> V R/W</td>
+    <td><b>F</b> CA4</td>
+    <td><b>Q</b> I/O 3</td>
+  </tr>
+  <tr>
+    <td><b>G</b> CD5</td>
+    <td><b>R</b> C R/W</td>
+    <td><b>G</b> CA5</td>
+    <td><b>R</b> S0 2</td>
+  </tr>
+  <tr>
+    <td><b>H</b> CD6</td>
+    <td><b>S</b> IRQ</td>
+    <td><b>H</b> CA6</td>
+    <td><b>S</b> NMI</td>
+  </tr>
+  <tr>
+    <td><b>I</b> CD7</td>
+    <td><b>T</b> nc</td>
+    <td><b>I</b> CA7</td>
+    <td><b>T</b> RESET</td>
+  </tr>
+  <tr>
+    <td><b>J </b>BLK1</td>
+    <td><b>U</b> +5v</td>
+    <td><b>J </b>CA8</td>
+    <td><b>U</b> nc</td>
+  </tr>
+  <tr>
+    <td><b>K </b>BLK2</td>
+    <td><b>V</b> GND</td>
+    <td><b>K </b>CA9</td>
+    <td><b>V</b> GND</td>
+  </tr>
+  <tr>
+    <td colspan="4" bgcolor="black"><p align="Center">
+      <font size="2"><b>Figure 3. VIC20 Edge Connector</b></font></p></td>
+  </tr>
+</tbody></table>
+</p><p>
+<table align="center" bgcolor="gray" cellpadding="2" width="500">
+  <tbody><tr>
+    <td colspan="4"><p>
+      <table align="center" bgcolor="white" border="1" cellpadding="2">
+	<tbody><tr>
+	  <td bgcolor="black"><font size="2">A</font></td>
+	  <td bgcolor="black"><font size="2">B</font></td>
+	  <td bgcolor="black"><font size="2">C</font></td>
+	  <td bgcolor="black"><font size="2">D</font></td>
+	  <td bgcolor="black"><font size="2">E</font></td>
+	  <td bgcolor="black"><font size="2">F</font></td>
+	  <td bgcolor="black"><font size="2">G</font></td>
+	  <td bgcolor="black"><font size="2">H</font></td>
+	  <td bgcolor="black"><font size="2">I</font></td>
+	  <td bgcolor="black"><font size="2">J</font></td>
+	  <td bgcolor="black"><font size="2">K</font></td>
+	  <td bgcolor="black"><font size="2">L</font></td>
+	  <td bgcolor="black"><font size="2">M</font></td>
+	  <td bgcolor="black"><font size="2">N</font></td>
+	  <td bgcolor="black"><font size="2">O</font></td>
+	  <td bgcolor="black"><font size="2">P</font></td>
+	  <td bgcolor="black"><font size="2">Q</font></td>
+	  <td bgcolor="black"><font size="2">R</font></td>
+	  <td bgcolor="black"><font size="2">S</font></td>
+	  <td bgcolor="black"><font size="2">T</font></td>
+	  <td bgcolor="black"><font size="2">U</font></td>
+	  <td bgcolor="black"><font size="2">V</font></td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	</tr>
+	<tr>
+	  <td bgcolor="black"><font size="2">A</font></td>
+	  <td bgcolor="black"><font size="2">B</font></td>
+	  <td bgcolor="black"><font size="2">C</font></td>
+	  <td bgcolor="black"><font size="2">D</font></td>
+	  <td bgcolor="black"><font size="2">E</font></td>
+	  <td bgcolor="black"><font size="2">F</font></td>
+	  <td bgcolor="black"><font size="2">G</font></td>
+	  <td bgcolor="black"><font size="2">H</font></td>
+	  <td bgcolor="black"><font size="2">I</font></td>
+	  <td bgcolor="black"><font size="2">J</font></td>
+	  <td bgcolor="black"><font size="2">K</font></td>
+	  <td bgcolor="black"><font size="2">L</font></td>
+	  <td bgcolor="black"><font size="2">M</font></td>
+	  <td bgcolor="black"><font size="2">N</font></td>
+	  <td bgcolor="black"><font size="2">O</font></td>
+	  <td bgcolor="black"><font size="2">P</font></td>
+	  <td bgcolor="black"><font size="2">Q</font></td>
+	  <td bgcolor="black"><font size="2">R</font></td>
+	  <td bgcolor="black"><font size="2">S</font></td>
+	  <td bgcolor="black"><font size="2">T</font></td>
+	  <td bgcolor="black"><font size="2">U</font></td>
+	  <td bgcolor="black"><font size="2">V</font></td>
+	</tr>
+      </tbody></table>
+      </p><p align="Center">
+      (Viewed looking INTO expansion slot)</p></td>
+  </tr>
+  <tr>
+    <td colspan="2" bgcolor="black"><p align="Center">
+      TOP</p></td>
+    <td colspan="2" bgcolor="black"><p align="Center">
+      BOTTOM</p></td>
+  </tr>
+  <tr>
+    <td><b>A</b> GND</td>
+    <td><b>L</b> ROM L</td>
+    <td><b>A</b> GND</td>
+    <td><b>L</b> A10</td>
+  </tr>
+  <tr>
+    <td><b>B</b> D0</td>
+    <td><b>M</b> I/O 2</td>
+    <td><b>B</b> A0</td>
+    <td><b>M </b>A11</td>
+  </tr>
+  <tr>
+    <td><b>C</b> D1</td>
+    <td><b>N</b> EXROM</td>
+    <td><b>C</b> A1</td>
+    <td><b>N</b> A12</td>
+  </tr>
+  <tr>
+    <td><b>D</b> D2</td>
+    <td><b>O</b> GAME</td>
+    <td><b>D</b> A2</td>
+    <td><b>O</b> A13</td>
+  </tr>
+  <tr>
+    <td><b>E</b> D3</td>
+    <td><b>P</b> I/O 1</td>
+    <td><b>E</b> A3</td>
+    <td><b>P</b> A14</td>
+  </tr>
+  <tr>
+    <td><b>F</b> D4</td>
+    <td><b>Q </b>Dot Clock</td>
+    <td><b>F</b> A4</td>
+    <td><b>Q</b> A15</td>
+  </tr>
+  <tr>
+    <td><b>G</b> D5</td>
+    <td><b>R</b> R/W</td>
+    <td><b>G</b> A5</td>
+    <td><b>R</b> S0 2</td>
+  </tr>
+  <tr>
+    <td><b>H</b> D6</td>
+    <td><b>S</b> IRQ</td>
+    <td><b>H</b> A6</td>
+    <td><b>S</b> NMI</td>
+  </tr>
+  <tr>
+    <td><b>I</b> D7</td>
+    <td><b>T</b> +5v</td>
+    <td><b>I</b> A7</td>
+    <td><b>T</b> RESET</td>
+  </tr>
+  <tr>
+    <td><b>J </b>DMA</td>
+    <td><b>U</b> +5v</td>
+    <td><b>J </b>A8</td>
+    <td><b>U</b> ROMH</td>
+  </tr>
+  <tr>
+    <td><b>K </b>BA</td>
+    <td><b>V</b> GND</td>
+    <td><b>K </b>A9</td>
+    <td><b>V</b> GND</td>
+  </tr>
+  <tr>
+    <td colspan="4" bgcolor="black"><p align="Center">
+      <font size="2"><b>Figure 4. Commodore 64 Edge Connector</b></font></p></td>
+  </tr>
+</tbody></table>
+</p><p>
+<table align="center" bgcolor="gray" cellpadding="2">
+  <tbody><tr>
+    <td bgcolor="black"><font size="2"><b>MIDI circuit</b></font></td>
+    <td bgcolor="black"><font size="2"><b>VIC 20</b></font></td>
+    <td bgcolor="black"><font size="2"><b>CBM 64</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>0v</b></font></td>
+    <td><font size="2"><b>GND</b></font></td>
+    <td><font size="2"><b>GND</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>D0</b></font></td>
+    <td><font size="2"><b>CD0</b></font></td>
+    <td><font size="2"><b>D0</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>D1</b></font></td>
+    <td><font size="2"><b>CD1</b></font></td>
+    <td><font size="2"><b>D1</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>D2</b></font></td>
+    <td><font size="2"><b>CD2</b></font></td>
+    <td><font size="2"><b>D2</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>D3</b></font></td>
+    <td><font size="2"><b>CD3</b></font></td>
+    <td><font size="2"><b>D3</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>D4</b></font></td>
+    <td><font size="2"><b>CD4</b></font></td>
+    <td><font size="2"><b>D4</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>D5</b></font></td>
+    <td><font size="2"><b>CD5</b></font></td>
+    <td><font size="2"><b>D5</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>D6</b></font></td>
+    <td><font size="2"><b>CD6</b></font></td>
+    <td><font size="2"><b>D6</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>D7</b></font></td>
+    <td><font size="2"><b>CD7</b></font></td>
+    <td><font size="2"><b>D7</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>R/W</b></font></td>
+    <td><font size="2"><b>C R/W</b></font></td>
+    <td><font size="2"><b>R/W</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>R/S</b></font></td>
+    <td><font size="2"><b>CA 0</b></font></td>
+    <td><font size="2"><b>A0</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>E</b></font></td>
+    <td><font size="2"><b>S0 2</b></font></td>
+    <td><font size="2"><b>S0 2</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>CS2</b></font></td>
+    <td><font size="2"><b>I/O 3</b></font></td>
+    <td><font size="2"><b>I/O 2</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>+5v</b></font></td>
+    <td><font size="2"><b>+5v</b></font></td>
+    <td><font size="2"><b>+5v</b></font></td>
+  </tr>
+  <tr>
+    <td colspan="3"><font size="2">Note the CS0 and CS1 lines should be tied to&nbsp;5v
+      as only CS2 is used.</font></td>
+  </tr>
+  <tr>
+    <td colspan="3" bgcolor="black"><p align="Center">
+      <font size="2"><b>Table 5.</b></font></p></td>
+  </tr>
+</tbody></table>
+</p><p align="Center">
+<img alt="C64 Expansion slot layout" src="maplin_files/C64.gif" height="388" width="381">
+</p><p align="Center">
+</p><p>
+<b>MIDI Interface Software Writing</b> <font size="2"> <br>
+Sequencing can be accomplished from BASIC quite easily. All that is required
+is that the appropriate data be output to the 6850 in the correct order.
+This data may be stored in an array or in data statements.<br>
+For recording or processing of MIDI data received, it is really necessary
+to use machine language, either entirely or using subroutines which can be
+called from BASIC; this should not be too much of a problem to anyone who
+has an understanding of assembly language, however guidelines will be given.
+<br>
+Before the 6850 is used it has to be RESET and the CLOCK DIVISION rate set.
+This is achieved by writing decimal 3 -then decimal 22 to the control register
+of the 6850. <br>
+Data being exchanged between devices is passed through the TX and RX data
+registers. To achieve correct data transfer, the STATUS register must be
+checked; i.e. that the TRANSMIT DATA REGISTER is empty before sending more
+data; TDRE bit of STATUS REGISTER will be high when it is OK to send more
+data, and similarly for receiving data; data must be present in the RECEIVE
+DATA REGISTER before it can be read; RDRF bit of STATUS REGISTER will be
+high when it is OK to read the data. <br>
+The Registers will be configured in the computers memory map as shown in
+Table 4; the actual locations will depend on the machine and the address
+decoding used, but addresses for the VIC 20 and the Commodore 64 are shown.
+Figures 3 and 4 show the pin functions of VIC 20 and Commodore 64 edge connectors
+respectively, and Table 5 shows connections from the two edge connectors
+to the circuit. <br>
+To illustrate how simple the software can be, a few examples are shown in
+Listings 1 to 5, these show how to RESET the 6850 and READ and WRITE data,
+examples are given in both BASIC and 6502 assembly code. In the examples:
+'base' means base address, 'base+ 1' means base address+ 1 location, 'data'
+means either variable or memory location containing data. <br>
+Please note that BASIC should not be used to directly get data from the 6850
+since BASIC is slow. However BASIC may be used to send data without problem.
+If data needs to be fetched in BASIC, a machine language subroutine must
+be used. <br>
+Table 6 is intended as a guide to what data should be sent and in what order.
+Table 7 gives Controller assignments and Table 8 describes Mode
+Messages.</font>
+</p><p>
+<table align="center" bgcolor="gray" cellpadding="2">
+  <tbody><tr>
+    <td bgcolor="black"><p align="Center">
+      <font size="2"><b>First Byte</b></font></p></td>
+    <td bgcolor="black"><p align="Center">
+      <font size="2"><b>Second Byte</b></font></p></td>
+    <td bgcolor="black"><p align="Center">
+      <font size="2"><b>Third Byte</b></font></p></td>
+    <td bgcolor="black"><p align="Center">
+      <font size="2"><b>Description</b></font></p></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>1001 mmmm</b></font></td>
+    <td><font size="2"><b>0nnn nnnn</b></font></td>
+    <td><font size="2"><b>0vvv vvvv</b></font></td>
+    <td><font size="2"><b>NOTE ON (Velocity 0=note off) [1]</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>1000 mmmm</b></font></td>
+    <td><font size="2"><b>0nnn nnnn</b></font></td>
+    <td><font size="2"><b>0vvv vvvv</b></font></td>
+    <td><font size="2"><b>NOTE OFF [1]</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>1010 mmmm</b></font></td>
+    <td><font size="2"><b>0nnn nnnn</b></font></td>
+    <td><font size="2"><b>0ppp pppp</b></font></td>
+    <td><font size="2"><b>POLYPHONIC KEY PRESSURE (Aftertouch) [2] </b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>1101 mmmm</b></font></td>
+    <td><font size="2"><b>0ppp pppp</b></font></td>
+    <td>---- ----</td>
+    <td><font size="2"><b>OVERALL KEY PRESSURE (Aftertouch) [2] </b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>1011 mmmm</b></font></td>
+    <td><font size="2"><b>0ccc cccc</b></font></td>
+    <td><font size="2"><b>0ddd dddd</b></font></td>
+    <td><font size="2"><b>CONTROLLER CHANGE [3] </b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>1110 mmmm</b></font></td>
+    <td><font size="2"><b>0ddd dddd</b></font></td>
+    <td><font size="2"><b>0ddd dddd</b></font></td>
+    <td><font size="2"><b>PITCH BEND &nbsp;[4]</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>1100 mmmm</b></font></td>
+    <td><font size="2"><b>0PPP PPPP</b></font></td>
+    <td>---- ----</td>
+    <td><font size="2"><b>PROGRAM CHANGE [5]</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>1001 0000</b></font></td>
+    <td><font size="2"><b>0iii iiii</b></font></td>
+    <td><font size="2"><b>0*** ****</b></font></td>
+    <td><font size="2"><b>SYSTEM EXCLUSIVE [6] </b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>1001 0111</b></font></td>
+    <td>---- ----</td>
+    <td>---- ----</td>
+    <td><font size="2"><b>EOX (End of exchange) [7] </b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>1111 1111</b></font></td>
+    <td>---- ----</td>
+    <td>---- ----</td>
+    <td><font size="2"><b>SYSTEM RESET </b></font></td>
+  </tr>
+  <tr>
+    <td colspan="4" bgcolor="black"><p align="Center">
+      <font size="2"><b>Key </b></font></p></td>
+  </tr>
+  <tr>
+    <td><p align="Left">
+      <font size="2"><b>mmmm</b></font></p></td>
+    <td></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>MIDI channel No. (0 to 15)</b></font></td>
+  </tr>
+  <tr>
+    <td><p align="Left">
+      <font size="2"><b>0nnn nnnn</b></font></p></td>
+    <td></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>NOTE on keyboard (0 to 127)</b></font></td>
+  </tr>
+  <tr>
+    <td><p align="Left">
+      <font size="2"><b>0vvv vvvv</b></font></p></td>
+    <td></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>VELOCITY (0 to 127)</b></font></td>
+  </tr>
+  <tr>
+    <td><p align="Left">
+      <font size="2"><b>0ppp pppp</b></font></p></td>
+    <td></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>PRESSURE (0 to 127)</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>0ccc cccc</b></font></td>
+    <td></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>CONTROLLER No. (0 to 127)</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>0PPP PPPP</b></font></td>
+    <td></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>PROGRAM No. (0 to 127)</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>0ddd dddd</b></font></td>
+    <td></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>DATA (0 to 127)</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>0iii iiii</b></font></td>
+    <td></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>ID Code (0 to 127)</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>0*** ****</b></font></td>
+    <td></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>Undefined number of data bytes (as 0ddd dddd)</b></font></td>
+  </tr>
+  <tr>
+    <td colspan="4" bgcolor="black"><p align="Center">
+      <font size="2"><b>Notes </b></font></p></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>[1]</b></font></td>
+    <td><font size="2"><b>0nnn nnnn</b></font></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>60 is middle 'C'</b></font></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><font size="2"><b>0vvv vvvv</b></font></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>0=off,1=<sub>ppp</sub>,64=between <sub>mp</sub> and
+      <sub>mf</sub>,127=<sub>fff</sub></b></font></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><font size="2"><b>0vvv vvvv</b></font></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>64 in non velocity sensitive devices</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>[2]</b></font></td>
+    <td><font size="2"><b>0ppp pppp</b></font></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>0 = no pressure,127 = max pressure</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>[3]</b></font></td>
+    <td><font size="2"><b>0ccc cccc</b></font></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>controller number,see list</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>[4]</b></font></td>
+    <td><font size="2"><b>0ddd dddd</b></font></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>data for controller</b></font></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><font size="2"><b>0ddd dddd</b></font></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>2nd byte=LSB,3rd byte = MSB,<br>
+      2nd byte=0,3rd byte=64 gives no bend</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>[5]</b></font></td>
+    <td><font size="2"><b>0PPP PPPP</b></font></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>program or patch number</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>[6]</b></font></td>
+    <td><font size="2"><b>0iii iiii</b></font></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>manufacturers ID code</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2"><b>[7]</b></font></td>
+    <td><font size="2"><b>0*** ****</b></font></td>
+    <td><p align="Center">
+      =</p></td>
+    <td><font size="2"><b>undefined &nbsp;number of data bytes,terminate by sending
+      [7],<br>
+      use to return to normal.Use after EXCLUSIVE data exchange</b></font></td>
+  </tr>
+  <tr>
+    <td colspan="4" bgcolor="black"><p align="Center">
+      <font size="2"><b>Table 6.</b></font></p></td>
+  </tr>
+</tbody></table>
+</p><p>
+<table align="center" bgcolor="gray" cellpadding="2">
+  <tbody><tr>
+    <td colspan="2" bgcolor="black"><p align="Center">
+      <font size="2"><b>Controller assignment</b></font></p></td>
+  </tr>
+  <tr>
+    <td bgcolor="black"><p align="Center">
+      <font size="2"><b>Controller no.</b></font></p></td>
+    <td bgcolor="black"><p align="Center">
+      <font size="2"><b>Description</b></font></p></td>
+  </tr>
+  <tr>
+    <td><font size="2">0</font></td>
+    <td><font size="2"><b>Continuous controller 0 MSB</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2">1</font></td>
+    <td><font size="2"><b>Modulation wheel MSB</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2">2 to 31</font></td>
+    <td><font size="2"><b>Continuous controllers 2 to 31 MSB</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2">32</font></td>
+    <td><font size="2"><b>Continuous controller 0 &nbsp;LSB</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2">33</font></td>
+    <td><font size="2"><b>Modulation wheel LSB</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2">34 to 63</font></td>
+    <td><font size="2"><b>Continuous controllers 2 to 31 LSB</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2">64 to 95</font></td>
+    <td><font size="2"><b>Switch controllers </b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2">96 to 121</font></td>
+    <td><font size="2"><b>** undefined **</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2">122 to 127</font></td>
+    <td><font size="2"><b>MODE MESSAGES (see Table 8)</b></font></td>
+  </tr>
+  <tr>
+    <td bgcolor="black"><font size="2"><b>Controller data</b></font></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="2"><font size="2">For continuous controllers 0 to 127 (min to max)<br>
+      For switch controllers 0 = off,127 = on.For continuous controllers;<br>
+      if only 7 bits of resolution,send only MSB.<br>
+      If full resolution is required send MSB first,then LSB.<br>
+      If only LSB has changed in value,LSB can be sent without MSB</font>.</td>
+  </tr>
+  <tr>
+    <td colspan="2" bgcolor="black"><p align="Center">
+      <font size="2"><b>Table 7.</b></font></p></td>
+  </tr>
+</tbody></table>
+</p><p align="Center">
+<table align="center" bgcolor="gray" cellpadding="2">
+  <tbody><tr>
+    <td colspan="3" bgcolor="black"><p align="Center">
+      <font size="2"><b>Mode Messages</b></font></p></td>
+  </tr>
+  <tr>
+    <td bgcolor="black"><p align="Center">
+      <font size="2"><b>Controller no.</b></font></p></td>
+    <td bgcolor="black"><font size="2"><b>Description</b></font></td>
+    <td bgcolor="black"><p align="Center">
+      <font size="2"><b>Data</b></font></p></td>
+  </tr>
+  <tr>
+    <td><font size="2">122</font></td>
+    <td><font size="2"><b>Local Control</b></font></td>
+    <td><font size="2"><b>0 = off,127 = on</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2">123</font></td>
+    <td><font size="2"><b>All notes off</b></font></td>
+    <td><font size="2"><b>0 </b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2">124</font></td>
+    <td><font size="2"><b>Omni off (all notes off)</b></font></td>
+    <td><font size="2"><b>0 </b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2">125</font></td>
+    <td><font size="2"><b>Omni on (all notes off)</b></font></td>
+    <td><font size="2"><b>0 </b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2">126</font></td>
+    <td><font size="2"><b>Mono on [poly off] (all notes off)</b></font></td>
+    <td><font size="2"><b>number of channels</b></font></td>
+  </tr>
+  <tr>
+    <td><font size="2">127</font></td>
+    <td><font size="2"><b>Poly on [mono off] (all notes off)</b></font></td>
+    <td><font size="2"><b>0 </b></font></td>
+  </tr>
+  <tr>
+    <td colspan="3" bgcolor="black"><font size="2"><b>Note</b></font></td>
+  </tr>
+  <tr>
+    <td colspan="3"><font size="2">All messages which can be sent successively (e.g.
+      NOTE ON) under the same STATUS byte,<br>
+      can be sent without STATUS byte until a different STATUS is required.<br>
+      </font></td>
+  </tr>
+  <tr>
+    <td colspan="3" bgcolor="black"><p align="Center">
+      <font size="2"><b>Table 8.</b></font></p></td>
+  </tr>
+</tbody></table>
+</p><p align="Center">
+<table align="CENTER" bgcolor="OLIVE" cellpadding="2">
+  <tbody><tr>
+    <td colspan="3" bgcolor="SILVER"><p align="Center">
+      <b>MIDI INTERFACE PARTS LIST</b></p></td>
+  </tr>
+  <tr>
+    <td><b>RESISTORS</b></td>
+    <td>All 0.6w 1%</td>
+    <td>Metal Film</td>
+  </tr>
+  <tr>
+    <td>R1,3</td>
+    <td>2k2</td>
+    <td>2 (M2K2)</td>
+  </tr>
+  <tr>
+    <td>R2,5,6,7,8,9</td>
+    <td>220<font face="Symbol">W</font></td>
+    <td>6 (M220R)</td>
+  </tr>
+  <tr>
+    <td>R4</td>
+    <td>10k*</td>
+    <td>1(M10K)</td>
+  </tr>
+  <tr>
+    <td><a name="*">* </a>I suggest a 2k7 instead</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><b>CAPACITORS</b></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>C1</td>
+    <td>100nF Poly</td>
+    <td>1 (BX76H)</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><b>SEMICONDUCTORS</b></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>IC1</td>
+    <td>74LS04</td>
+    <td>1(YF04E)</td>
+  </tr>
+  <tr>
+    <td>IC2</td>
+    <td>MC6850P</td>
+    <td>1(WQ48C)</td>
+  </tr>
+  <tr>
+    <td>D1</td>
+    <td>1N4148</td>
+    <td>1(QL80B)</td>
+  </tr>
+  <tr>
+    <td>OPTO1</td>
+    <td>OPTO-ISOLATOR</td>
+    <td>1(RA57M)</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><b>MISCELLANEOUS</b></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>X1</td>
+    <td>2MhZ CRYSTAL</td>
+    <td>1(FY80B)</td>
+  </tr>
+  <tr>
+    <td>SK1-3</td>
+    <td>PC DIN SKT 5 PIN "A"</td>
+    <td>3(YX91Y)</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>24-PIN DIL SKT</td>
+    <td>1(BL20W)</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>14-PIN DIL SKT</td>
+    <td>1(BL18U)</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>BOX AB10</td>
+    <td>1(LF11M)</td>
+  </tr>
+</tbody></table>
+</p><p align="Center">
+</p><p align="Center">
+<b><u>6502 Machine Code and Basic programs</u></b>
+</p><p>
+<b>Example1</b>
+</p><p>
+10 REM**RESET6850**
+</p><p>
+20 POKE 'base',3
+</p><p>
+30 REM **SET DIVIDE RATE &amp; WORD FORMAT**
+</p><p>
+40 POKE 'base',22
+</p><p>
+</p><p>
+<b>Example2</b>
+</p><p>
+@reset: <br>
+LDA#$03 <i>load acc with hex 03</i>
+</p><p>
+STA$'base' <i>store acc at 'base'</i>
+</p><p>
+LDA#$16 <i>load acc with hex l6</i>
+</p><p>
+STA$'base' <i>store acc at 'base'</i>
+</p><p>
+RTS <i>return from subroutine</i>
+</p><p>
+</p><p>
+<b>Example3</b>
+</p><p>
+@getdata:<br>
+LDA$'base' <i>load acc with STATUS</i>
+</p><p>
+AND#$01 <i>AND with bit 0</i>
+</p><p>
+CMP#$01 <i>test</i>
+</p><p>
+BNE$@ getdata <i>branch if no data</i>
+</p><p>
+LDA$'base+1' <i>get data</i>
+</p><p>
+STA$'data' <i>store acc at 'data'</i>
+</p><p>
+RTS <i>return from subroutine</i>
+</p><p>
+</p><p>
+<b>Example4</b>
+</p><p>
+10 REM **IS TX REG EMPTY?**
+</p><p>
+20 IF (PEEK('base') AND 2)=0 THEN 20
+</p><p>
+30 REM **SEND DATA to 6850**
+</p><p>
+40 POKE'base+1','data'
+</p><p>
+</p><p>
+<b>Example5</b>
+</p><p>
+@ send data :<br>
+LDA$'base' <i>load acc with STATUS</i>
+</p><p>
+AND#$02 <i>AND with bit 1</i>
+</p><p>
+CMP#$02 <i>test</i>
+</p><p>
+BNE$@ send <i>branch if not ready</i>
+</p><p>
+data
+</p><p>
+LDA$'data' <i>get data to send</i>
+</p><p>
+STA$'base+1' <i>send data</i>
+</p><p>
+RTS <i>return from subroutine</i>
+</p><p>
+</p><p>
+<table align="center" cellpadding="2" width="400">
+  <tbody><tr>
+    <td colspan="4" bgco0lor="silver"><p align="Center">
+      <b>VIC-20&nbsp;MIDI interface photos</b></p></td>
+  </tr>
+  <tr>
+    <td><a href="http://members.lycos.co.uk/templarseries/maplin/Pic017.Jpg"><img alt="Interfaces" src="maplin_files/Pic017.Jpg" height="100" width="100"></a></td>
+    <td><a href="http://members.lycos.co.uk/templarseries/maplin/Pic018.Jpg"><img alt="Inside interface 1" src="maplin_files/Pic018.Jpg" height="100" width="100"></a></td>
+    <td><a href="http://members.lycos.co.uk/templarseries/maplin/Pic019.Jpg"><img alt="Detail of interface 1" src="maplin_files/Pic019.Jpg" height="100" width="100"></a></td>
+    <td><a href="http://members.lycos.co.uk/templarseries/maplin/Pic020.Jpg"><img alt="Rear IDC connector" src="maplin_files/Pic020.Jpg" height="100" width="100"></a></td>
+  </tr>
+  <tr>
+    <td><font size="1">Interfaces and cartridge connector</font></td>
+    <td><font size="1">Inside interface 1</font></td>
+    <td><font size="1">Breadboard circuit and DIN connectors</font></td>
+    <td><font size="1">Rear IDC connector</font></td>
+  </tr>
+  <tr>
+    <td><a href="http://members.lycos.co.uk/templarseries/maplin/Pic021.Jpg"><img alt="Cannibalised ALIEN cartridge" src="maplin_files/Pic021.Jpg" height="100" width="100"></a></td>
+    <td><a href="http://members.lycos.co.uk/templarseries/maplin/Pic022.Jpg"><img alt="Cable connector and inside shot" src="maplin_files/Pic022.Jpg" height="100" width="100"></a></td>
+    <td><a href="http://members.lycos.co.uk/templarseries/maplin/Pic023.Jpg"><img alt="Din Sockets" src="maplin_files/Pic023.Jpg" height="100" width="100"></a></td>
+    <td><p align="Center">
+      <a href="http://members.lycos.co.uk/templarseries/maplin/PIC024.jpg"><img alt="Interface2 showing I/O block switch" src="maplin_files/PIC024.jpg" height="100" width="100"></a></p></td>
+  </tr>
+  <tr>
+    <td><font size="1">IDC VIC Cartridge connector</font></td>
+    <td><font size="1">Cable connection to interface</font></td>
+    <td><font size="1">In/Out and Thru DIN connectors</font></td>
+    <td><font size="1">Interface2,showing I/O switch &amp; 2nd&nbsp;connector</font></td>
+  </tr>
+</tbody></table>
+</p><p>
+</p><p>
+Using the above article I managed to create two separate interfaces. One
+with &nbsp;MIDI In/Out/Thru and one with only &nbsp;MIDI In/Out. The second
+I made switchable onto either the same or different address block as the
+first,thus enabling both interfaces to either operate simultaneously or
+independently from other PEEK/POKE addresses. The major problem with connecting
+these interfaces is the edge connector required to connect them to the VICs
+cartridge port. Rather than have to get hold of the required PCB edge connector,I
+opted to cannibalise a VIC cartridge and connect all the required lines to
+another type of readily available connector,making it easier to plug the
+interfaces into the VIC.
+</p><p>
+<table align="center" bgcolor="gray" cellpadding="2" width="400">
+  <tbody><tr>
+    <td colspan="2"><p>
+      <table align="center" bgcolor="white" border="1" cellpadding="2">
+	<tbody><tr>
+	  <td bgcolor="black">1</td>
+	  <td bgcolor="black">2</td>
+	  <td bgcolor="black">3</td>
+	  <td bgcolor="black">4</td>
+	  <td bgcolor="black">5</td>
+	  <td bgcolor="black">6</td>
+	  <td bgcolor="black">7</td>
+	  <td bgcolor="black">8</td>
+	  <td bgcolor="black">9</td>
+	  <td bgcolor="black">10</td>
+	  <td bgcolor="black">11</td>
+	  <td bgcolor="black">12</td>
+	  <td bgcolor="black">13</td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+	</tr>
+	<tr>
+	  <td bgcolor="black">14</td>
+	  <td bgcolor="black">15</td>
+	  <td bgcolor="black">16</td>
+	  <td bgcolor="black">17</td>
+	  <td bgcolor="black">18</td>
+	  <td bgcolor="black">19</td>
+	  <td bgcolor="black">20</td>
+	  <td bgcolor="black">21</td>
+	  <td bgcolor="black">22</td>
+	  <td bgcolor="black">23</td>
+	  <td bgcolor="black">24</td>
+	  <td bgcolor="black">25</td>
+	  <td bgcolor="black">26</td>
+	</tr>
+      </tbody></table>
+      </p><p align="Center">
+      &nbsp;(Viewed from rear of connector)</p></td>
+  </tr>
+  <tr>
+    <td>1 - Data Bit 0</td>
+    <td>14 -&nbsp;GND</td>
+  </tr>
+  <tr>
+    <td>2 - Data Bit 1</td>
+    <td>15 - nc</td>
+  </tr>
+  <tr>
+    <td>3 - Data Bit 2</td>
+    <td>16 - nc</td>
+  </tr>
+  <tr>
+    <td>4 - Data Bit 3</td>
+    <td>17 - nc</td>
+  </tr>
+  <tr>
+    <td>5 - Data Bit 4</td>
+    <td>18 - nc</td>
+  </tr>
+  <tr>
+    <td>6 - Data Bit 5</td>
+    <td>19 - nc</td>
+  </tr>
+  <tr>
+    <td>7 - Data Bit 6</td>
+    <td>20 - nc</td>
+  </tr>
+  <tr>
+    <td>8 - Data Bit 7</td>
+    <td>21 - nc</td>
+  </tr>
+  <tr>
+    <td>9 - Chip Select (I/O2)*</td>
+    <td>22 - nc</td>
+  </tr>
+  <tr>
+    <td>10 - Enable</td>
+    <td>23 - nc</td>
+  </tr>
+  <tr>
+    <td>11 - Read/Write</td>
+    <td>24 - nc</td>
+  </tr>
+  <tr>
+    <td>12 - Register Select</td>
+    <td>25 - nc</td>
+  </tr>
+  <tr>
+    <td>13 - Chip Select (I/O3)</td>
+    <td>26 - 5v</td>
+  </tr>
+  <tr>
+    <td colspan="2" bgcolor="black"><font size="2"><b>26 Way Connector layout &nbsp;(*
+      this line was added for Interface2 to allow "piggy backing")</b></font></td>
+  </tr>
+</tbody></table>
+</p><p>
+I used the above arrangement to connect the 26 way connector to the VIC cartridge
+- I later used the remaining pin (no.9) on the top row to connect the extra
+I/O 2 line which enabled me to make the second interface switchable between
+39936 as a base address and 38912 - thus enabling the two interfaces to be
+"piggy-backed" or to be separately accessed on independent I/O port addresses
+- that is - with the addition of ONE more piece of wire in the cable connections
+TWO interfaces can be run independently - this makes for a rather complex
+set-up - but is still just as easy to program in either 6502 or BASIC. The
+switch was a simple "one or the other" type - as shown in Pic024.
+</p><p>
+Alternatively,it is possible to put a 26 way connector directly into the
+VIC casing - rather than cannibalise a cartridge - this of &nbsp;course ruins
+the VIC case - and it is difficult to lock down the connector to the case
+- but there is plenty of room in the case for a connector and once there,it's
+just a matter of wiring directly to the VIC PCB.
+</p><p>
+Note that BASIC is not fast enough to cope with INPUT data - but data can
+be transmitted reasonably to the MIDI out without any recourse to 6502 machine
+code.<br>
+<br>
+The original article uses a printed circuit to solder the components too.
+I opted to use breadboard and design the circuit around that. I also found
+that making R4 variable made adjustments that seemed necessary to the input
+signal possible,as on first trial the signal did not seem to get to the MIDI
+in. <a href="#*">I suggest replacing the 10K resistor with a 2k7</a>.Wiring
+to the cannibalised cartridge was also a stumbling point,since some of the
+solder joints had to be made very close to the actual gold contact.
+</p><p align="Left">
+The whole thing is not costly,most of the price being taken up by the UART,and
+maybe the case,all the other components being relatively cheap.
+</p><p align="Center">
+<a href="http://reviews.ebay.co.uk/Yamaha-PSS580_W0QQugidZ10000000001862281"><img alt="THRU interface" src="maplin_files/THRU.jpg" height="184" width="279"></a>
+</p><p align="Left">
+NOTE that it is possible to make a MIDI-thru box by using the circuit diagram
+IN and THRU sections and duplicating the THRU section - this requires only
+the use of the Opto-Isolator and the Inverter 74LS04.I did exactly this -
+and it will just run on the same PSU as my PSS480 &nbsp;(or a 9v battery
+- I made it switchable) - but this is not advised as it is 4volts over what
+the 74LS04 SHOULD run on - however mine has never broken down and continues
+to send &nbsp;THRU signals to all 3 outputs.It is advisable however to add
+a 1k resistor between the 9v supply and the power pin of the 74LS04,which
+will make the voltage within tolerance.
+</p><p align="Center">
+<a href="http://reviews.ebay.co.uk/Commodore-VIC-20-and-64_W0QQugidZ10000000002350029">Ebay
+Review of VIC/64</a><br>
+<a href="http://www.datasheetarchive.com/">Data Sheet Archive</a><br>
+<a href="http://www.geocities.com/templarser/elect-logic.html">Digital Electronic
+Logic</a><br>
+<a href="http://www.play-hookey.com/digital/experiments/">Breadboarding Digital
+Circuits</a><br>
+<a href="http://www.geocities.com/Omegaman_UK/maplin1.html">History of
+Electronics</a><br>
+<a href="http://www.viceteam.org/">WINVICE - Vic20/PC Emulation</a><br>
+<a href="http://sta.c64.org/xcables.html">XM1541 cables</a><br>
+<a href="http://www.fairlight.to/tools/pc.html">World of Fairlight</a><br>
+<a href="http://www.msadams.com/downloads.htm">Scott Adams</a><br>
+<a href="http://members.lycos.co.uk/templarseries/synths.html">My Synths</a><br>
+<a href="http://members.lycos.co.uk/templarseries/midig.html">MIDI Guitar Project</a>
+</p><p align="Center">
+<a title="DIY Forums - Why Pay If You Can Do It Yourself?" href="http://www.diyforums.net/"><img alt="DIY Forums - Why Pay If You Can Do It Yourself?" src="maplin_files/diylinx.htm" border="0" height="83" width="237"></a>
+</p><p align="Center">
+<a href="http://members.lycos.co.uk/templarseries/sounds.html" target="_top">Back to Sounds</a>
+<a href="http://members.lycos.co.uk/templarseries/index.html">Back to Index</a>
+</p><p>
+  </p><hr>
+<p>
+
+
+</p><div id="catfish3ba9cb0a" style="display: none;"></div>
+<script src="maplin_files/displaycf.htm" type="text/javascript"></script>
+
+<script type="text/javascript">
+   var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+   document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="maplin_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+   try {
+      var pageTracker = _gat._getTracker("UA-7539432-13");
+      pageTracker._trackPageview();
+   } catch(err) {}
+</script>
+</body></html>
