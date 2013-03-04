@@ -1,9 +1,6 @@
 ;A short generic routine for setting any shift register value for any pulse
 ;channel in about 150 cpu clocks. Use it freely.
 
-TMP  = $57
-TMP2 = $58 
-
 	; USAGE: y = channel ($0a..$0c)
 	;        x = initial frequency
 	;        a = shift register contents

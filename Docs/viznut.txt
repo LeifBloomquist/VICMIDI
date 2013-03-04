@@ -1,0 +1,63 @@
+> Users want to be able to use your waveforms over MIDI, so I'm
+> implementing them as a Program Change.  So here are my questions about
+> your setwave code...
+>
+> 1) What exactly needs to be passed in A?  The comments just say "a =
+> shift register contents".  Should A be the value represented by the
+> binary value of the "waveform name"?  i.e. if I want the "11010"
+> waveform, do I pass in $1A?
+>
+> Is it valid to pass other values, or should I force it so that only
+> those waveforms listed in your document are allowed?
+
+You can pass any values. There are 16 waveforms, and each waveform cycles
+thru 16 different shift register states, so each of the 16x16=256 possible
+shift register contents is a valid state in one of the possible waveforms.
+The "waveform names" I've given are just the shortest possible binary
+sequences that set up each waveform.
+
+And yes, you can put these binary numbers directly into A when using the
+routine.
+
+> 2) You have a comment "make sure that the channel has been at $7e for
+> some time before calling this function.".  Does that imply some
+> silence before changing waveforms?  Does this have to be repeated for
+> every new note?
+
+It implies that the shift register must be cleared before setting a new
+waveform. The easiest way to clear the shift register is switching the
+channel off for a short while. It is also important that the shift rate is
+fast enough ($7E is the fastest setting).
+
+Of course, it IS possible to change the waveform without fulfilling these
+requirements, but in this case the exact change is not predictable. Still,
+there is some VIC-20 music (e.g. Orb Megademo, Summer Lameness) that do this
+kind of "random unpredictable tweaks" constantly in order to create a unique
+kind of sound, so you might want to give the users this possibility as well.
+
+When changing the note: if you just change the frequency (without turning
+the channel off), then it is not necessary to set the waveform again.
+However, if you have any silence before the new note, then it is necessary
+to call the waveform routine again.
+
+viznut
+
+--------------------------------------------------------
+
+> How long should I wait for?  "A short while" isn't very precise ;-)
+> (How many NOPs would I need?)
+
+It depends on the channel and the pitch it's playing before setting it to
+$7E. I once calculated the worst case as being 2160 clock cycles (for the
+slowest channel ($900a) on the lowest pitch), but I haven't verified it in
+practice as my players never need to change the waveform very often.
+
+Anyway, if you want to be sure you don't wait any longer than you need to,
+here's the formula I used:
+
+  offtime in clock cycles = clocks_per_shift * (wavelength + 7)
+
+where clocks_per_shift is 16, 8 or 4 depending on the channel (alto, tenor,
+soprano) and wavelength is ((126-PEEK(3687X))AND127)+1.
+
+viznut

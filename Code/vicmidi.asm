@@ -3,11 +3,12 @@
 
 ; --------------------------------------------------------------------------------------------------  
 
-  processor 6502 ;  VIC-20
+  processor 6502  ; VIC-20
   
   ; Assume no memory expansion.   Compile as Cartridge ROM in Block 5.
   org $A000  ; Block 5
-    
+  
+  ; Macro and equate includes (must be at start)  
   include "macros.asm"
   include "equates.asm"
 
@@ -30,7 +31,7 @@ START:
   jsr $e404 ; INIT Message (needed (?) so keycheck routines work)  
 
 entry:
-  jsr titlescreen 
+  jsr mainscreen 
   jsr setup_pal 
   jsr setwavecopy
   jsr checkuart
@@ -60,11 +61,11 @@ entry:
   sta poly_flags+2 ;     flags
   sta spin_color
   sta write_pointer
-  sta read_pointer
-  
-
-  lda #$6C         
-  sta spin_display
+  sta read_pointer 
+  sta waveform1
+  sta waveform2
+  sta waveform3
+  sta waveform4
   
 ;;; ========================================================================
 ;;; main LOOP!
@@ -146,35 +147,39 @@ messageproc:
   sta channel
   
   ; Determine Command
-  lda statusbyte ; Status Byte
-  and #$F0       ; Get the upper nybble
+  lda statusbyte    ; Status Byte
+  and #$F0          ; Get the upper nybble
+   
+  cmp #$80          ; Note Off
+  beq donoteoff
   
-m8
-  cmp #$80       ; Note Off
-  bne m9 
+  cmp #$90          ; Note On
+  beq donoteon
+  
+  cmp #$B0          ; Control Change
+  beq docontrolchange    
+  
+  cmp #$C0          ; Program Change
+  beq doprogramchange
+
+  ; All others (Aftertouch, etc.) ignored.
+  jmp loop
+ 
+donoteoff:
   jsr noteoff
   jmp loop
 
-m9
-  cmp #$90       ; Note On
-  bne mb
+donoteon:  
   jsr noteon
   jmp loop 
 
-mb
-  cmp #$B0       ; Control Change
-  bne mc
+docontrolchange:
   jsr controlchange
   jmp loop
 
-mc
-  cmp #$C0       ; Program Change
-  bne mx 
+doprogramchange:
   jsr programchange 
-  ; Drop through
-mx
-  ; All others (Aftertouch, etc.) ignored.
-  jmp loop
+  jmp loop 
 
 
 ;******************************************************************************
@@ -201,39 +206,92 @@ savenote:
   ; Save the note# so that later Note Offs only apply to this note.
   txa
   sta lastnote,y
-
+  
   ; Perform a table lookup of MIDI Note# to VIC Register
-  ; Table to use depends on voice/channel
+  ; Table to use depends on bank/voice/channel
+
+  ; Check the bank
+  lda bank
+  
+  cmp #$00
+  beq lookups_ntsc 
+  
+  cmp #$01
+  beq lookups_pal
+  
+  ; TODO here *** - Alternate scales.
+  
+  ; Ignore all other banks
+  rts 
+
+
+; ------ NTSC -------
+
+lookups_ntsc:
   cpy #$00 
-  beq vl1
+  beq vlook1_ntsc
   
   cpy #$01
-  beq vl2
+  beq vlook2_ntsc
   
   cpy #$02
-  beq vl3
+  beq vlook3_ntsc
   
   cpy #$03
-  beq vl4
+  beq vlook4_ntsc
   
   ; Ignore all other channels
   rts
-
-vl1
-  lda voice1lookup,x
+      
+vlook1_ntsc:
+  lda voice1lookup_ntsc,x
   jmp setvoice
 
-vl2
-  lda voice2lookup,x
+vlook2_ntsc:
+  lda voice2lookup_ntsc,x
   jmp setvoice
   
-vl3
-  lda voice3lookup,x
+vlook3_ntsc:
+  lda voice3lookup_ntsc,x
   jmp setvoice 
 
-vl4
-  lda voice4lookup,x
-  jmp setvoice  
+vlook4_ntsc:
+  lda voice4lookup_ntsc,x
+  jmp setvoice
+    
+; ------ PAL -------
+
+lookups_pal:
+  cpy #$00 
+  beq vlook1_pal
+  
+  cpy #$01
+  beq vlook2_pal
+  
+  cpy #$02
+  beq vlook3_pal
+  
+  cpy #$03
+  beq vlook4_pal
+  
+  ; Ignore all other channels
+  rts
+      
+vlook1_pal:
+  lda voice1lookup_pal,x
+  jmp setvoice
+
+vlook2_pal:
+  lda voice2lookup_pal,x
+  jmp setvoice
+  
+vlook3_pal:
+  lda voice3lookup_pal,x
+  jmp setvoice 
+
+vlook4_pal:
+  lda voice4lookup_pal,x
+  jmp setvoice
 
 
 ; ---- Note Off ---------------------------------------------------
@@ -270,35 +328,38 @@ controlchange:
   ldy channel    ; Y now contains channel #
   
   lda mididata0  ; Controller number
-cc1
-  cmp #01       ; Modulation Wheel (coarse) - decimal
-  bne cc7
-  jmp modwheel
-  
-cc7
-  cmp #07       ; Volume (coarse) - decimal
-  bne cc74
-  jmp volume
-  
-cc74
-  cmp #74       ; Brightness - decimal
-  bne cc120
-  jmp screencolors
 
-cc120
+  cmp #00        ; Bank select - decimal
+  beq bankselect
+
+  cmp #01        ; Modulation Wheel (coarse) - decimal
+  beq modwheel
+  
+  cmp #07        ; Volume (coarse) - decimal
+  beq volume
+  
+  cmp #74        ; Brightness - decimal
+  beq screencolors
+
   cmp #120       ; All Sound Off - decimal
-  bne cc123
-  jmp soundoff
+  beq soundoff
 
-cc123
   cmp #123       ; All Notes Off - decimal
-  bne ccx
-  jmp soundoff
+  beq soundoff
 
-ccx ; Ignore all the rest
+  ; Ignore all the rest
   rts
-  
-  
+
+; ---- Bank Select -----------------------------------------------------
+; Bc 00 vv
+
+bankselect:
+  lda mididata1  
+  ora #$03         ; A contains bank, 0-3
+  sta bank  
+  HEXPOKE (voice_display+132),bank
+  rts
+   
 ; ---- MOD Wheel Controller --------------------------------------------
 ; Bc 01 vv
   
@@ -307,7 +368,6 @@ modwheel:
   lda mididata1
   ora #$80
   jmp setvoice
-  
 
 ; ---- Volume Controller ------------------------------------------------
 ; Bc 07 vv
@@ -348,7 +408,7 @@ screencolors:
 ; Bc 7B xx
 
 soundoff:
-  lda #$00      ; Off
+  lda #$00        ; Off
   jmp setvoice
 
 
@@ -356,57 +416,68 @@ soundoff:
 ; Cc pn  <NOTE 2 bytes!>
 
 programchange:
-  ;Blank the unused MIDI byte
+  ; Blank the unused MIDI byte
   lda #45  ; -
   sta midi_display+6
   sta midi_display+7
   
-  ldy channel    ; Y now contains channel #
+  ; Get low nybble and replace, since there are only 16 viznut waveforms
+  lda mididata0
+  and #$0f     
+  sta mididata0   ; Note that this is the waveform NUMBER, not the VALUE!      
+  
+  ldy channel      ; Y now contains channel #
+  sta waveform1,y  ; Store waveform used 
+  
+  cpy #00
+  beq pc_0
+  
+  cpy #01
+  beq pc_1
+  
+  cpy #02
+  beq pc_2
+  
+  cpy #03       ; Not sure if viznut's waveforms applies to the noise voice,
+  beq pc_3      ; but keep it in away.
 
-pc_0:
-  cpy #$00
-  bne pc_1 
-  HEXPOKE (voice_display+5),mididata0 
-  jmp pc_do
-
-pc_1:
-  cpy #$01
-  bne pc_2
-  HEXPOKE (voice_display+27),mididata0
-  jmp pc_do
-  
-pc_2:
-  cpy #$02
-  bne pc_3
-  HEXPOKE (voice_display+49),mididata0
-  jmp pc_do
-  
-pc_3:
-  cpy #$03
-  bne pc_rts
-  HEXPOKE (voice_display+71),mididata0
-  jmp pc_do
-  
-  ;Ignore all other channels
-pc_rts:  
+  ; Ignore all other channels  
   rts
 
+; Update the screen with Program# (viznut waveform code)
+; Note that these are not actually used until setvoice is called below [1]
 
-pc_do:
-  ldy channel    ; Y now contains channel # (0-3) (temp)
+pc_0:
+  HEXPOKE (voice_display+ 5),waveform1 
+  rts
+
+pc_1:
+  HEXPOKE (voice_display+27),waveform2
+  rts
   
-  lda sound_voice1,y
-  sta tempx  ; See below 
- 
+pc_2:
+  HEXPOKE (voice_display+49),waveform3
+  rts
+  
+pc_3:
+  HEXPOKE (voice_display+71),waveform4
+  rts
+  
+  
+;---------------------------------------------------------
+; Set a voice using viznut's setwave function.
+; If a sound is already playing, fine.  But if not, need a "short" delay.  TODO ***
+
+viznut:
+  ldy channel  ; Channel # (0-3)   
   lda voice_to_register,y
-  tay             ; Y Now contains low byte of register
-  
-  lda mididata0
-  and #$0f        ; Get low nybble, since there are only 16 viznut waveforms
-  tax
-  lda viznutwaveforms,x  ; A now contains the desired shift register contents
+  tay                     ; Y now contains low byte of register 90xx  
 
-  ldx tempx              ; X now contains initial frequency of selected channel
+  lda waveform1,x  ; Retrieve the last desired waveform#
+  tax
+  lda viznutwaveforms,x   ; A now contains the desired shift register contents
+
+  ldx currentvalue        ; X now contains initial frequency of selected channel
   
   ; X,Y,A are set - Set the waveform.
   jsr setwave
@@ -417,11 +488,22 @@ pc_do:
 ;*******************  Set/Display Functions  *******************************
 ;***************************************************************************  
 
-; Dispatcher for setting the appropriate voice.
+; Dispatcher for setting the appropriate voice and updating the screen
 ; Channel# in Y (Channel 0 = Voice 1, etc) 
 ; Value to set it to in A.
 
 setvoice:
+   sta currentvalue 
+  
+  ; Before setting the voice, check if a viznut waveform was selected previously [1]
+  ; If so, handle that separately. 
+  lda waveform1,y
+  bne viznut
+
+  ; Nope, carry on.
+  lda currentvalue
+  sta sound_voice1,y  
+
   cpy #$00 
   beq v1
   
@@ -438,119 +520,24 @@ setvoice:
   rts
 
 ; ---- Voice 1 -------
-v1 
-  sta sound_voice1
+v1
   HEXPOKE (voice_display+00),sound_voice1
   rts
 
 ; ---- Voice 2 -------
 v2
-  sta sound_voice2
   HEXPOKE (voice_display+22),sound_voice2
   rts
 
 ; ---- Voice 3 -------
 v3
-  sta sound_voice3
   HEXPOKE (voice_display+44),sound_voice3
   rts
 
 ; ---- Voice 4 -------
 v4
-  sta sound_noise
   HEXPOKE (voice_display+66),sound_noise
   rts
-
-;***************************************************************************
-;*******************    Hardware Functions   *******************************
-;***************************************************************************  
-
-; ----------------------------------------------------------------------------
-; Confirm the presence of the ST16C450 UART  
-checkuart:
-  lda #$55
-  sta UART_SCRATCHPAD
-  
-  lda UART_SCRATCHPAD
-  cmp #$55
-  beq checkuart_ok 
-
-  ; Not found!
-  PLOT 0,20
-  PRINTSTRING "**uart NOT FOUND! ***"
-
-uloop:
-  inc screen_colors
-  jmp uloop 
-   
-checkuart_ok:
-  rts        
- 
-; ----------------------------------------------------------------------------  
-; Set up the UART
-  
-resetuart:
-  ; Expose the divisor latch.
-  lda #%10000000
-  sta UART_LCR
-  
-  ; Set the MIDI baud rate.
-  ; The ST16C450 datasheet says that it divides the input clock rate by
-  ; 16, so with a 2Mhz crystal on board, that gives
-  ; 2000000 * (1/16) * (1/x) = 31250.  Solving gives x=4 for the low
-  ; byte of the divisor, and 0 for the high byte.  
-      
-  ldx #$00 
-  ldy #$04
-  stx UART_DIVISOR_MSB
-  sty UART_DIVISOR_LSB
-  
-  ; Set to MIDI: Word length 8, Stop bits 1, no parity (also hides divisor latch)
-  lda #%00000011
-  sta UART_LCR
-  
-  ; Enable the interrupt when data is received
-  lda #%00000001
-  sta UART_IER
-  rts        
-
-; ----------------------------------------------------------------------------  
-; Set up the IRQ for reading bytes from the UART
-  
-setupirq:
-  sei 
-  
-  ; Point to my interrupt vector
-  lda #<theirq 
-  sta $0314 
-  lda #>theirq 
-  sta $0315 
-  
-  ; Disable timer interrupts
-  
-  lda #%01100000
-  sta $912e     ; disable and acknowledge interrupts
-  sta $912d
-  ;sta $911e     ; disable NMIs (Restore key) 
-  
-  cli 
-  rts 
-
-; ----------------------------------------------------------------------------
-; The IRQ.  
-
-theirq: 
-  ; Fetch the received byte
-  lda UART_RXTX    ;get data
-  ldy write_pointer
-  sta buffer,y
-  inc write_pointer
-
-  ; Clear the interrupt from the UART by reading the status register
-  lda UART_ISR
-   
-  jmp $ff56  ; Use this in place of rti because it restores the A,X,Y registers from the stack
-  ;jmp $eabf     ; return to normal IRQ  (scans keyboard and stuff)
 
 ; ----------------------------------------------------------------------------  
   
@@ -566,30 +553,17 @@ setcolorsloop:
   rts    
 
 ; ----------------------------------------------------------------------------  
-; Draw Title Screen
+; Draw Main Screen
 
-titlescreen:
+mainscreen:
   jsr CLRSCREEN
   lda #$06   ; Blue
   sta $0286  ; Cursor Color
   PRINTSTRING maintext
+  
+  lda #$6C         
+  sta spin_display
   rts
-
-; ---------------------------------------------------------------------------- 
-; Handle the RESTORE key  
-
-RESTORE:
-  jmp $fec7   ; Continue as if no cartridge installed
-
-; ----------------------------------------------------------------------------  
-; More includes  
-
-  include "utils.asm"
-  include "polymode.asm"
-  include "keyboard.asm"     
-setwaveorg:
-  include "setwave.asm"
-  byte 0,0,0,0   
 
 ; setwave needs to start on a page and is self-modifying, 
 ; so it is copied to RAM here
@@ -621,7 +595,7 @@ maintext:
   byte "vOLUME : --", CRLF
   byte "bANK   : --", CRLF
   byte CRLF
-  byte "sYSTEM : tbd", CRLF
+  byte "sYSTEM : ???", CRLF
   
   byte 0
   
@@ -631,8 +605,19 @@ maintext:
 voice_to_register:
   byte $0A,$0B,$0C,$0D
 
+
+; ----------------------------------------------------------------------------  
+; Code includes  
+
+  include "hardware.asm"   
+  include "utils.asm"
+  include "polymode.asm"
+  include "keyboard.asm"     
+setwaveorg:
+  include "setwave.asm"   
+
   include "lookup-ntsc.asm"
-  ;include "lookup-pal.asm"
+  include "lookup-pal.asm"
   ;include "lookup-ntsc-alt.asm"
   ;include "lookup-pal-alt.asm"
   

@@ -1,0 +1,62 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.HideOutput=0
+Compilator.LogType=0
+DefaultDir=C:\Users\Leif\Documents\GitHub\VICMIDI\Code
+DefaultCPIndex=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+Extensions=*.asm
+[Project tree]
+Code
+	+Code
+		equates.asm
+		hardware.asm
+		keyboard.asm
+		lookup-ntsc.asm
+		lookup-pal.asm
+		macros.asm
+		polymode.asm
+		setwave.asm
+		utils.asm
+		vicmidi.asm
+[Open project files]
+0=equates.asm
+1=vicmidi.asm
+2=TODO.txt
+3=hardware.asm
+4=lookup-ntsc.asm
+5=lookup-pal.asm
+6=macros.asm
+7=utils.asm
+[Selected Project Files]
+Main=
+Selected=vicmidi.asm
+[equates.asm]
+TopLine=1
+Caret=1,19
+[vicmidi.asm]
+TopLine=187
+Caret=12,208
+[TODO.txt]
+TopLine=1
+Caret=1,1
+[hardware.asm]
+TopLine=1
+Caret=39,21
+[lookup-ntsc.asm]
+TopLine=203
+Caret=19,396
+[lookup-pal.asm]
+TopLine=1
+Caret=18,1
+[macros.asm]
+TopLine=1
+Caret=13,7
+[utils.asm]
+TopLine=55
+Caret=11,79

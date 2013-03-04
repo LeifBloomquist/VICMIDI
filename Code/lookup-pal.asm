@@ -1,8 +1,8 @@
 ; --------------------------------------------------------------------------------------------------  
-; Note Lookups NTSC - 128 bytes each, map MIDI Note# to a VIC register value
+; Note Lookups PAL - 128 bytes each, map MIDI Note# to a VIC register value
 ; From http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?t=3643
 
-voice1lookup_ntsc:
+voice1lookup_pal:
    byte 0    
    byte 0    
    byte 0    
@@ -20,50 +20,50 @@ voice1lookup_ntsc:
    byte 0    
    byte 0    
    byte 0    
-   byte 0    
-   byte 0    
-   byte 0    
-   byte 0    
-   byte 0    
-   byte 0    
-   byte 0    
-   byte 133  
-   byte 140  
-   byte 146  
-   byte 152  
-   byte 158  
-   byte 163  
-   byte 169  
-   byte 173  
-   byte 178  
-   byte 182  
-   byte 186  
-   byte 190  
-   byte 194  
-   byte 197  
-   byte 201  
-   byte 204  
-   byte 207  
-   byte 209  
-   byte 212  
-   byte 214  
-   byte 217  
-   byte 219  
-   byte 221  
-   byte 223  
-   byte 224  
-   byte 226  
-   byte 228  
-   byte 229  
-   byte 231  
-   byte 232  
-   byte 233  
-   byte 235  
-   byte 236  
-   byte 237  
-   byte 238  
-   byte 239  
-   byte 240  
+   byte 0                            
+   byte 0                            
+   byte 0                            
+   byte 0                            
+   byte 0                            
+   byte 0                            
+   byte 0                            
+   byte 123 ; (122.60)  <- not reachable in PAL                            
+   byte 130                                                    
+   byte 137                                                    
+   byte 144                                                    
+   byte 150                                                    
+   byte 156                                        
+   byte 161                                        
+   byte 167                                        
+   byte 172                                        
+   byte 176                                        
+   byte 181                                        
+   byte 185                                        
+   byte 189                                        
+   byte 193                                        
+   byte 196                                        
+   byte 199                                        
+   byte 202                                        
+   byte 205                                        
+   byte 208                                        
+   byte 211                                        
+   byte 213                                        
+   byte 216                                        
+   byte 218                                        
+   byte 220                                        
+   byte 222                                        
+   byte 224                                        
+   byte 226                                        
+   byte 227                                        
+   byte 229                                        
+   byte 230                                        
+   byte 232                 
+   byte 233                 
+   byte 234                 
+   byte 235                 
+   byte 236                 
+   byte 237                 
+   byte 238                 
    byte 0    
    byte 0    
    byte 0    
@@ -132,7 +132,7 @@ voice1lookup_ntsc:
    byte 0    
    byte 0  
      
-voice2lookup_ntsc:    
+voice2lookup_pal:   
    byte 0           
    byte 0    
    byte 0    
@@ -169,43 +169,43 @@ voice2lookup_ntsc:
    byte 0    
    byte 0    
    byte 0    
-   byte 133  
-   byte 140  
-   byte 146  
-   byte 152  
-   byte 158  
-   byte 163  
-   byte 169  
-   byte 173  
-   byte 178  
-   byte 182  
-   byte 186  
-   byte 190  
-   byte 194  
-   byte 197  
-   byte 201  
-   byte 204  
-   byte 207  
-   byte 209  
-   byte 212  
-   byte 214  
-   byte 217  
-   byte 219  
-   byte 221  
-   byte 223  
+   byte 123   ; (122.60)  <- not reachable in PAL    
+   byte 130  
+   byte 137  
+   byte 144  
+   byte 150  
+   byte 156  
+   byte 161  
+   byte 167  
+   byte 172  
+   byte 176  
+   byte 181  
+   byte 185  
+   byte 189  
+   byte 193  
+   byte 196  
+   byte 199  
+   byte 202  
+   byte 205  
+   byte 208  
+   byte 211  
+   byte 213  
+   byte 216  
+   byte 218  
+   byte 220  
+   byte 222  
    byte 224  
    byte 226  
-   byte 228  
+   byte 227  
    byte 229  
-   byte 231  
+   byte 230  
    byte 232  
    byte 233  
+   byte 234  
    byte 235  
    byte 236  
    byte 237  
    byte 238  
-   byte 239  
-   byte 240  
    byte 0    
    byte 0    
    byte 0    
@@ -262,7 +262,7 @@ voice2lookup_ntsc:
    byte 0    
    byte 0    
     
-voice3lookup_ntsc:
+voice3lookup_pal:  
    byte 0   
    byte 0   
    byte 0   
@@ -311,43 +311,43 @@ voice3lookup_ntsc:
    byte 0   
    byte 0   
    byte 0   
-   byte 133 
-   byte 140 
-   byte 146 
-   byte 152 
-   byte 158 
-   byte 163 
-   byte 169 
-   byte 173 
-   byte 178 
-   byte 182 
-   byte 186 
-   byte 190 
-   byte 194 
-   byte 197 
-   byte 201 
-   byte 204 
-   byte 207 
-   byte 209 
-   byte 212 
-   byte 214 
-   byte 217 
-   byte 219 
-   byte 221 
-   byte 223 
+   byte 123   ; (122.60)  <- not reachable in PAL    
+   byte 130 
+   byte 137 
+   byte 144 
+   byte 150 
+   byte 156 
+   byte 161 
+   byte 167 
+   byte 172 
+   byte 176 
+   byte 181 
+   byte 185 
+   byte 189 
+   byte 193 
+   byte 196 
+   byte 199 
+   byte 202 
+   byte 205 
+   byte 208 
+   byte 211 
+   byte 213 
+   byte 216 
+   byte 218 
+   byte 220 
+   byte 222 
    byte 224 
    byte 226 
-   byte 228 
+   byte 227 
    byte 229 
-   byte 231 
+   byte 230 
    byte 232 
    byte 233 
+   byte 234 
    byte 235 
    byte 236 
    byte 237 
    byte 238 
-   byte 239 
-   byte 240 
    byte 0   
    byte 0   
    byte 0   
@@ -393,7 +393,7 @@ voice3lookup_ntsc:
    byte 0   
    
    
-voice4lookup_ntsc:  
+voice4lookup_pal: 
    byte 0    
    byte 0    
    byte 0    
@@ -430,7 +430,7 @@ voice4lookup_ntsc:
    byte 0    
    byte 0    
    byte 0    
-   byte 133  
+   byte 133    ; (122.60)  <- not reachable in PAL 
    byte 140  
    byte 146  
    byte 152  
