@@ -60,21 +60,29 @@ hexstring
 ; ==============================================================
 
 setup_pal:
-  ;PLOT 13,9
+  PLOT 9,13
   
   lda $EDE4
   cmp #$0C
   beq DOPAL 
   
   ; NTSC System detected
-  ;PRINTSTRING "ntsc"
+  PRINTSTRING ntscstring
   lda #$00
   sta bank
-  rts
+  jmp showbank   ; There's an rts there
   
   ; PAL System detected, make changes
 DOPAL        
-  ;PRINTSTRING "pal"
+  PRINTSTRING palstring
   lda #$01 
   sta bank  
-  rts
+  jmp showbank   ; There's an rts there
+  
+palstring:
+  .byte "pal",0
+  
+ntscstring:
+  .byte "ntsc",0
+  
+; EOF!

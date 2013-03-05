@@ -355,8 +355,9 @@ controlchange:
 
 bankselect:
   lda mididata1  
-  ora #$03         ; A contains bank, 0-3
-  sta bank  
+  and #$03         ; A contains bank, 0-3
+  sta bank
+showbank:  
   HEXPOKE (voice_display+132),bank
   rts
    
@@ -497,13 +498,12 @@ setvoice:
   
   ; Before setting the voice, check if a viznut waveform was selected previously [1]
   ; If so, handle that separately. 
-  lda waveform1,y
-  bne viznut
+;  lda waveform1,y
+;  bne viznut
 
   ; Nope, carry on.
   lda currentvalue
-  sta sound_voice1,y  
-
+  
   cpy #$00 
   beq v1
   
@@ -521,21 +521,25 @@ setvoice:
 
 ; ---- Voice 1 -------
 v1
+  sta sound_voice1  
   HEXPOKE (voice_display+00),sound_voice1
   rts
 
 ; ---- Voice 2 -------
 v2
+  sta sound_voice2
   HEXPOKE (voice_display+22),sound_voice2
   rts
 
 ; ---- Voice 3 -------
 v3
+  sta sound_voice3
   HEXPOKE (voice_display+44),sound_voice3
   rts
 
 ; ---- Voice 4 -------
 v4
+  sta sound_noise
   HEXPOKE (voice_display+66),sound_noise
   rts
 
@@ -595,9 +599,9 @@ maintext:
   byte "vOLUME : --", CRLF
   byte "bANK   : --", CRLF
   byte CRLF
-  byte "sYSTEM : ???", CRLF
-  
+  byte "sYSTEM : ???", CRLF 
   byte 0
+  
   
 ; ----------------------------------------------------------------------------  
 ; Lookup table between voice #(0-3) and low byte of register# ($0A-$0D)

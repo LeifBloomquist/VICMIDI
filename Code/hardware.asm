@@ -14,7 +14,7 @@ checkuart:
 
   ; Not found!
   PLOT 0,20
-  PRINTSTRING "**uart NOT FOUND! ***"
+  PRINTSTRING nouart
 
 uloop:
   inc screen_colors
@@ -95,5 +95,12 @@ theirq:
 
 RESTORE:
   jmp $fec7   ; Continue as if no cartridge installed
+  
+
+; ---------------------------------------------------------------------------- 
+; Strings
+  
+nouart:
+   .byte "**uart NOT FOUND! ***"
   
 ; EOF!
