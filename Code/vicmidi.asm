@@ -1,7 +1,8 @@
 ; VIC-20 MIDI Interface
-; By David Viens and Leif Bloomquist
+; By David Viens and Leif Bloomquist, portions by 
+; Michael Kircher and Viznut
 
-; --------------------------------------------------------------------------------------------------  
+; ----------------------------------------------------------------------------  
 
   processor 6502  ; VIC-20
   
@@ -12,7 +13,7 @@
   include "macros.asm"
   include "equates.asm"
 
- ; ---- Startup Code ---------------------------------------------------
+ ; ---- Startup Code ---------------------------------------------------------
   dc.w START   ; Entry point for power up
   dc.w RESTORE ; Entry point for warm start (RESTORE)
   
@@ -67,7 +68,7 @@ entry:
   sta waveform3
   sta waveform4
   
-;;; ========================================================================
+;;; ==========================================================================
 ;;; main LOOP!
 loop:
   inc spin_color   ; Prove we aren't 'frozen'
@@ -76,7 +77,7 @@ loop:
   lda read_pointer
   cmp write_pointer
   beq loop         ; Pointers match, no data
-;;; ========================================================================
+;;; ==========================================================================
 
   ; We have data!
   ; Advance pointer for next read  
@@ -112,7 +113,7 @@ setbytes:
   sty bytesexpected
   jmp loop   ; Wait for next byte
 
-; --------------------------------------------------------------------------------------------------  
+; ----------------------------------------------------------------------------  
 ; Store data byte
 
 data:
@@ -128,11 +129,12 @@ data:
   ; Not complete, wait for more bytes. 
   jmp loop
 
-; --------------------------------------------------------------------------------------------------  
+; ----------------------------------------------------------------------------  
 ; Process a complete MIDI message
 
 messageproc:
-  ; Reset midicounter back to 0 for next message - this might be redundant (see above line 100)
+  ; Reset midicounter back to 0 for next message - 
+  ; This might be redundant, see above line 100
   lda #$00         
   sta midicounter
   
@@ -182,9 +184,9 @@ doprogramchange:
   jmp loop 
 
 
-;******************************************************************************
-;*************************  MIDI Processing  **********************************
-;******************************************************************************  
+;*****************************************************************************
+;*************************  MIDI Processing  *********************************
+;*****************************************************************************  
 
 ; ---- Note On ---------------------------------------------------
 ; 9c nn vv
@@ -219,7 +221,8 @@ savenote:
   cmp #$01
   beq lookups_pal
   
-  ; TODO here *** - Alternate scales.
+  cmp #$02
+  beq lookups_alt
   
   ; Ignore all other banks
   rts 
@@ -293,8 +296,41 @@ vlook4_pal:
   lda voice4lookup_pal,x
   jmp setvoice
 
+; ------ Alternate -------
 
-; ---- Note Off ---------------------------------------------------
+lookups_alt:
+  cpy #$00 
+  beq vlook1_alt
+  
+  cpy #$01
+  beq vlook2_alt
+  
+  cpy #$02
+  beq vlook3_alt
+  
+  cpy #$03
+  beq vlook4_alt
+  
+  ; Ignore all other channels
+  rts
+      
+vlook1_alt:
+  lda voice1lookup_alt,x
+  jmp setvoice
+
+vlook2_alt:
+  lda voice2lookup_alt,x
+  jmp setvoice
+  
+vlook3_alt:
+  lda voice3lookup_alt,x
+  jmp setvoice 
+
+vlook4_alt:
+  lda voice4lookup_alt,x
+  jmp setvoice
+
+; ---- Note Off --------------------------------------------------------------
 ; 8c nn vv
 
 noteoff:
@@ -321,7 +357,7 @@ noteoff_off:
 noteoff_x:
   rts
   
-; ---- Control Change ---------------------------------------------------
+; ---- Control Change --------------------------------------------------------
 ; Bc CC vv
 
 controlchange:
@@ -350,7 +386,7 @@ controlchange:
   ; Ignore all the rest
   rts
 
-; ---- Bank Select -----------------------------------------------------
+; ---- Bank Select -----------------------------------------------------------
 ; Bc 00 vv
 
 bankselect:
@@ -361,7 +397,7 @@ showbank:
   HEXPOKE (voice_display+132),bank
   rts
    
-; ---- MOD Wheel Controller --------------------------------------------
+; ---- MOD Wheel Controller --------------------------------------------------
 ; Bc 01 vv
   
 ; Poke the data directly to the register, after OR'ing with $80
@@ -370,7 +406,7 @@ modwheel:
   ora #$80
   jmp setvoice
 
-; ---- Volume Controller ------------------------------------------------
+; ---- Volume Controller -----------------------------------------------------
 ; Bc 07 vv
 
 volume:
@@ -384,7 +420,7 @@ setvolume:
   HEXPOKE (voice_display+110),sound_volume
   rts
 
-; ---- Brightness Controller (used for screen color)-------------------------
+; ---- Brightness Controller (used for screen color)--------------------------
 ; Bc 4a vv  
 
 screencolors:
@@ -404,7 +440,7 @@ screencolors:
   sta screen_colors
   rts
 
-; ---- Sound Off / All Notes Off Controller------------------------------------
+; ---- Sound Off / All Notes Off Controller-----------------------------------
 ; Bc 78 xx
 ; Bc 7B xx
 
@@ -413,7 +449,7 @@ soundoff:
   jmp setvoice
 
 
-; ---- Program Change ---------------------------------------------------
+; ---- Program Change --------------------------------------------------------
 ; Cc pn  <NOTE 2 bytes!>
 
 programchange:
@@ -569,6 +605,20 @@ mainscreen:
   sta spin_display
   rts
 
+
+; ----------------------------------------------------------------------------  
+; Draw Credits Screen
+
+mainscreen:
+  jsr CLRSCREEN
+  lda #$06   ; Blue
+  sta $0286  ; Cursor Color
+  PRINTSTRING credits
+
+  rts
+
+
+; ---------------------------------------------------------------------------- 
 ; setwave needs to start on a page and is self-modifying, 
 ; so it is copied to RAM here
   
@@ -601,7 +651,27 @@ maintext:
   byte CRLF
   byte "sYSTEM : ???", CRLF 
   byte 0
-  
+
+
+credits:
+  byte CG_LCS, CG_DCS 
+  byte " *vic20 midi cREDITS*", CRLF
+  byte CRLF
+  byte "hARDWARE:", CRLF             
+  byte "  jIM bRAIN", CRLF
+  byte "  fRANCOIS lEVEILLE", CRLF
+  byte "  ld bALL", CRLF
+  byte CRLF
+  byte "sOFTWARE:", CRLF             
+  byte " lEIF bLOOMQUIST", CRLF
+  byte " dAVID vIENS", CRLF
+  byte " mICHAEL kIRCHER", CRLF
+  byte " vIZNUT", CRLF
+  byte CRLF
+  byte "tHANKS TO EVERYONE", CRLF
+  byte "ON THE vic20 dENIAL", CRLF
+  byte "FORUMS!", CRLF
+  byte 0 
   
 ; ----------------------------------------------------------------------------  
 ; Lookup table between voice #(0-3) and low byte of register# ($0A-$0D)
@@ -622,7 +692,6 @@ setwaveorg:
 
   include "lookup-ntsc.asm"
   include "lookup-pal.asm"
-  ;include "lookup-ntsc-alt.asm"
-  ;include "lookup-pal-alt.asm"
+  include "lookup-alt.asm"
   
 ; EOF!

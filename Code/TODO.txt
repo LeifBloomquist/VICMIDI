@@ -1,4 +1,3 @@
-Alternate lookup tables for internal scale 
 Space bar kills sound
 Debug polymode
 MIDI “Running Status”
