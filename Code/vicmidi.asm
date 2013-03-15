@@ -194,8 +194,10 @@ doprogramchange:
 noteon:
   ; Special Case: Treat Velocity=0 as Note Off.  Velocity ignored otherwise.
   lda mididata1
-  beq noteoff
+  bne noteon_contd
+  jmp noteoff
 
+noteon_contd:
   ldy channel    ; Y now contains Channel # (0-offset)  
   ldx mididata0  ; X now contains MIDI Note #
   
@@ -609,12 +611,11 @@ mainscreen:
 ; ----------------------------------------------------------------------------  
 ; Draw Credits Screen
 
-mainscreen:
+creditscreen:
   jsr CLRSCREEN
   lda #$06   ; Blue
   sta $0286  ; Cursor Color
   PRINTSTRING credits
-
   rts
 
 
