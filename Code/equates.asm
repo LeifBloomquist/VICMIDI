@@ -49,17 +49,25 @@ mididata2     = $FE     ; If needed
 
 ; ---- Non Zero Page Addresses -----------------------------------------------	
 
-; Setwave Target
-setwave            = $1000  ; This is right at the start of BASIC space.  Setwave code has to all be on one page.
+; Store viznut waveform being used per voice  (located neat start of BASIC space) 
+waveform1          = $1010
+waveform2          = $1011
+waveform3          = $1012
+waveform4          = $1013
 
-; Store viznut waveform being used per voice 
-waveform1          = $1100
-waveform2          = $1101
-waveform3          = $1102
-waveform4          = $1103 
+; Scratch space for setwave parameters
+setwavechannel     = $1020  ; y = channel ($0a..$0c)
+setwavefrequency   = $1021  ; x = initial frequency
+setwaveshiftreg    = $1022  ; a = shift register contents
+
+; Setwave Target
+setwave            = $1100  ; Setwave code has to all be on one page. 
 
 ; Input Buffer
 buffer             = $1200
+
+; Font (copied here from ROM)
+font               = $1800 ; 6144 decimal
 
 ; ST16C450 Registers
 UART_RXTX          = $9C00

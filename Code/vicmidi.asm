@@ -542,21 +542,26 @@ pc_3:
 ; If a sound is already playing, fine.  But if not, need a "short" delay.  TODO ***
 
 viznut:
-  lda channel  ; Channel # (0-3)
-  and #$03     ; Just to be sure
-  tay   
+  ldy channel       ; Channel # (0-3)   
   lda voice_to_register,y
-  tay                     ; Y now contains low byte of register 90xx  
-  tax
+  sta setwavechannel
   
-  lda waveform1,x  ; Retrieve the last desired waveform#
+  lda currentvalue        ; X now contains initial frequency of selected channel
+  sta setwavefrequency
+  
+  ldy channel
+  lda waveform1,y         ; Retrieve the last desired waveform# for this channel
   tax
-  lda viznutwaveforms,x   ; A now contains the desired shift register contents
+  lda viznutwaveforms,x   ; Retrieve the desired shift register contents for that waveform#  
+  sta setwaveshiftreg  
 
-  ldx currentvalue        ; X now contains initial frequency of selected channel
-  
-  ; X,Y,A are set - Set the waveform.
+  ; Set X,Y,A as required and set the waveform.
+  ldy setwavechannel
+  ldx setwavefrequency   
+  lda setwaveshiftreg
   jsr setwave
+  
+  ; TODO, update the screen
   rts    
 
 
