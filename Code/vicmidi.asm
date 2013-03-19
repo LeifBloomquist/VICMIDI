@@ -226,6 +226,9 @@ savenote:
   cmp #$02
   beq lookups_alt
   
+  cmp #$03
+  beq lookups_alt
+  
   ; Ignore all other banks
   rts 
 
@@ -395,8 +398,39 @@ bankselect:
   lda mididata1  
   and #$03         ; A contains bank, 0-3
   sta bank
+  
 showbank:  
   HEXPOKE (voice_display+132),bank
+  
+  PLOT 9,13
+  
+  lda bank
+  
+  cmp #$00
+  beq ntsc
+  
+  cmp #$01
+  beq pal
+  
+  cmp #$02
+  beq alt
+  
+  cmp #$03
+  beq alt
+  
+  ; Ignore the rest
+  rts
+  
+ntsc:
+  PRINTSTRING ntscstring
+  rts
+    
+pal:
+  PRINTSTRING palstring
+  rts
+
+alt:
+  PRINTSTRING altstring
   rts
    
 ; ---- MOD Wheel Controller --------------------------------------------------
@@ -508,10 +542,13 @@ pc_3:
 ; If a sound is already playing, fine.  But if not, need a "short" delay.  TODO ***
 
 viznut:
-  ldy channel  ; Channel # (0-3)   
+  lda channel  ; Channel # (0-3)
+  and #$03     ; Just to be sure
+  tay   
   lda voice_to_register,y
   tay                     ; Y now contains low byte of register 90xx  
-
+  tax
+  
   lda waveform1,x  ; Retrieve the last desired waveform#
   tax
   lda viznutwaveforms,x   ; A now contains the desired shift register contents
@@ -536,8 +573,8 @@ setvoice:
   
   ; Before setting the voice, check if a viznut waveform was selected previously [1]
   ; If so, handle that separately. 
-;  lda waveform1,y
-;  bne viznut
+  lda waveform1,y
+  bne viznut
 
   ; Nope, carry on.
   lda currentvalue
@@ -599,10 +636,11 @@ setcolorsloop:
 
 mainscreen:
   jsr CLRSCREEN
+  lda #31     ; Decimal, white and yellow
+  sta screen_colors  
   lda #$06   ; Blue
   sta $0286  ; Cursor Color
-  PRINTSTRING maintext
-  
+  PRINTSTRING maintext  
   lda #$6C         
   sta spin_display
   rts
@@ -611,10 +649,12 @@ mainscreen:
 ; ----------------------------------------------------------------------------  
 ; Draw Credits Screen
 
-creditscreen:
+creditscreen:     
   jsr CLRSCREEN
-  lda #$06   ; Blue
-  sta $0286  ; Cursor Color
+  lda #30     ; Decimal, white and blue
+  sta screen_colors  
+  lda #$02   ; Red
+  sta $0286  ; Cursor Color  
   PRINTSTRING credits
   rts
 
@@ -658,12 +698,14 @@ credits:
   byte CG_LCS, CG_DCS 
   byte " *vic20 midi cREDITS*", CRLF
   byte CRLF
-  byte "hARDWARE:", CRLF             
+  byte "hARDWARE:", CRLF
+  byte CRLF             
   byte "  jIM bRAIN", CRLF
   byte "  fRANCOIS lEVEILLE", CRLF
   byte "  ld bALL", CRLF
   byte CRLF
-  byte "sOFTWARE:", CRLF             
+  byte "sOFTWARE:", CRLF
+  byte CRLF             
   byte " lEIF bLOOMQUIST", CRLF
   byte " dAVID vIENS", CRLF
   byte " mICHAEL kIRCHER", CRLF
@@ -673,6 +715,15 @@ credits:
   byte "ON THE vic20 dENIAL", CRLF
   byte "FORUMS!", CRLF
   byte 0 
+
+palstring:
+  .byte "pal ",0
+  
+ntscstring:
+  .byte "ntsc",0
+
+altstring:
+  .byte "alt ",0
   
 ; ----------------------------------------------------------------------------  
 ; Lookup table between voice #(0-3) and low byte of register# ($0A-$0D)

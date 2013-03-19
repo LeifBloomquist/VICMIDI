@@ -17,7 +17,10 @@ checkuart:
   PRINTSTRING nouart
 
 uloop:
-  inc screen_colors
+  lda #24
+  sta screen_colors
+  lda #26
+  sta screen_colors
   jmp uloop 
    
 checkuart_ok:
@@ -101,6 +104,6 @@ RESTORE:
 ; Strings
   
 nouart:
-   .byte "**uart NOT FOUND! ***"
+   .byte "** uart NOT FOUND! **"
   
 ; EOF!

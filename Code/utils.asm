@@ -59,30 +59,20 @@ hexstring
 ; Most defaults are NTSC.  This code overrides for PAL.
 ; ==============================================================
 
-setup_pal:
-  PLOT 9,13
-  
+setup_pal:  
   lda $EDE4
   cmp #$0C
   beq DOPAL 
   
   ; NTSC System detected
-  PRINTSTRING ntscstring
   lda #$00
   sta bank
   jmp showbank   ; There's an rts there
   
-  ; PAL System detected, make changes
-DOPAL        
-  PRINTSTRING palstring
+  ; PAL System detected
+DOPAL
   lda #$01 
   sta bank  
   jmp showbank   ; There's an rts there
-  
-palstring:
-  .byte "pal",0
-  
-ntscstring:
-  .byte "ntsc",0
   
 ; EOF!
