@@ -32,6 +32,7 @@ START:
   jsr $e404 ; INIT Message (needed (?) so keycheck routines work)  
 
 entry:
+  jsr setupfont  
   jsr mainscreen 
   jsr setup_pal 
   jsr setwavecopy
@@ -57,6 +58,7 @@ entry:
   sta lastnote+0   ; Clear
   sta lastnote+1   ;    last
   sta lastnote+2   ;      note
+  sta lastnote+3   ;        (including noise)
   sta poly_flags+0 ; Clear
   sta poly_flags+1 ;   poly
   sta poly_flags+2 ;     flags
@@ -578,11 +580,12 @@ setvoice:
   
   ; Before setting the voice, check if a viznut waveform was selected previously [1]
   ; If so, handle that separately. 
-  lda waveform1,y
-  bne viznut
+  ;lda waveform1,y
+  ;bne viznut
 
   ; Nope, carry on.
   lda currentvalue
+  ldy channel   ; Y now contains channel #
   
   cpy #$00 
   beq v1
@@ -646,7 +649,7 @@ mainscreen:
   lda #$06   ; Blue
   sta $0286  ; Cursor Color
   PRINTSTRING maintext  
-  lda #$6C         
+  lda #$7F  ; was#$6C         
   sta spin_display
   rts
 
@@ -670,13 +673,36 @@ creditscreen:
   
 setwavecopy:  
   ldx #$00
-copyloop:
+copy1:
   lda setwaveorg,x
   sta setwave,x
   inx
-  bne copyloop
+  bne copy1
   rts
   
+  
+; ---------------------------------------------------------------------------- 
+; Set up the font 
+; 
+  
+setupfont:  
+  ldx #$00
+copy2:
+  lda fontorg,x
+  sta font,x
+  lda fontorg+$100,x
+  sta font+$100,x
+  lda fontorg+$200,x
+  sta font+$200,x
+  lda fontorg+$300,x
+  sta font+$300,x
+  inx
+  bne copy2
+  
+  lda #254  ; Decimal  Points char. to 6144
+  sta $9005
+   
+  rts
   
 ; ----------------------------------------------------------------------------
 ; Strings
@@ -754,7 +780,7 @@ setwaveorg:
 ; ----------------------------------------------------------------------------  
 ; Binary includes
 
-.fontorg:
+fontorg:
    incbin "font.bin"  
 
   

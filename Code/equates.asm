@@ -35,7 +35,7 @@ currentvalue  = $5E   ; Current value for voice settings
 poly_flags    = $61   ; Flags for polymode
                       ; Also 62,63,64
 
-lastnote      = $69   ; Remembers last note, so Note Off applies to that note only
+lastnote      = $68   ; Remembers last note, so Note Off applies to that note only
                       ; Also 69,6A,6B             
 
 temp1         = $6C   ; Used for screen colors

@@ -104,6 +104,7 @@ RESTORE:
 ; Strings
   
 nouart:
-   .byte "** uart NOT FOUND! **"
+   byte 127,127, " uart NOT FOUND! ", 127,127
+   byte 0
   
 ; EOF!
