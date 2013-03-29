@@ -750,5 +750,12 @@ setwaveorg:
   include "lookup-ntsc.asm"
   include "lookup-pal.asm"
   include "lookup-alt.asm"
+
+; ----------------------------------------------------------------------------  
+; Binary includes
+
+.fontorg:
+   incbin "font.bin"  
+
   
 ; EOF!
