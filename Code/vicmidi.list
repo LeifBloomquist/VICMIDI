@@ -1093,12 +1093,12 @@
      36  a54c
      37  a54c							; Set the MIDI baud rate.
      38  a54c							; The ST16C450 datasheet says that it divides the input clock rate by
-     39  a54c							; 16, so with a 2Mhz crystal on board, that gives
+     39  a54c							; 16, so with a 2MHz crystal on board, that gives
      40  a54c							; 2000000 * (1/16) * (1/x) = 31250.  Solving gives x=4 for the low
      41  a54c							; byte of the divisor, and 0 for the high byte.
      42  a54c
      43  a54c		       a2 00		      ldx	#$00
-     44  a54e		       a0 04		      ldy	#$04
+     44  a54e		       a0 08		      ldy	#$08	; For 4MHz crystal
      45  a550		       8e 01 9c 	      stx	UART_DIVISOR_MSB
      46  a553		       8c 00 9c 	      sty	UART_DIVISOR_LSB
      47  a556

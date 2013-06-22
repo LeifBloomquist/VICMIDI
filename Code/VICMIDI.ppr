@@ -36,13 +36,13 @@ Code
 7=lookup-alt.asm
 [Selected Project Files]
 Main=
-Selected=vicmidi.asm
+Selected=hardware.asm
 [equates.asm]
-TopLine=39
-Caret=5,65
+TopLine=68
+Caret=5,94
 [vicmidi.asm]
-TopLine=634
-Caret=40,654
+TopLine=619
+Caret=8,653
 [TODO.txt]
 TopLine=1
 Caret=1,1
@@ -50,8 +50,8 @@ Caret=1,1
 TopLine=50
 Caret=3,77
 [hardware.asm]
-TopLine=1
-Caret=10,23
+TopLine=21
+Caret=31,44
 [lookup-ntsc.asm]
 TopLine=24
 Caret=1,1

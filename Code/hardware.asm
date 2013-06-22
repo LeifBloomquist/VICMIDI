@@ -36,12 +36,13 @@ resetuart:
   
   ; Set the MIDI baud rate.
   ; The ST16C450 datasheet says that it divides the input clock rate by
-  ; 16, so with a 2Mhz crystal on board, that gives
+  ; 16, so with a 2MHz crystal on board, that gives
   ; 2000000 * (1/16) * (1/x) = 31250.  Solving gives x=4 for the low
   ; byte of the divisor, and 0 for the high byte.  
       
   ldx #$00 
-  ldy #$04
+ ;ldy #$04  ; For 2MHz crystal 
+  ldy #$08  ; For 4MHz crystal 
   stx UART_DIVISOR_MSB
   sty UART_DIVISOR_LSB
   
