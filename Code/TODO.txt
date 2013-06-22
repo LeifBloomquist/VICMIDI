@@ -1,8 +1,9 @@
+Debug Active Sense in the middle of running status messages
 Space bar kills sound
 Debug polymode
-MIDI “Running Status”
 MIDI-Out (use the VIC keyboard to control external hardware)
 Fix up viznut's waveforms - call on every note change, if set
+
 
 
   

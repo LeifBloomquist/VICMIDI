@@ -28,7 +28,7 @@ TMP  = $57
 TMP2 = $58 
 
 write_pointer = $5C   ; FIFO current write pointer - incremented on byte received
-read_pointer  = $5D   ; FIFO current read pointer - incremented on byte removed
+read_pointer  = $5D   ; FIFO current read pointer  - incremented on byte removed
 
 currentvalue  = $5E   ; Current value for voice settings
 
@@ -49,11 +49,14 @@ mididata2     = $FE     ; If needed
 
 ; ---- Non Zero Page Addresses -----------------------------------------------	
 
-; Store viznut waveform being used per voice  (located neat start of BASIC space) 
+; Store viznut waveform being used per voice  (located near start of BASIC space) 
 waveform1          = $1010
 waveform2          = $1011
 waveform3          = $1012
 waveform4          = $1013
+
+tempstatusbyte     = $1014
+command            = $1015
 
 ; Scratch space for setwave parameters
 setwavechannel     = $1020  ; y = channel ($0a..$0c)

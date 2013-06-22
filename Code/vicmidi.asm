@@ -20,13 +20,13 @@
   dc.b "A0",$C3,$C2,$CD  ; 'A0CBM' boot string
 
 START:  
-  ;Kernel Init
+  ; Kernel Init
   jsr $fd8d ; RAMTAS - Initialise System Constants
   jsr $fd52 ; Init Vectors
   jsr $fdf9 ; Init I/O
   jsr $e518 ; Init I/O 
   
-  ;BASIC Init (Partial)
+  ; BASIC Init (Partial)
   jsr $e45b ; Init Vectors  
   jsr $e3a4 ; BASIC RAM
   jsr $e404 ; INIT Message (needed (?) so keycheck routines work)  
@@ -81,7 +81,7 @@ loop:
   beq loop         ; Pointers match, no data
 ;;; ==========================================================================
 
-  ; We have data!
+  ; We have data!   
   ; Advance pointer for next read  
   inc read_pointer
   
@@ -92,28 +92,54 @@ loop:
   ; If Bit 7 is set, it means it's a status byte and we need to prepare for a new message
   bpl data  ; Not a status byte
   
-  ; Store the status byte
+; ----------------------------------------------------------------------------  
+; Process a status byte  (Currently in A)
+  
+  ; Store the status byte temporarily
+  sta tempstatusbyte
+  
+  ; Handle System Common / System Realtime messages
+  and #$F0
+  cmp #$F0
+  bne normalmessage  
+  jmp system_realtime_proc
+  
+normalmessage:
+  ; Everything else, split into Command and Channel
+  lda tempstatusbyte
   sta statusbyte
+  and #$F0             ; Get the upper nybble
+  sta command
+  
+  lda statusbyte
+  and #$0F             ; Get the lower nybble
+  sta channel
+  
+  ; Also, check how many data bytes should follow.
+  lda command
+
+  ; 1 for Program Change
+  cmp #$C0      ; Program change
+  beq bytes1
+  
+  ; Assume 2 for all the rest
+bytes2:
+  ldy #$02
+  jmp setbytes
+  
+bytes1:
+  ldy #$01
+  ; Drop through
+
+setbytes:
+  sty bytesexpected
   
   ; Reset the midi counter to 0
   ldx #$00
   stx midicounter
   
-  ; Also, check how many bytes we'll need - Normally 3, but 2 for Program Change
-  and #$F0      ; Get the upper nybble
-  cmp #$C0      ; Program change
-  bne bytes2
-  
-bytes1:
-  ldy #$01
-  jmp setbytes
-
-bytes2:
-  ldy #$02
-
-setbytes:
-  sty bytesexpected
   jmp loop   ; Wait for next byte
+
 
 ; ----------------------------------------------------------------------------  
 ; Store data byte
@@ -131,28 +157,23 @@ data:
   ; Not complete, wait for more bytes. 
   jmp loop
 
+
 ; ----------------------------------------------------------------------------  
-; Process a complete MIDI message
+; Process a complete MIDI message   (All but System)
 
 messageproc:
-  ; Reset midicounter back to 0 for next message - 
-  ; This might be redundant, see above line 100
-  lda #$00         
-  sta midicounter
-  
+ 
   ; Display received message bytes
   HEXPOKE (midi_display+0),statusbyte
   HEXPOKE (midi_display+3),mididata0
   HEXPOKE (midi_display+6),mididata1
   
-  ; Save channel
-  lda statusbyte
-  and #$0F
-  sta channel
-  
+  ; Reset the midi counter to 0 again, in case running status
+  ldx #$00
+  stx midicounter
+
   ; Determine Command
-  lda statusbyte    ; Status Byte
-  and #$F0          ; Get the upper nybble
+  lda command          
    
   cmp #$80          ; Note Off
   beq donoteoff
@@ -184,6 +205,33 @@ docontrolchange:
 doprogramchange:
   jsr programchange 
   jmp loop 
+
+
+; ----------------------------------------------------------------------------  
+; Process a MIDI System Realtime  (for future)
+
+system_realtime_proc:
+ 
+  ; Display received message bytes
+  ; HEXPOKE (midi_display+0),tempstatusbyte
+  
+   ; Blank the unused MIDI bytes
+  ;lda #45  ; -
+  ;sta midi_display+3
+  ;sta midi_display+4
+  ;sta midi_display+6
+  ;sta midi_display+7
+  
+  ; Determine Command
+  ;lda tempstatusbyte          
+   
+  ;cmp #$...
+  ;beq ...
+  
+  ; All ignored.
+  jmp loop
+ 
+
 
 
 ;*****************************************************************************
@@ -368,8 +416,7 @@ noteoff_x:
 ; Bc CC vv
 
 controlchange:
-  ldy channel    ; Y now contains channel #
-  
+  ldy channel    ; Y now contains channel #      
   lda mididata0  ; Controller number
 
   cmp #00        ; Bank select - decimal
@@ -783,5 +830,4 @@ setwaveorg:
 fontorg:
    incbin "font.bin"  
 
-  
 ; EOF!

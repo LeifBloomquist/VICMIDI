@@ -41,8 +41,8 @@ resetuart:
   ; byte of the divisor, and 0 for the high byte.  
       
   ldx #$00 
- ;ldy #$04  ; For 2MHz crystal 
-  ldy #$08  ; For 4MHz crystal 
+  ldy #$04  ; For 2MHz crystal   (Original protype from Francois) 
+  ;ldy #$08  ; For 4MHz crystal 
   stx UART_DIVISOR_MSB
   sty UART_DIVISOR_LSB
   
