@@ -107,17 +107,20 @@ setcharsloop2:
 ; Quick hack using KERNAL routines to read the keyboard
 
 ReadKey:
-    lda $C5  ; Current key
-    sta screen_start
-    cmp #$40  ;None
+    jsr ISCNKY   ; Call this manually since the main timer IRQ is disabled.
+    
+    lda $C5     ; Current key?
+    cmp #$40    ; None
     bne keypressed
     
     ; No key was pressed.  But was one pressed previously?
-    lda  midinoteout
+    lda midinoteout
     beq key_x   ; No
     
     ; Yes, so turn that note off.
     jsr sendnoteoff
+    lda #$00
+    sta midinoteout
     
 key_x:
     rts

@@ -1,7 +1,8 @@
-Debug Active Sense in the middle of running status messages
+Add MIDI Out as well as MIDI in on screen
+Proper MIDI-Out keeping track of all sent notes (lookup table)
 Space bar kills sound
 Debug polymode
-MIDI-Out (use the VIC keyboard to control external hardware)
+
 Fix up viznut's waveforms - call on every note change, if set
 
 

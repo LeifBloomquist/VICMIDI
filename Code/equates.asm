@@ -104,9 +104,10 @@ UART_DIVISOR_MSB   = $9C01
 ; Kernal/BASIC Routines
 CLRSCREEN   = $E55F
 HOME        = $E581
+ISCNKY      = $EB1E
 CHROUT      = $F27A
 GETIN       = $FFE4
-STROUT      = $CB1E   ; Print string pointed to by (A/Y) until zero byte.
+STROUT      = $CB1E   ; Print string pointed to by (A/Y) until zero byte.  
 
 CG_DCS = 8   ;disable shift+C=
 CG_ECS = 9   ;enable shift+C=

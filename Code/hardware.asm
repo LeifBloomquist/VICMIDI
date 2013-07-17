@@ -51,15 +51,14 @@ resetuart:
   sta UART_LCR
   
   ; Enable the interrupt when data is received
- ; lda #%00000001
- ; sta UART_IER
+  lda #%00000001
+  sta UART_IER
   rts        
 
 ; ----------------------------------------------------------------------------  
 ; Set up the IRQ for reading bytes from the UART
   
-setupirq:  
-  rts
+setupirq:
   sei 
   
   ; Point to my interrupt vector
@@ -91,8 +90,8 @@ theirq:
   ; Clear the interrupt from the UART by reading the status register
   lda UART_ISR
    
-  ;jmp $ff56  ; Use this in place of rti because it restores the A,X,Y registers from the stack
-  jmp $eabf     ; return to normal IRQ  (scans keyboard and stuff)
+  jmp $ff56  ; Use this in place of rti because it restores the A,X,Y registers from the stack
+  ;jmp $eabf     ; return to normal IRQ  (scans keyboard and stuff)
   
   
 ; ---------------------------------------------------------------------------- 
