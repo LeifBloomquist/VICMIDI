@@ -12,7 +12,7 @@ FileFormat=0
 ProjectFilesOnly=0
 Extensions=*.asm
 [Project tree]
-Code
+VICMIDI
 	+Code
 		equates.asm
 		hardware.asm
@@ -25,39 +25,28 @@ Code
 		setwave.asm
 		utils.asm
 		vicmidi.asm
+		make.cmd
 [Open project files]
-0=equates.asm
-1=vicmidi.asm
-2=TODO.txt
-3=utils.asm
-4=hardware.asm
-5=lookup-ntsc.asm
-6=lookup-pal.asm
-7=lookup-alt.asm
+0=vicmidi.asm
+1=hardware.asm
+2=polymode.asm
+3=keyboard.asm
+4=equates.asm
 [Selected Project Files]
 Main=
-Selected=hardware.asm
-[equates.asm]
-TopLine=68
-Caret=5,94
+Selected=keyboard.asm
 [vicmidi.asm]
-TopLine=619
-Caret=8,653
-[TODO.txt]
-TopLine=1
-Caret=1,1
-[utils.asm]
-TopLine=50
-Caret=3,77
+TopLine=9
+Caret=7,72
 [hardware.asm]
-TopLine=21
-Caret=31,44
-[lookup-ntsc.asm]
-TopLine=24
-Caret=1,1
-[lookup-pal.asm]
+TopLine=77
+Caret=40,47
+[polymode.asm]
 TopLine=1
 Caret=1,1
-[lookup-alt.asm]
-TopLine=1
-Caret=1,1
+[keyboard.asm]
+TopLine=181
+Caret=37,209
+[equates.asm]
+TopLine=66
+Caret=48,83

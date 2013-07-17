@@ -100,3 +100,364 @@ setcharsloop2:
   cpx #$00
   bne setcharsloop2  
   rts
+  
+  
+  
+; --------------------------------------------------------------------------- 
+; Quick hack using KERNAL routines to read the keyboard
+
+ReadKey:
+    lda $C5  ; Current key
+    sta screen_start
+    cmp #$40  ;None
+    bne keypressed
+    
+    ; No key was pressed.  But was one pressed previously?
+    lda  midinoteout
+    beq key_x   ; No
+    
+    ; Yes, so turn that note off.
+    jsr sendnoteoff
+    
+key_x:
+    rts
+    
+    
+keypressed:   ; A contains key code
+    tax
+    lda notelookup,x
+    beq key_x             ; Note was 0, in this context meaning no note
+    
+    sta midinoteout
+    jsr sendnoteon        
+
+    rts
+    
+
+
+; ---------------------------------------------------------------------------     
+; Send a NOTE ON MIDI Message.
+
+sendnoteon:  
+    jsr wait_tx 
+    lda noteonval    ; Note on
+    sta UART_RXTX
+    
+    jsr wait_tx
+    lda midinoteout
+    sta UART_RXTX
+    
+    jsr wait_tx
+    lda defaultvelocity   
+    sta UART_RXTX
+    
+    ; Display
+    HEXPOKE (midi_display+0),noteonval
+    HEXPOKE (midi_display+3),midinoteout
+    HEXPOKE (midi_display+6),defaultvelocity
+    
+    rts
+
+
+; ---------------------------------------------------------------------------     
+; Send a NOTE OFF MIDI Message.
+
+sendnoteoff:  
+    jsr wait_tx 
+    lda noteoffval    ; Note off
+    sta UART_RXTX
+    
+    jsr wait_tx
+    lda midinoteout
+    sta UART_RXTX
+    
+    jsr wait_tx
+    lda defaultvelocity   ; Decimal - convention for velocity when velocity not supported.
+    sta UART_RXTX
+    
+    ; Display
+    HEXPOKE (midi_display+0),noteoffval
+    HEXPOKE (midi_display+3),midinoteout
+    HEXPOKE (midi_display+6),defaultvelocity
+    
+    rts
+
+
+; --------------------------------------------------------------------------- 
+; Quick hack to wait for THR to be empty.  Ideally sending would be
+; interrupt-driven with a ring buffer.
+
+wait_tx: 
+    lda UART_LSR
+    and #32
+    beq wait_tx
+    rts
+
+noteonval:
+    byte $90    
+
+noteoffval:
+    byte $80 
+    
+defaultvelocity:
+    byte 64  ; Decimal - convention for velocity when velocity not supported.   
+
+notelookup:
+				
+	;	MIDI Note#		Comments
+	byte	0	;	
+	byte	63	;	
+	byte	66	;	
+	byte	70	;	
+	byte	73	;	
+	byte	0	;	
+	byte	80	;	
+	byte	83	;	
+	byte	0	;	
+	byte	62	;	
+	byte	65	;	
+	byte	69	;	
+	byte	72	;	
+	byte	76	;	
+	byte	79	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	60	;	Middle C (C5)
+	byte	64	;	
+	byte	67	;	
+	byte	71	;	
+	byte	74	;	
+	byte	77	;	
+	byte	81	;	
+	byte	0	;	
+	byte	61	;	
+	byte	0	;	
+	byte	68	;	
+	byte	0	;	
+	byte	75	;	
+	byte	78	;	
+	byte	82	;	
+	byte	0	;	
+	byte	0	;	No key Pressed
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	
+	byte	0	;	

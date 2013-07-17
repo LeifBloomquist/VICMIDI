@@ -69,12 +69,13 @@ entry:
   sta waveform2
   sta waveform3
   sta waveform4
+  sta midinoteout
   
 ;;; ==========================================================================
 ;;; main LOOP!
 loop:
   inc spin_color   ; Prove we aren't 'frozen'
-  ;jsr GetKey      ; create events from keyboard if needed - TODO
+  jsr ReadKey      ; create events from keyboard if needed
   
   lda read_pointer
   cmp write_pointer
@@ -99,10 +100,11 @@ loop:
   sta tempstatusbyte
   
   ; Handle System Common / System Realtime messages
-  and #$F0
+  and #$F0                     
   cmp #$F0
   bne normalmessage  
-  jmp system_realtime_proc
+;  inc screen_colors
+  jmp system_realtime_proc   ; Which goes back to loop
   
 normalmessage:
   ; Everything else, split into Command and Channel
@@ -142,7 +144,7 @@ setbytes:
 
 
 ; ----------------------------------------------------------------------------  
-; Store data byte
+; Store data byte - in A.
 
 data:
   ldx midicounter    ; What byte are we at?
@@ -168,7 +170,7 @@ messageproc:
   HEXPOKE (midi_display+3),mididata0
   HEXPOKE (midi_display+6),mididata1
   
-  ; Reset the midi counter to 0 again, in case running status
+  ; Reset the midi counter to 0 again, in case of running status
   ldx #$00
   stx midicounter
 
@@ -213,14 +215,16 @@ doprogramchange:
 system_realtime_proc:
  
   ; Display received message bytes
-  ; HEXPOKE (midi_display+0),tempstatusbyte
+  HEXPOKE (midi_display+0),tempstatusbyte
   
    ; Blank the unused MIDI bytes
-  ;lda #45  ; -
-  ;sta midi_display+3
-  ;sta midi_display+4
-  ;sta midi_display+6
-  ;sta midi_display+7
+  lda #45  ; -
+  sta midi_display+3
+  sta midi_display+4
+  sta midi_display+6
+  sta midi_display+7
+  
+  ; inc screen_colors
   
   ; Determine Command
   ;lda tempstatusbyte          
@@ -691,7 +695,7 @@ setcolorsloop:
 
 mainscreen:
   jsr CLRSCREEN
-  lda #31     ; Decimal, white and yellow
+  lda #26     ; Decimal, white and red
   sta screen_colors  
   lda #$06   ; Blue
   sta $0286  ; Cursor Color

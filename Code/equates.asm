@@ -63,6 +63,9 @@ setwavechannel     = $1020  ; y = channel ($0a..$0c)
 setwavefrequency   = $1021  ; x = initial frequency
 setwaveshiftreg    = $1022  ; a = shift register contents
 
+; Used by MIDI Out
+midinoteout        = $1023
+
 ; Setwave Target
 setwave            = $1100  ; Setwave code has to all be on one page. 
 
@@ -71,6 +74,21 @@ buffer             = $1200
 
 ; Font (copied here from ROM)
 font               = $1800 ; 6144 decimal
+
+;Screen locations
+screen_start       = $1E00
+midi_display       = $1E4D
+voice_display      = $1E77
+spin_display       = $1FF9  ; Lower-right corner
+spin_color         = spin_display + $7800
+
+;Sound and Video Registers
+sound_voice1       = $900A  ; Frequency for oscillator 1 (low)    (on: 128-255) 
+sound_voice2       = $900B  ; Frequency for oscillator 2 (medium) (on: 128-255) 
+sound_voice3       = $900C  ; Frequency for oscillator 3 (high)   (on: 128-255) 
+sound_noise        = $900D  ; Frequency of noise source           (on: 128-255) 
+sound_volume       = $900E  ; Bits 0-3 sets volume of all sound.  Bits 4-7 are auxiliary color information (not used)
+screen_colors      = $900F 
 
 ; ST16C450 Registers
 UART_RXTX          = $9C00
@@ -82,26 +100,12 @@ UART_SCRATCHPAD    = $9C07
 UART_DIVISOR_LSB   = $9C00  ; Yes, same as UART_RXTX
 UART_DIVISOR_MSB   = $9C01
 
-;Sound and Video Registers
-sound_voice1       = $900A  ; Frequency for oscillator 1 (low)    (on: 128-255) 
-sound_voice2       = $900B  ; Frequency for oscillator 2 (medium) (on: 128-255) 
-sound_voice3       = $900C  ; Frequency for oscillator 3 (high)   (on: 128-255) 
-sound_noise        = $900D  ; Frequency of noise source           (on: 128-255) 
-sound_volume       = $900E  ; Bits 0-3 sets volume of all sound.  Bits 4-7 are auxiliary color information (not used)
-screen_colors      = $900F 
-
-;Screen locations
-screen_start       = $1E00
-midi_display       = $1E4D
-voice_display      = $1E77
-spin_display       = $1FF9  ; Lower-right corner
-spin_color         = spin_display + $7800
-
 
 ; Kernal/BASIC Routines
-CHROUT      = $f27a
-CLRSCREEN   = $e55f
+CLRSCREEN   = $E55F
 HOME        = $E581
+CHROUT      = $F27A
+GETIN       = $FFE4
 STROUT      = $CB1E   ; Print string pointed to by (A/Y) until zero byte.
 
 CG_DCS = 8   ;disable shift+C=
