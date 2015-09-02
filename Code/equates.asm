@@ -90,11 +90,12 @@ sound_noise        = $900D  ; Frequency of noise source           (on: 128-255)
 sound_volume       = $900E  ; Bits 0-3 sets volume of all sound.  Bits 4-7 are auxiliary color information (not used)
 screen_colors      = $900F 
 
-; ST16C450 Registers
+; ST16C450 Registers  (IO3)
 UART_RXTX          = $9C00
 UART_IER           = $9C01
 UART_ISR           = $9C02
 UART_LCR           = $9C03
+UART_MCR           = $9C04 
 UART_LSR           = $9C05
 UART_SCRATCHPAD    = $9C07
 UART_DIVISOR_LSB   = $9C00  ; Yes, same as UART_RXTX

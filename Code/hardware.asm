@@ -41,14 +41,20 @@ resetuart:
   ; byte of the divisor, and 0 for the high byte.  
       
   ldx #$00 
-  ;ldy #$04  ; For 2MHz crystal   (Original protype from Francois) 
-  ldy #$08  ; For 4MHz crystal 
+  ;ldy #$04  ; For 2MHz  crystal   (Original protype from Francois) 
+  ;ldy #$08  ; For 4MHz  crystal   (Prototype from Brain)
+  ldy #$24   ; For 18MHz crystal   (Pre-production cartridge from Brain)
+
   stx UART_DIVISOR_MSB
   sty UART_DIVISOR_LSB
   
   ; Set to MIDI: Word length 8, Stop bits 1, no parity (also hides divisor latch)
   lda #%00000011
   sta UART_LCR
+  
+  ; New for VICMIDI Pre-production cart - select MIDI
+  lda #$04
+  sta UART_MCR
   
   ; Enable the interrupt when data is received
   lda #%00000001
