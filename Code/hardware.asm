@@ -43,7 +43,7 @@ resetuart:
   ldx #$00 
   ;ldy #$04  ; For 2MHz  crystal   (Original protype from Francois) 
   ;ldy #$08  ; For 4MHz  crystal   (Prototype from Brain)
-  ldy #$24   ; For 18MHz crystal   (Pre-production cartridge from Brain)
+  ldy #$25   ; For 18MHz crystal   (Pre-production cartridge from Brain)
 
   stx UART_DIVISOR_MSB
   sty UART_DIVISOR_LSB

@@ -1167,7 +1167,7 @@
      43  a585		       a2 00		      ldx	#$00
      44  a587							;ldy #$04  ; For 2MHz	crystal   (Original protype from Francois)
      45  a587							;ldy #$08  ; For 4MHz	crystal   (Prototype from Brain)
-     46  a587		       a0 24		      ldy	#$24	; For 18MHz crystal   (Pre-production cartridge from Brain)
+     46  a587		       a0 25		      ldy	#$25	; For 18MHz crystal   (Pre-production cartridge from Brain)
      47  a589
      48  a589		       8e 01 9c 	      stx	UART_DIVISOR_MSB
      49  a58c		       8c 00 9c 	      sty	UART_DIVISOR_LSB
