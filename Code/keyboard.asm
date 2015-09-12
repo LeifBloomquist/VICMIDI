@@ -109,18 +109,18 @@ setcharsloop2:
 ReadKey:
     jsr ISCNKY   ; Call this manually since the main timer IRQ is disabled.
     
-    lda $C5     ; Current key?
-    cmp #$40    ; None
+    lda $C5      ; Current key?
+    cmp #$40     ; None
     bne keypressed
     
     ; No key was pressed.  But was one pressed previously?
     lda midinoteout
-    beq key_x   ; No
+    beq key_x    ; No
     
     ; Yes, so turn that note off.
     jsr sendnoteoff
     lda #$00
-    sta midinoteout
+    sta midinoteout   
     
 key_x:
     rts
@@ -130,9 +130,14 @@ keypressed:   ; A contains key code
     tax
     lda notelookup,x
     beq key_x             ; Note was 0, in this context meaning no note
+        
+    ; Same note as before?
+    cmp midinoteout
+    beq key_x    ; Yes, do nothing
     
+    ; New note - send it     
     sta midinoteout
-    jsr sendnoteon        
+    jsr sendnoteon    
 
     rts
     

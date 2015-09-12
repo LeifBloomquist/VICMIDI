@@ -1,13 +1,13 @@
 ------- FILE vicmidi.asm LEVEL 1 PASS 2
-      1  b2db ????						; VIC-20 MIDI Interface
-      2  b2db ????						; By David Viens and Leif Bloomquist, portions by
-      3  b2db ????						; Michael Kircher and Viznut
-      4  b2db ????
-      5  b2db ????						; ----------------------------------------------------------------------------
-      6  b2db ????
-      7  b2db ????				      processor	6502	; VIC-20
-      8  b2db ????
-      9  b2db ????						; Assume no memory expansion.	 Compile as Cartridge ROM in Block 5.
+      1  b2e6 ????						; VIC-20 MIDI Interface
+      2  b2e6 ????						; By David Viens and Leif Bloomquist, portions by
+      3  b2e6 ????						; Michael Kircher and Viznut
+      4  b2e6 ????
+      5  b2e6 ????						; ----------------------------------------------------------------------------
+      6  b2e6 ????
+      7  b2e6 ????				      processor	6502	; VIC-20
+      8  b2e6 ????
+      9  b2e6 ????						; Assume no memory expansion.	 Compile as Cartridge ROM in Block 5.
      10  a000					      org	$A000	; Block 5
      11  a000
      12  a000							; Macro and equate includes (must be at start)
@@ -513,19 +513,19 @@
     306  a176		       60		      rts
     307  a177
     308  a177				   vlook1_ntsc
-    309  a177		       bd db a8 	      lda	voice1lookup_ntsc,x
+    309  a177		       bd e6 a8 	      lda	voice1lookup_ntsc,x
     310  a17a		       4c 1a a3 	      jmp	setvoice
     311  a17d
     312  a17d				   vlook2_ntsc
-    313  a17d		       bd 5b a9 	      lda	voice2lookup_ntsc,x
+    313  a17d		       bd 66 a9 	      lda	voice2lookup_ntsc,x
     314  a180		       4c 1a a3 	      jmp	setvoice
     315  a183
     316  a183				   vlook3_ntsc
-    317  a183		       bd db a9 	      lda	voice3lookup_ntsc,x
+    317  a183		       bd e6 a9 	      lda	voice3lookup_ntsc,x
     318  a186		       4c 1a a3 	      jmp	setvoice
     319  a189
     320  a189				   vlook4_ntsc
-    321  a189		       bd 5b aa 	      lda	voice4lookup_ntsc,x
+    321  a189		       bd 66 aa 	      lda	voice4lookup_ntsc,x
     322  a18c		       4c 1a a3 	      jmp	setvoice
     323  a18f
     324  a18f							; ------ PAL -------
@@ -547,19 +547,19 @@
     340  a19f		       60		      rts
     341  a1a0
     342  a1a0				   vlook1_pal
-    343  a1a0		       bd db aa 	      lda	voice1lookup_pal,x
+    343  a1a0		       bd e6 aa 	      lda	voice1lookup_pal,x
     344  a1a3		       4c 1a a3 	      jmp	setvoice
     345  a1a6
     346  a1a6				   vlook2_pal
-    347  a1a6		       bd 5b ab 	      lda	voice2lookup_pal,x
+    347  a1a6		       bd 66 ab 	      lda	voice2lookup_pal,x
     348  a1a9		       4c 1a a3 	      jmp	setvoice
     349  a1ac
     350  a1ac				   vlook3_pal
-    351  a1ac		       bd db ab 	      lda	voice3lookup_pal,x
+    351  a1ac		       bd e6 ab 	      lda	voice3lookup_pal,x
     352  a1af		       4c 1a a3 	      jmp	setvoice
     353  a1b2
     354  a1b2				   vlook4_pal
-    355  a1b2		       bd 5b ac 	      lda	voice4lookup_pal,x
+    355  a1b2		       bd 66 ac 	      lda	voice4lookup_pal,x
     356  a1b5		       4c 1a a3 	      jmp	setvoice
     357  a1b8
     358  a1b8							; ------ Alternate -------
@@ -581,19 +581,19 @@
     374  a1c8		       60		      rts
     375  a1c9
     376  a1c9				   vlook1_alt
-    377  a1c9		       bd db ac 	      lda	voice1lookup_alt,x
+    377  a1c9		       bd e6 ac 	      lda	voice1lookup_alt,x
     378  a1cc		       4c 1a a3 	      jmp	setvoice
     379  a1cf
     380  a1cf				   vlook2_alt
-    381  a1cf		       bd 5b ad 	      lda	voice2lookup_alt,x
+    381  a1cf		       bd 66 ad 	      lda	voice2lookup_alt,x
     382  a1d2		       4c 1a a3 	      jmp	setvoice
     383  a1d5
     384  a1d5				   vlook3_alt
-    385  a1d5		       bd db ad 	      lda	voice3lookup_alt,x
+    385  a1d5		       bd e6 ad 	      lda	voice3lookup_alt,x
     386  a1d8		       4c 1a a3 	      jmp	setvoice
     387  a1db
     388  a1db				   vlook4_alt
-    389  a1db		       bd 5b ae 	      lda	voice4lookup_alt,x
+    389  a1db		       bd 66 ae 	      lda	voice4lookup_alt,x
     390  a1de		       4c 1a a3 	      jmp	setvoice
     391  a1e1
     392  a1e1							; ---- Note Off --------------------------------------------------------------
@@ -867,7 +867,7 @@
     605  a301		       a4 49		      ldy	channel
     606  a303		       b9 10 10 	      lda	waveform1,y	; Retrieve the last desired waveform# for this channel
     607  a306		       aa		      tax
-    608  a307		       bd cb a8 	      lda	viznutwaveforms,x	; Retrieve the desired shift register contents for that waveform#
+    608  a307		       bd d6 a8 	      lda	viznutwaveforms,x	; Retrieve the desired shift register contents for that waveform#
     609  a30a		       8d 22 10 	      sta	setwaveshiftreg
     610  a30d
     611  a30d							; Set X,Y,A as required and set the waveform.
@@ -1021,7 +1021,7 @@
     725  a3b8				   setwavecopy
     726  a3b8		       a2 00		      ldx	#$00
     727  a3ba				   copy1
-    728  a3ba		       bd 9e a8 	      lda	setwaveorg,x
+    728  a3ba		       bd a9 a8 	      lda	setwaveorg,x
     729  a3bd		       9d 00 11 	      sta	setwave,x
     730  a3c0		       e8		      inx
     731  a3c1		       d0 f7		      bne	copy1
@@ -1035,13 +1035,13 @@
     739  a3c4				   setupfont
     740  a3c4		       a2 00		      ldx	#$00
     741  a3c6				   copy2
-    742  a3c6		       bd db ae 	      lda	fontorg,x
+    742  a3c6		       bd e6 ae 	      lda	fontorg,x
     743  a3c9		       9d 00 18 	      sta	font,x
-    744  a3cc		       bd db af 	      lda	fontorg+$100,x
+    744  a3cc		       bd e6 af 	      lda	fontorg+$100,x
     745  a3cf		       9d 00 19 	      sta	font+$100,x
-    746  a3d2		       bd db b0 	      lda	fontorg+$200,x
+    746  a3d2		       bd e6 b0 	      lda	fontorg+$200,x
     747  a3d5		       9d 00 1a 	      sta	font+$200,x
-    748  a3d8		       bd db b1 	      lda	fontorg+$300,x
+    748  a3d8		       bd e6 b1 	      lda	fontorg+$300,x
     749  a3db		       9d 00 1b 	      sta	font+$300,x
     750  a3de		       e8		      inx
     751  a3df		       d0 e5		      bne	copy2
@@ -1493,2068 +1493,2078 @@
     111  a6e6
     112  a6e6		       a5 c5		      lda	$C5	; Current key?
     113  a6e8		       c9 40		      cmp	#$40	; None
-    114  a6ea		       d0 0e		      bne	keypressed
+    114  a6ea		       d0 11		      bne	keypressed
     115  a6ec
     116  a6ec							; No key was pressed.	But was one pressed previously?
     117  a6ec		       ad 23 10 	      lda	midinoteout
-    118  a6ef		       f0 08		      beq	key_x	; No
+    118  a6ef		       f0 0b		      beq	key_x	; No
     119  a6f1
     120  a6f1							; Yes, so turn that note off.
-    121  a6f1		       20 4d a7 	      jsr	sendnoteoff
+    121  a6f1		       20 58 a7 	      jsr	sendnoteoff
     122  a6f4		       a9 00		      lda	#$00
     123  a6f6		       8d 23 10 	      sta	midinoteout
     124  a6f9
-    125  a6f9				   key_x
-    126  a6f9		       60		      rts
-    127  a6fa
-    128  a6fa
-    129  a6fa				   keypressed		; A contains key code
-    130  a6fa		       aa		      tax
-    131  a6fb		       bd 9e a7 	      lda	notelookup,x
-    132  a6fe		       f0 f9		      beq	key_x	; Note was 0, in this context meaning no note
-    133  a700
-    134  a700		       8d 23 10 	      sta	midinoteout
-    135  a703		       20 07 a7 	      jsr	sendnoteon
-    136  a706
-    137  a706		       60		      rts
-    138  a707
-    139  a707
-    140  a707
-    141  a707							; ---------------------------------------------------------------------------
-    142  a707							; Send a NOTE ON MIDI Message.
-    143  a707
-    144  a707				   sendnoteon
-    145  a707		       20 93 a7 	      jsr	wait_tx
-    146  a70a		       ad 9b a7 	      lda	noteonval	; Note on
-    147  a70d		       8d 00 9c 	      sta	UART_RXTX
-    148  a710
-    149  a710		       20 93 a7 	      jsr	wait_tx
-    150  a713		       ad 23 10 	      lda	midinoteout
-    151  a716		       8d 00 9c 	      sta	UART_RXTX
-    152  a719
-    153  a719		       20 93 a7 	      jsr	wait_tx
-    154  a71c		       ad 9d a7 	      lda	defaultvelocity
-    155  a71f		       8d 00 9c 	      sta	UART_RXTX
-    156  a722
-    157  a722							; Display
-      0  a722					      HEXPOKE	(midi_display+0),noteonval
-      1  a722		       a9 4d		      lda	#<(midi_display+0)
-      2  a724		       85 22		      sta	$22
-      3  a726		       a9 1e		      lda	#>(midi_display+0)
-      4  a728		       85 23		      sta	$23
-      5  a72a
-      6  a72a		       ad 9b a7 	      lda	noteonval
-      7  a72d		       20 dd a5 	      jsr	hexstr
-      0  a730					      HEXPOKE	(midi_display+3),midinoteout
-      1  a730		       a9 50		      lda	#<(midi_display+3)
-      2  a732		       85 22		      sta	$22
-      3  a734		       a9 1e		      lda	#>(midi_display+3)
-      4  a736		       85 23		      sta	$23
-      5  a738
-      6  a738		       ad 23 10 	      lda	midinoteout
-      7  a73b		       20 dd a5 	      jsr	hexstr
-      0  a73e					      HEXPOKE	(midi_display+6),defaultvelocity
-      1  a73e		       a9 53		      lda	#<(midi_display+6)
-      2  a740		       85 22		      sta	$22
-      3  a742		       a9 1e		      lda	#>(midi_display+6)
-      4  a744		       85 23		      sta	$23
-      5  a746
-      6  a746		       ad 9d a7 	      lda	defaultvelocity
-      7  a749		       20 dd a5 	      jsr	hexstr
-    161  a74c
-    162  a74c		       60		      rts
-    163  a74d
-    164  a74d
-    165  a74d							; ---------------------------------------------------------------------------
-    166  a74d							; Send a NOTE OFF MIDI Message.
-    167  a74d
-    168  a74d				   sendnoteoff
-    169  a74d		       20 93 a7 	      jsr	wait_tx
-    170  a750		       ad 9c a7 	      lda	noteoffval	; Note off
-    171  a753		       8d 00 9c 	      sta	UART_RXTX
-    172  a756
-    173  a756		       20 93 a7 	      jsr	wait_tx
-    174  a759		       ad 23 10 	      lda	midinoteout
-    175  a75c		       8d 00 9c 	      sta	UART_RXTX
-    176  a75f
-    177  a75f		       20 93 a7 	      jsr	wait_tx
-    178  a762		       ad 9d a7 	      lda	defaultvelocity	; Decimal - convention for velocity when velocity not supported.
-    179  a765		       8d 00 9c 	      sta	UART_RXTX
-    180  a768
-    181  a768							; Display
-      0  a768					      HEXPOKE	(midi_display+0),noteoffval
-      1  a768		       a9 4d		      lda	#<(midi_display+0)
-      2  a76a		       85 22		      sta	$22
-      3  a76c		       a9 1e		      lda	#>(midi_display+0)
-      4  a76e		       85 23		      sta	$23
-      5  a770
-      6  a770		       ad 9c a7 	      lda	noteoffval
-      7  a773		       20 dd a5 	      jsr	hexstr
-      0  a776					      HEXPOKE	(midi_display+3),midinoteout
-      1  a776		       a9 50		      lda	#<(midi_display+3)
-      2  a778		       85 22		      sta	$22
-      3  a77a		       a9 1e		      lda	#>(midi_display+3)
-      4  a77c		       85 23		      sta	$23
-      5  a77e
-      6  a77e		       ad 23 10 	      lda	midinoteout
-      7  a781		       20 dd a5 	      jsr	hexstr
-      0  a784					      HEXPOKE	(midi_display+6),defaultvelocity
-      1  a784		       a9 53		      lda	#<(midi_display+6)
-      2  a786		       85 22		      sta	$22
-      3  a788		       a9 1e		      lda	#>(midi_display+6)
-      4  a78a		       85 23		      sta	$23
-      5  a78c
-      6  a78c		       ad 9d a7 	      lda	defaultvelocity
-      7  a78f		       20 dd a5 	      jsr	hexstr
-    185  a792
-    186  a792		       60		      rts
-    187  a793
-    188  a793
-    189  a793							; ---------------------------------------------------------------------------
-    190  a793							; Quick hack to wait for THR to be empty.  Ideally sending would be
-    191  a793							; interrupt-driven with a ring buffer.
-    192  a793
-    193  a793				   wait_tx
-    194  a793		       ad 05 9c 	      lda	UART_LSR
-    195  a796		       29 20		      and	#32
-    196  a798		       f0 f9		      beq	wait_tx
-    197  a79a		       60		      rts
-    198  a79b
-    199  a79b				   noteonval
-    200  a79b		       90		      byte.b	$90
-    201  a79c
-    202  a79c				   noteoffval
-    203  a79c		       80		      byte.b	$80
-    204  a79d
-    205  a79d				   defaultvelocity
-    206  a79d		       40		      byte.b	64	; Decimal - convention for velocity when velocity not supported.
-    207  a79e
-    208  a79e				   notelookup
-    209  a79e
-    210  a79e							;	MIDI Note#		Comments
-    211  a79e		       00		      byte.b	0	;
-    212  a79f		       3f		      byte.b	63	;
-    213  a7a0		       42		      byte.b	66	;
-    214  a7a1		       46		      byte.b	70	;
-    215  a7a2		       49		      byte.b	73	;
-    216  a7a3		       00		      byte.b	0	;
-    217  a7a4		       50		      byte.b	80	;
-    218  a7a5		       53		      byte.b	83	;
-    219  a7a6		       00		      byte.b	0	;
-    220  a7a7		       3e		      byte.b	62	;
-    221  a7a8		       41		      byte.b	65	;
-    222  a7a9		       45		      byte.b	69	;
-    223  a7aa		       48		      byte.b	72	;
-    224  a7ab		       4c		      byte.b	76	;
-    225  a7ac		       4f		      byte.b	79	;
-    226  a7ad		       00		      byte.b	0	;
-    227  a7ae		       00		      byte.b	0	;
-    228  a7af		       00		      byte.b	0	;
-    229  a7b0		       00		      byte.b	0	;
-    230  a7b1		       00		      byte.b	0	;
-    231  a7b2		       00		      byte.b	0	;
-    232  a7b3		       00		      byte.b	0	;
-    233  a7b4		       00		      byte.b	0	;
-    234  a7b5		       00		      byte.b	0	;
-    235  a7b6		       00		      byte.b	0	;
-    236  a7b7		       00		      byte.b	0	;
-    237  a7b8		       00		      byte.b	0	;
-    238  a7b9		       00		      byte.b	0	;
-    239  a7ba		       00		      byte.b	0	;
-    240  a7bb		       00		      byte.b	0	;
-    241  a7bc		       00		      byte.b	0	;
-    242  a7bd		       00		      byte.b	0	;
-    243  a7be		       00		      byte.b	0	;
-    244  a7bf		       00		      byte.b	0	;
-    245  a7c0		       00		      byte.b	0	;
-    246  a7c1		       00		      byte.b	0	;
-    247  a7c2		       00		      byte.b	0	;
-    248  a7c3		       00		      byte.b	0	;
-    249  a7c4		       00		      byte.b	0	;
-    250  a7c5		       00		      byte.b	0	;
-    251  a7c6		       00		      byte.b	0	;
-    252  a7c7		       00		      byte.b	0	;
-    253  a7c8		       00		      byte.b	0	;
-    254  a7c9		       00		      byte.b	0	;
-    255  a7ca		       00		      byte.b	0	;
-    256  a7cb		       00		      byte.b	0	;
-    257  a7cc		       00		      byte.b	0	;
-    258  a7cd		       00		      byte.b	0	;
-    259  a7ce		       3c		      byte.b	60	;	Middle C (C5)
-    260  a7cf		       40		      byte.b	64	;
-    261  a7d0		       43		      byte.b	67	;
-    262  a7d1		       47		      byte.b	71	;
-    263  a7d2		       4a		      byte.b	74	;
-    264  a7d3		       4d		      byte.b	77	;
-    265  a7d4		       51		      byte.b	81	;
-    266  a7d5		       00		      byte.b	0	;
-    267  a7d6		       3d		      byte.b	61	;
-    268  a7d7		       00		      byte.b	0	;
-    269  a7d8		       44		      byte.b	68	;
-    270  a7d9		       00		      byte.b	0	;
-    271  a7da		       4b		      byte.b	75	;
-    272  a7db		       4e		      byte.b	78	;
-    273  a7dc		       52		      byte.b	82	;
-    274  a7dd		       00		      byte.b	0	;
-    275  a7de		       00		      byte.b	0	;	No key Pressed
-    276  a7df		       00		      byte.b	0	;
-    277  a7e0		       00		      byte.b	0	;
-    278  a7e1		       00		      byte.b	0	;
-    279  a7e2		       00		      byte.b	0	;
-    280  a7e3		       00		      byte.b	0	;
-    281  a7e4		       00		      byte.b	0	;
-    282  a7e5		       00		      byte.b	0	;
-    283  a7e6		       00		      byte.b	0	;
-    284  a7e7		       00		      byte.b	0	;
-    285  a7e8		       00		      byte.b	0	;
-    286  a7e9		       00		      byte.b	0	;
-    287  a7ea		       00		      byte.b	0	;
-    288  a7eb		       00		      byte.b	0	;
-    289  a7ec		       00		      byte.b	0	;
-    290  a7ed		       00		      byte.b	0	;
-    291  a7ee		       00		      byte.b	0	;
-    292  a7ef		       00		      byte.b	0	;
-    293  a7f0		       00		      byte.b	0	;
-    294  a7f1		       00		      byte.b	0	;
-    295  a7f2		       00		      byte.b	0	;
-    296  a7f3		       00		      byte.b	0	;
-    297  a7f4		       00		      byte.b	0	;
-    298  a7f5		       00		      byte.b	0	;
-    299  a7f6		       00		      byte.b	0	;
-    300  a7f7		       00		      byte.b	0	;
-    301  a7f8		       00		      byte.b	0	;
-    302  a7f9		       00		      byte.b	0	;
-    303  a7fa		       00		      byte.b	0	;
-    304  a7fb		       00		      byte.b	0	;
-    305  a7fc		       00		      byte.b	0	;
-    306  a7fd		       00		      byte.b	0	;
-    307  a7fe		       00		      byte.b	0	;
-    308  a7ff		       00		      byte.b	0	;
-    309  a800		       00		      byte.b	0	;
-    310  a801		       00		      byte.b	0	;
-    311  a802		       00		      byte.b	0	;
-    312  a803		       00		      byte.b	0	;
-    313  a804		       00		      byte.b	0	;
-    314  a805		       00		      byte.b	0	;
-    315  a806		       00		      byte.b	0	;
-    316  a807		       00		      byte.b	0	;
-    317  a808		       00		      byte.b	0	;
-    318  a809		       00		      byte.b	0	;
-    319  a80a		       00		      byte.b	0	;
-    320  a80b		       00		      byte.b	0	;
-    321  a80c		       00		      byte.b	0	;
-    322  a80d		       00		      byte.b	0	;
-    323  a80e		       00		      byte.b	0	;
-    324  a80f		       00		      byte.b	0	;
-    325  a810		       00		      byte.b	0	;
-    326  a811		       00		      byte.b	0	;
-    327  a812		       00		      byte.b	0	;
-    328  a813		       00		      byte.b	0	;
-    329  a814		       00		      byte.b	0	;
-    330  a815		       00		      byte.b	0	;
-    331  a816		       00		      byte.b	0	;
-    332  a817		       00		      byte.b	0	;
-    333  a818		       00		      byte.b	0	;
-    334  a819		       00		      byte.b	0	;
-    335  a81a		       00		      byte.b	0	;
-    336  a81b		       00		      byte.b	0	;
-    337  a81c		       00		      byte.b	0	;
-    338  a81d		       00		      byte.b	0	;
-    339  a81e		       00		      byte.b	0	;
-    340  a81f		       00		      byte.b	0	;
-    341  a820		       00		      byte.b	0	;
-    342  a821		       00		      byte.b	0	;
-    343  a822		       00		      byte.b	0	;
-    344  a823		       00		      byte.b	0	;
-    345  a824		       00		      byte.b	0	;
-    346  a825		       00		      byte.b	0	;
-    347  a826		       00		      byte.b	0	;
-    348  a827		       00		      byte.b	0	;
-    349  a828		       00		      byte.b	0	;
-    350  a829		       00		      byte.b	0	;
-    351  a82a		       00		      byte.b	0	;
-    352  a82b		       00		      byte.b	0	;
-    353  a82c		       00		      byte.b	0	;
-    354  a82d		       00		      byte.b	0	;
-    355  a82e		       00		      byte.b	0	;
-    356  a82f		       00		      byte.b	0	;
-    357  a830		       00		      byte.b	0	;
-    358  a831		       00		      byte.b	0	;
-    359  a832		       00		      byte.b	0	;
-    360  a833		       00		      byte.b	0	;
-    361  a834		       00		      byte.b	0	;
-    362  a835		       00		      byte.b	0	;
-    363  a836		       00		      byte.b	0	;
-    364  a837		       00		      byte.b	0	;
-    365  a838		       00		      byte.b	0	;
-    366  a839		       00		      byte.b	0	;
-    367  a83a		       00		      byte.b	0	;
-    368  a83b		       00		      byte.b	0	;
-    369  a83c		       00		      byte.b	0	;
-    370  a83d		       00		      byte.b	0	;
-    371  a83e		       00		      byte.b	0	;
-    372  a83f		       00		      byte.b	0	;
-    373  a840		       00		      byte.b	0	;
-    374  a841		       00		      byte.b	0	;
-    375  a842		       00		      byte.b	0	;
-    376  a843		       00		      byte.b	0	;
-    377  a844		       00		      byte.b	0	;
-    378  a845		       00		      byte.b	0	;
-    379  a846		       00		      byte.b	0	;
-    380  a847		       00		      byte.b	0	;
-    381  a848		       00		      byte.b	0	;
-    382  a849		       00		      byte.b	0	;
-    383  a84a		       00		      byte.b	0	;
-    384  a84b		       00		      byte.b	0	;
-    385  a84c		       00		      byte.b	0	;
-    386  a84d		       00		      byte.b	0	;
-    387  a84e		       00		      byte.b	0	;
-    388  a84f		       00		      byte.b	0	;
-    389  a850		       00		      byte.b	0	;
-    390  a851		       00		      byte.b	0	;
-    391  a852		       00		      byte.b	0	;
-    392  a853		       00		      byte.b	0	;
-    393  a854		       00		      byte.b	0	;
-    394  a855		       00		      byte.b	0	;
-    395  a856		       00		      byte.b	0	;
-    396  a857		       00		      byte.b	0	;
-    397  a858		       00		      byte.b	0	;
-    398  a859		       00		      byte.b	0	;
-    399  a85a		       00		      byte.b	0	;
-    400  a85b		       00		      byte.b	0	;
-    401  a85c		       00		      byte.b	0	;
-    402  a85d		       00		      byte.b	0	;
-    403  a85e		       00		      byte.b	0	;
-    404  a85f		       00		      byte.b	0	;
-    405  a860		       00		      byte.b	0	;
-    406  a861		       00		      byte.b	0	;
-    407  a862		       00		      byte.b	0	;
-    408  a863		       00		      byte.b	0	;
-    409  a864		       00		      byte.b	0	;
-    410  a865		       00		      byte.b	0	;
-    411  a866		       00		      byte.b	0	;
-    412  a867		       00		      byte.b	0	;
-    413  a868		       00		      byte.b	0	;
-    414  a869		       00		      byte.b	0	;
-    415  a86a		       00		      byte.b	0	;
-    416  a86b		       00		      byte.b	0	;
-    417  a86c		       00		      byte.b	0	;
-    418  a86d		       00		      byte.b	0	;
-    419  a86e		       00		      byte.b	0	;
-    420  a86f		       00		      byte.b	0	;
-    421  a870		       00		      byte.b	0	;
-    422  a871		       00		      byte.b	0	;
-    423  a872		       00		      byte.b	0	;
-    424  a873		       00		      byte.b	0	;
-    425  a874		       00		      byte.b	0	;
-    426  a875		       00		      byte.b	0	;
-    427  a876		       00		      byte.b	0	;
-    428  a877		       00		      byte.b	0	;
-    429  a878		       00		      byte.b	0	;
-    430  a879		       00		      byte.b	0	;
-    431  a87a		       00		      byte.b	0	;
-    432  a87b		       00		      byte.b	0	;
-    433  a87c		       00		      byte.b	0	;
-    434  a87d		       00		      byte.b	0	;
-    435  a87e		       00		      byte.b	0	;
-    436  a87f		       00		      byte.b	0	;
-    437  a880		       00		      byte.b	0	;
-    438  a881		       00		      byte.b	0	;
-    439  a882		       00		      byte.b	0	;
-    440  a883		       00		      byte.b	0	;
-    441  a884		       00		      byte.b	0	;
-    442  a885		       00		      byte.b	0	;
-    443  a886		       00		      byte.b	0	;
-    444  a887		       00		      byte.b	0	;
-    445  a888		       00		      byte.b	0	;
-    446  a889		       00		      byte.b	0	;
-    447  a88a		       00		      byte.b	0	;
-    448  a88b		       00		      byte.b	0	;
-    449  a88c		       00		      byte.b	0	;
-    450  a88d		       00		      byte.b	0	;
-    451  a88e		       00		      byte.b	0	;
-    452  a88f		       00		      byte.b	0	;
-    453  a890		       00		      byte.b	0	;
-    454  a891		       00		      byte.b	0	;
-    455  a892		       00		      byte.b	0	;
-    456  a893		       00		      byte.b	0	;
-    457  a894		       00		      byte.b	0	;
-    458  a895		       00		      byte.b	0	;
-    459  a896		       00		      byte.b	0	;
-    460  a897		       00		      byte.b	0	;
-    461  a898		       00		      byte.b	0	;
-    462  a899		       00		      byte.b	0	;
-    463  a89a		       00		      byte.b	0	;
-    464  a89b		       00		      byte.b	0	;
-    465  a89c		       00		      byte.b	0	;
-    466  a89d		       00		      byte.b	0	;
+    125  a6f9		       ce 0f 90 	      dec	screen_colors
+    126  a6fc
+    127  a6fc				   key_x
+    128  a6fc		       60		      rts
+    129  a6fd
+    130  a6fd
+    131  a6fd				   keypressed		; A contains key code
+    132  a6fd		       aa		      tax
+    133  a6fe		       bd a9 a7 	      lda	notelookup,x
+    134  a701		       f0 f9		      beq	key_x	; Note was 0, in this context meaning no note
+    135  a703
+    136  a703							; Same note as before?
+    137  a703		       cd 23 10 	      cmp	midinoteout
+    138  a706		       f0 f4		      beq	key_x	; Yes, do nothing
+    139  a708
+    140  a708							; New note - send it
+    141  a708
+    142  a708		       8d 23 10 	      sta	midinoteout
+    143  a70b		       20 12 a7 	      jsr	sendnoteon
+    144  a70e
+    145  a70e		       ee 0f 90 	      inc	screen_colors
+    146  a711
+    147  a711		       60		      rts
+    148  a712
+    149  a712
+    150  a712
+    151  a712							; ---------------------------------------------------------------------------
+    152  a712							; Send a NOTE ON MIDI Message.
+    153  a712
+    154  a712				   sendnoteon
+    155  a712		       20 9e a7 	      jsr	wait_tx
+    156  a715		       ad a6 a7 	      lda	noteonval	; Note on
+    157  a718		       8d 00 9c 	      sta	UART_RXTX
+    158  a71b
+    159  a71b		       20 9e a7 	      jsr	wait_tx
+    160  a71e		       ad 23 10 	      lda	midinoteout
+    161  a721		       8d 00 9c 	      sta	UART_RXTX
+    162  a724
+    163  a724		       20 9e a7 	      jsr	wait_tx
+    164  a727		       ad a8 a7 	      lda	defaultvelocity
+    165  a72a		       8d 00 9c 	      sta	UART_RXTX
+    166  a72d
+    167  a72d							; Display
+      0  a72d					      HEXPOKE	(midi_display+0),noteonval
+      1  a72d		       a9 4d		      lda	#<(midi_display+0)
+      2  a72f		       85 22		      sta	$22
+      3  a731		       a9 1e		      lda	#>(midi_display+0)
+      4  a733		       85 23		      sta	$23
+      5  a735
+      6  a735		       ad a6 a7 	      lda	noteonval
+      7  a738		       20 dd a5 	      jsr	hexstr
+      0  a73b					      HEXPOKE	(midi_display+3),midinoteout
+      1  a73b		       a9 50		      lda	#<(midi_display+3)
+      2  a73d		       85 22		      sta	$22
+      3  a73f		       a9 1e		      lda	#>(midi_display+3)
+      4  a741		       85 23		      sta	$23
+      5  a743
+      6  a743		       ad 23 10 	      lda	midinoteout
+      7  a746		       20 dd a5 	      jsr	hexstr
+      0  a749					      HEXPOKE	(midi_display+6),defaultvelocity
+      1  a749		       a9 53		      lda	#<(midi_display+6)
+      2  a74b		       85 22		      sta	$22
+      3  a74d		       a9 1e		      lda	#>(midi_display+6)
+      4  a74f		       85 23		      sta	$23
+      5  a751
+      6  a751		       ad a8 a7 	      lda	defaultvelocity
+      7  a754		       20 dd a5 	      jsr	hexstr
+    171  a757
+    172  a757		       60		      rts
+    173  a758
+    174  a758
+    175  a758							; ---------------------------------------------------------------------------
+    176  a758							; Send a NOTE OFF MIDI Message.
+    177  a758
+    178  a758				   sendnoteoff
+    179  a758		       20 9e a7 	      jsr	wait_tx
+    180  a75b		       ad a7 a7 	      lda	noteoffval	; Note off
+    181  a75e		       8d 00 9c 	      sta	UART_RXTX
+    182  a761
+    183  a761		       20 9e a7 	      jsr	wait_tx
+    184  a764		       ad 23 10 	      lda	midinoteout
+    185  a767		       8d 00 9c 	      sta	UART_RXTX
+    186  a76a
+    187  a76a		       20 9e a7 	      jsr	wait_tx
+    188  a76d		       ad a8 a7 	      lda	defaultvelocity	; Decimal - convention for velocity when velocity not supported.
+    189  a770		       8d 00 9c 	      sta	UART_RXTX
+    190  a773
+    191  a773							; Display
+      0  a773					      HEXPOKE	(midi_display+0),noteoffval
+      1  a773		       a9 4d		      lda	#<(midi_display+0)
+      2  a775		       85 22		      sta	$22
+      3  a777		       a9 1e		      lda	#>(midi_display+0)
+      4  a779		       85 23		      sta	$23
+      5  a77b
+      6  a77b		       ad a7 a7 	      lda	noteoffval
+      7  a77e		       20 dd a5 	      jsr	hexstr
+      0  a781					      HEXPOKE	(midi_display+3),midinoteout
+      1  a781		       a9 50		      lda	#<(midi_display+3)
+      2  a783		       85 22		      sta	$22
+      3  a785		       a9 1e		      lda	#>(midi_display+3)
+      4  a787		       85 23		      sta	$23
+      5  a789
+      6  a789		       ad 23 10 	      lda	midinoteout
+      7  a78c		       20 dd a5 	      jsr	hexstr
+      0  a78f					      HEXPOKE	(midi_display+6),defaultvelocity
+      1  a78f		       a9 53		      lda	#<(midi_display+6)
+      2  a791		       85 22		      sta	$22
+      3  a793		       a9 1e		      lda	#>(midi_display+6)
+      4  a795		       85 23		      sta	$23
+      5  a797
+      6  a797		       ad a8 a7 	      lda	defaultvelocity
+      7  a79a		       20 dd a5 	      jsr	hexstr
+    195  a79d
+    196  a79d		       60		      rts
+    197  a79e
+    198  a79e
+    199  a79e							; ---------------------------------------------------------------------------
+    200  a79e							; Quick hack to wait for THR to be empty.  Ideally sending would be
+    201  a79e							; interrupt-driven with a ring buffer.
+    202  a79e
+    203  a79e				   wait_tx
+    204  a79e		       ad 05 9c 	      lda	UART_LSR
+    205  a7a1		       29 20		      and	#32
+    206  a7a3		       f0 f9		      beq	wait_tx
+    207  a7a5		       60		      rts
+    208  a7a6
+    209  a7a6				   noteonval
+    210  a7a6		       90		      byte.b	$90
+    211  a7a7
+    212  a7a7				   noteoffval
+    213  a7a7		       80		      byte.b	$80
+    214  a7a8
+    215  a7a8				   defaultvelocity
+    216  a7a8		       40		      byte.b	64	; Decimal - convention for velocity when velocity not supported.
+    217  a7a9
+    218  a7a9				   notelookup
+    219  a7a9
+    220  a7a9							;	MIDI Note#		Comments
+    221  a7a9		       00		      byte.b	0	;
+    222  a7aa		       3f		      byte.b	63	;
+    223  a7ab		       42		      byte.b	66	;
+    224  a7ac		       46		      byte.b	70	;
+    225  a7ad		       49		      byte.b	73	;
+    226  a7ae		       00		      byte.b	0	;
+    227  a7af		       50		      byte.b	80	;
+    228  a7b0		       53		      byte.b	83	;
+    229  a7b1		       00		      byte.b	0	;
+    230  a7b2		       3e		      byte.b	62	;
+    231  a7b3		       41		      byte.b	65	;
+    232  a7b4		       45		      byte.b	69	;
+    233  a7b5		       48		      byte.b	72	;
+    234  a7b6		       4c		      byte.b	76	;
+    235  a7b7		       4f		      byte.b	79	;
+    236  a7b8		       00		      byte.b	0	;
+    237  a7b9		       00		      byte.b	0	;
+    238  a7ba		       00		      byte.b	0	;
+    239  a7bb		       00		      byte.b	0	;
+    240  a7bc		       00		      byte.b	0	;
+    241  a7bd		       00		      byte.b	0	;
+    242  a7be		       00		      byte.b	0	;
+    243  a7bf		       00		      byte.b	0	;
+    244  a7c0		       00		      byte.b	0	;
+    245  a7c1		       00		      byte.b	0	;
+    246  a7c2		       00		      byte.b	0	;
+    247  a7c3		       00		      byte.b	0	;
+    248  a7c4		       00		      byte.b	0	;
+    249  a7c5		       00		      byte.b	0	;
+    250  a7c6		       00		      byte.b	0	;
+    251  a7c7		       00		      byte.b	0	;
+    252  a7c8		       00		      byte.b	0	;
+    253  a7c9		       00		      byte.b	0	;
+    254  a7ca		       00		      byte.b	0	;
+    255  a7cb		       00		      byte.b	0	;
+    256  a7cc		       00		      byte.b	0	;
+    257  a7cd		       00		      byte.b	0	;
+    258  a7ce		       00		      byte.b	0	;
+    259  a7cf		       00		      byte.b	0	;
+    260  a7d0		       00		      byte.b	0	;
+    261  a7d1		       00		      byte.b	0	;
+    262  a7d2		       00		      byte.b	0	;
+    263  a7d3		       00		      byte.b	0	;
+    264  a7d4		       00		      byte.b	0	;
+    265  a7d5		       00		      byte.b	0	;
+    266  a7d6		       00		      byte.b	0	;
+    267  a7d7		       00		      byte.b	0	;
+    268  a7d8		       00		      byte.b	0	;
+    269  a7d9		       3c		      byte.b	60	;	Middle C (C5)
+    270  a7da		       40		      byte.b	64	;
+    271  a7db		       43		      byte.b	67	;
+    272  a7dc		       47		      byte.b	71	;
+    273  a7dd		       4a		      byte.b	74	;
+    274  a7de		       4d		      byte.b	77	;
+    275  a7df		       51		      byte.b	81	;
+    276  a7e0		       00		      byte.b	0	;
+    277  a7e1		       3d		      byte.b	61	;
+    278  a7e2		       00		      byte.b	0	;
+    279  a7e3		       44		      byte.b	68	;
+    280  a7e4		       00		      byte.b	0	;
+    281  a7e5		       4b		      byte.b	75	;
+    282  a7e6		       4e		      byte.b	78	;
+    283  a7e7		       52		      byte.b	82	;
+    284  a7e8		       00		      byte.b	0	;
+    285  a7e9		       00		      byte.b	0	;	No key Pressed
+    286  a7ea		       00		      byte.b	0	;
+    287  a7eb		       00		      byte.b	0	;
+    288  a7ec		       00		      byte.b	0	;
+    289  a7ed		       00		      byte.b	0	;
+    290  a7ee		       00		      byte.b	0	;
+    291  a7ef		       00		      byte.b	0	;
+    292  a7f0		       00		      byte.b	0	;
+    293  a7f1		       00		      byte.b	0	;
+    294  a7f2		       00		      byte.b	0	;
+    295  a7f3		       00		      byte.b	0	;
+    296  a7f4		       00		      byte.b	0	;
+    297  a7f5		       00		      byte.b	0	;
+    298  a7f6		       00		      byte.b	0	;
+    299  a7f7		       00		      byte.b	0	;
+    300  a7f8		       00		      byte.b	0	;
+    301  a7f9		       00		      byte.b	0	;
+    302  a7fa		       00		      byte.b	0	;
+    303  a7fb		       00		      byte.b	0	;
+    304  a7fc		       00		      byte.b	0	;
+    305  a7fd		       00		      byte.b	0	;
+    306  a7fe		       00		      byte.b	0	;
+    307  a7ff		       00		      byte.b	0	;
+    308  a800		       00		      byte.b	0	;
+    309  a801		       00		      byte.b	0	;
+    310  a802		       00		      byte.b	0	;
+    311  a803		       00		      byte.b	0	;
+    312  a804		       00		      byte.b	0	;
+    313  a805		       00		      byte.b	0	;
+    314  a806		       00		      byte.b	0	;
+    315  a807		       00		      byte.b	0	;
+    316  a808		       00		      byte.b	0	;
+    317  a809		       00		      byte.b	0	;
+    318  a80a		       00		      byte.b	0	;
+    319  a80b		       00		      byte.b	0	;
+    320  a80c		       00		      byte.b	0	;
+    321  a80d		       00		      byte.b	0	;
+    322  a80e		       00		      byte.b	0	;
+    323  a80f		       00		      byte.b	0	;
+    324  a810		       00		      byte.b	0	;
+    325  a811		       00		      byte.b	0	;
+    326  a812		       00		      byte.b	0	;
+    327  a813		       00		      byte.b	0	;
+    328  a814		       00		      byte.b	0	;
+    329  a815		       00		      byte.b	0	;
+    330  a816		       00		      byte.b	0	;
+    331  a817		       00		      byte.b	0	;
+    332  a818		       00		      byte.b	0	;
+    333  a819		       00		      byte.b	0	;
+    334  a81a		       00		      byte.b	0	;
+    335  a81b		       00		      byte.b	0	;
+    336  a81c		       00		      byte.b	0	;
+    337  a81d		       00		      byte.b	0	;
+    338  a81e		       00		      byte.b	0	;
+    339  a81f		       00		      byte.b	0	;
+    340  a820		       00		      byte.b	0	;
+    341  a821		       00		      byte.b	0	;
+    342  a822		       00		      byte.b	0	;
+    343  a823		       00		      byte.b	0	;
+    344  a824		       00		      byte.b	0	;
+    345  a825		       00		      byte.b	0	;
+    346  a826		       00		      byte.b	0	;
+    347  a827		       00		      byte.b	0	;
+    348  a828		       00		      byte.b	0	;
+    349  a829		       00		      byte.b	0	;
+    350  a82a		       00		      byte.b	0	;
+    351  a82b		       00		      byte.b	0	;
+    352  a82c		       00		      byte.b	0	;
+    353  a82d		       00		      byte.b	0	;
+    354  a82e		       00		      byte.b	0	;
+    355  a82f		       00		      byte.b	0	;
+    356  a830		       00		      byte.b	0	;
+    357  a831		       00		      byte.b	0	;
+    358  a832		       00		      byte.b	0	;
+    359  a833		       00		      byte.b	0	;
+    360  a834		       00		      byte.b	0	;
+    361  a835		       00		      byte.b	0	;
+    362  a836		       00		      byte.b	0	;
+    363  a837		       00		      byte.b	0	;
+    364  a838		       00		      byte.b	0	;
+    365  a839		       00		      byte.b	0	;
+    366  a83a		       00		      byte.b	0	;
+    367  a83b		       00		      byte.b	0	;
+    368  a83c		       00		      byte.b	0	;
+    369  a83d		       00		      byte.b	0	;
+    370  a83e		       00		      byte.b	0	;
+    371  a83f		       00		      byte.b	0	;
+    372  a840		       00		      byte.b	0	;
+    373  a841		       00		      byte.b	0	;
+    374  a842		       00		      byte.b	0	;
+    375  a843		       00		      byte.b	0	;
+    376  a844		       00		      byte.b	0	;
+    377  a845		       00		      byte.b	0	;
+    378  a846		       00		      byte.b	0	;
+    379  a847		       00		      byte.b	0	;
+    380  a848		       00		      byte.b	0	;
+    381  a849		       00		      byte.b	0	;
+    382  a84a		       00		      byte.b	0	;
+    383  a84b		       00		      byte.b	0	;
+    384  a84c		       00		      byte.b	0	;
+    385  a84d		       00		      byte.b	0	;
+    386  a84e		       00		      byte.b	0	;
+    387  a84f		       00		      byte.b	0	;
+    388  a850		       00		      byte.b	0	;
+    389  a851		       00		      byte.b	0	;
+    390  a852		       00		      byte.b	0	;
+    391  a853		       00		      byte.b	0	;
+    392  a854		       00		      byte.b	0	;
+    393  a855		       00		      byte.b	0	;
+    394  a856		       00		      byte.b	0	;
+    395  a857		       00		      byte.b	0	;
+    396  a858		       00		      byte.b	0	;
+    397  a859		       00		      byte.b	0	;
+    398  a85a		       00		      byte.b	0	;
+    399  a85b		       00		      byte.b	0	;
+    400  a85c		       00		      byte.b	0	;
+    401  a85d		       00		      byte.b	0	;
+    402  a85e		       00		      byte.b	0	;
+    403  a85f		       00		      byte.b	0	;
+    404  a860		       00		      byte.b	0	;
+    405  a861		       00		      byte.b	0	;
+    406  a862		       00		      byte.b	0	;
+    407  a863		       00		      byte.b	0	;
+    408  a864		       00		      byte.b	0	;
+    409  a865		       00		      byte.b	0	;
+    410  a866		       00		      byte.b	0	;
+    411  a867		       00		      byte.b	0	;
+    412  a868		       00		      byte.b	0	;
+    413  a869		       00		      byte.b	0	;
+    414  a86a		       00		      byte.b	0	;
+    415  a86b		       00		      byte.b	0	;
+    416  a86c		       00		      byte.b	0	;
+    417  a86d		       00		      byte.b	0	;
+    418  a86e		       00		      byte.b	0	;
+    419  a86f		       00		      byte.b	0	;
+    420  a870		       00		      byte.b	0	;
+    421  a871		       00		      byte.b	0	;
+    422  a872		       00		      byte.b	0	;
+    423  a873		       00		      byte.b	0	;
+    424  a874		       00		      byte.b	0	;
+    425  a875		       00		      byte.b	0	;
+    426  a876		       00		      byte.b	0	;
+    427  a877		       00		      byte.b	0	;
+    428  a878		       00		      byte.b	0	;
+    429  a879		       00		      byte.b	0	;
+    430  a87a		       00		      byte.b	0	;
+    431  a87b		       00		      byte.b	0	;
+    432  a87c		       00		      byte.b	0	;
+    433  a87d		       00		      byte.b	0	;
+    434  a87e		       00		      byte.b	0	;
+    435  a87f		       00		      byte.b	0	;
+    436  a880		       00		      byte.b	0	;
+    437  a881		       00		      byte.b	0	;
+    438  a882		       00		      byte.b	0	;
+    439  a883		       00		      byte.b	0	;
+    440  a884		       00		      byte.b	0	;
+    441  a885		       00		      byte.b	0	;
+    442  a886		       00		      byte.b	0	;
+    443  a887		       00		      byte.b	0	;
+    444  a888		       00		      byte.b	0	;
+    445  a889		       00		      byte.b	0	;
+    446  a88a		       00		      byte.b	0	;
+    447  a88b		       00		      byte.b	0	;
+    448  a88c		       00		      byte.b	0	;
+    449  a88d		       00		      byte.b	0	;
+    450  a88e		       00		      byte.b	0	;
+    451  a88f		       00		      byte.b	0	;
+    452  a890		       00		      byte.b	0	;
+    453  a891		       00		      byte.b	0	;
+    454  a892		       00		      byte.b	0	;
+    455  a893		       00		      byte.b	0	;
+    456  a894		       00		      byte.b	0	;
+    457  a895		       00		      byte.b	0	;
+    458  a896		       00		      byte.b	0	;
+    459  a897		       00		      byte.b	0	;
+    460  a898		       00		      byte.b	0	;
+    461  a899		       00		      byte.b	0	;
+    462  a89a		       00		      byte.b	0	;
+    463  a89b		       00		      byte.b	0	;
+    464  a89c		       00		      byte.b	0	;
+    465  a89d		       00		      byte.b	0	;
+    466  a89e		       00		      byte.b	0	;
+    467  a89f		       00		      byte.b	0	;
+    468  a8a0		       00		      byte.b	0	;
+    469  a8a1		       00		      byte.b	0	;
+    470  a8a2		       00		      byte.b	0	;
+    471  a8a3		       00		      byte.b	0	;
+    472  a8a4		       00		      byte.b	0	;
+    473  a8a5		       00		      byte.b	0	;
+    474  a8a6		       00		      byte.b	0	;
+    475  a8a7		       00		      byte.b	0	;
+    476  a8a8		       00		      byte.b	0	;
 ------- FILE vicmidi.asm
-    824  a89e				   setwaveorg
+    824  a8a9				   setwaveorg
 ------- FILE setwave.asm LEVEL 2 PASS 2
-      0  a89e					      include	"setwave.asm"
-      1  a89e							;A short generic routine for setting any shift register value for any pulse
-      2  a89e							;channel in about 150 cpu clocks. Use it freely.
-      3  a89e
-      4  a89e							; USAGE: y = channel ($0a..$0c)
-      5  a89e							;	  x = initial frequency
-      6  a89e							;	  a = shift register contents
-      7  a89e							;
-      8  a89e							; WARNING for purists: self-modifying code, illegal opcodes.
-      9  a89e							;
-     10  a89e							; code align assertion: make sure that the loop is within a page.
-     11  a89e							; oscillator assertion: make sure that the channel has been at $7e
-     12  a89e							; for some time before calling this function.
-     13  a89e							; put TMP and TMP2 in the zero page.
-     14  a89e
-     15  a89e		       8e c0 a8 	      stx	initfreq	; 4
-     16  a8a1
-     17  a8a1		       8c af a8 	      sty	ch0	; 4
-     18  a8a4		       8c ba a8 	      sty	ch1	; 4
-     19  a8a7		       be be a8 	      ldx	ldfqmasks-$a,y	; 4
-     20  a8aa		       85 57		      sta	TMP	; 3
-     21  a8ac
-     22  a8ac		       09 7f		      ora	#$7f	; 2
-     23  a8ae
-     24  a8ae		       8f 0c 90 	      .byte.b	$8f,$0C,$90	; axs $900c  ; 4  [$900c] = a AND x	     *ILLEGAL OPCODE*
-     25  a8b1
-     26  a8b1		       a8 af	   ch0	      =	*-2
-     27  a8b1		       84 58		      sty	TMP2	; 3
-     28  a8b3		       a0 07		      ldy	#7	; 2
-     29  a8b5
-     30  a8b5				   l0
-     31  a8b5		       a9 7f		      lda	#$7f	; 2
-     32  a8b7		       07 57		      .byte.b	$07,TMP	; aso TMP		 ; 5  asl tmp; a = [tmp] OR $7f  *ILLEGAL OPCODE*
-     33  a8b9		       8f 0c 90 	      .byte.b	$8F,$0C,$90	; axs $900c	 ; 4  [$900c] = a AND x	  *ILLEGAL OPCODE*
-     34  a8b9		       a8 ba	   ch1	      =	*-2
-     35  a8bc		       88		      dey		; 2
-     36  a8bd		       d0 f6		      bne	l0	; 3
-     37  a8bf
-     38  a8bf		       a9 80		      lda	#128	; 2
-     39  a8bf		       a8 c0	   initfreq   =	*-1
-     40  a8c1		       ea		      nop		; 2
-     41  a8c2		       a4 58		      ldy	TMP2	; 3
-     42  a8c4				   noset
-     43  a8c4		       99 00 90 	      sta	$9000,y	; 5
-     44  a8c7
-     45  a8c7		       60		      rts		; 6	total clocks 11+4+3+2+16*7+16+6 eq 154
-     46  a8c8
-     47  a8c8				   ldfqmasks
-     48  a8c8		       fe		      .byte.b	$fe	; $900a - 1 x 16 clocks/bit
-     49  a8c9		       fd		      .byte.b	$fd	; $900b - 2 x	8 clocks/bit
-     50  a8ca		       fb		      .byte.b	$fb	; $900c - 4 x	4 clocks/bit
-     51  a8cb
-     52  a8cb
-     53  a8cb				   viznutwaveforms
-     54  a8cb		       00		      .byte.b	0	; MIDI Program #1	default  0000000011111111
-     55  a8cc		       02		      .byte.b	2	; MIDI Program #2	"10"	 0000001011111101
-     56  a8cd		       04		      .byte.b	4	; MIDI Program #3	"100"	 0000010011111011
-     57  a8ce		       06		      .byte.b	6	; MIDI Program #4	"110"	 0000011011111001
-     58  a8cf		       08		      .byte.b	8	; MIDI Program #5	"1000"	 0000100011110111
-     59  a8d0		       0a		      .byte.b	10	; MIDI Program #6	"1010"	 0000101011110101
-     60  a8d1		       0b		      .byte.b	11	; MIDI Program #7	"1011"	 0000110011110011
-     61  a8d2		       0e		      .byte.b	14	; MIDI Program #8	"1110"	 0000111011110001
-     62  a8d3		       12		      .byte.b	18	; MIDI Program #9	"10010"  0001001011101101
-     63  a8d4		       14		      .byte.b	20	; MIDI Program #10	"10100"  0001010011101011
-     64  a8d5		       16		      .byte.b	22	; MIDI Program #11	"10110"  0001011011101001
-     65  a8d6		       18		      .byte.b	24	; MIDI Program #12	"11000"  0001100011100111
-     66  a8d7		       1a		      .byte.b	26	; MIDI Program #13	"11010"  0001101011100101
-     67  a8d8		       24		      .byte.b	36	; MIDI Program #14	"100100" 0010010011011011
-     68  a8d9		       2a		      .byte.b	42	; MIDI Program #15	"101010" 0010101011010101
-     69  a8da		       2c		      .byte.b	44	; MIDI Program #16	"101100" 0010110011010011
+      0  a8a9					      include	"setwave.asm"
+      1  a8a9							;A short generic routine for setting any shift register value for any pulse
+      2  a8a9							;channel in about 150 cpu clocks. Use it freely.
+      3  a8a9
+      4  a8a9							; USAGE: y = channel ($0a..$0c)
+      5  a8a9							;	  x = initial frequency
+      6  a8a9							;	  a = shift register contents
+      7  a8a9							;
+      8  a8a9							; WARNING for purists: self-modifying code, illegal opcodes.
+      9  a8a9							;
+     10  a8a9							; code align assertion: make sure that the loop is within a page.
+     11  a8a9							; oscillator assertion: make sure that the channel has been at $7e
+     12  a8a9							; for some time before calling this function.
+     13  a8a9							; put TMP and TMP2 in the zero page.
+     14  a8a9
+     15  a8a9		       8e cb a8 	      stx	initfreq	; 4
+     16  a8ac
+     17  a8ac		       8c ba a8 	      sty	ch0	; 4
+     18  a8af		       8c c5 a8 	      sty	ch1	; 4
+     19  a8b2		       be c9 a8 	      ldx	ldfqmasks-$a,y	; 4
+     20  a8b5		       85 57		      sta	TMP	; 3
+     21  a8b7
+     22  a8b7		       09 7f		      ora	#$7f	; 2
+     23  a8b9
+     24  a8b9		       8f 0c 90 	      .byte.b	$8f,$0C,$90	; axs $900c  ; 4  [$900c] = a AND x	     *ILLEGAL OPCODE*
+     25  a8bc
+     26  a8bc		       a8 ba	   ch0	      =	*-2
+     27  a8bc		       84 58		      sty	TMP2	; 3
+     28  a8be		       a0 07		      ldy	#7	; 2
+     29  a8c0
+     30  a8c0				   l0
+     31  a8c0		       a9 7f		      lda	#$7f	; 2
+     32  a8c2		       07 57		      .byte.b	$07,TMP	; aso TMP		 ; 5  asl tmp; a = [tmp] OR $7f  *ILLEGAL OPCODE*
+     33  a8c4		       8f 0c 90 	      .byte.b	$8F,$0C,$90	; axs $900c	 ; 4  [$900c] = a AND x	  *ILLEGAL OPCODE*
+     34  a8c4		       a8 c5	   ch1	      =	*-2
+     35  a8c7		       88		      dey		; 2
+     36  a8c8		       d0 f6		      bne	l0	; 3
+     37  a8ca
+     38  a8ca		       a9 80		      lda	#128	; 2
+     39  a8ca		       a8 cb	   initfreq   =	*-1
+     40  a8cc		       ea		      nop		; 2
+     41  a8cd		       a4 58		      ldy	TMP2	; 3
+     42  a8cf				   noset
+     43  a8cf		       99 00 90 	      sta	$9000,y	; 5
+     44  a8d2
+     45  a8d2		       60		      rts		; 6	total clocks 11+4+3+2+16*7+16+6 eq 154
+     46  a8d3
+     47  a8d3				   ldfqmasks
+     48  a8d3		       fe		      .byte.b	$fe	; $900a - 1 x 16 clocks/bit
+     49  a8d4		       fd		      .byte.b	$fd	; $900b - 2 x	8 clocks/bit
+     50  a8d5		       fb		      .byte.b	$fb	; $900c - 4 x	4 clocks/bit
+     51  a8d6
+     52  a8d6
+     53  a8d6				   viznutwaveforms
+     54  a8d6		       00		      .byte.b	0	; MIDI Program #1	default  0000000011111111
+     55  a8d7		       02		      .byte.b	2	; MIDI Program #2	"10"	 0000001011111101
+     56  a8d8		       04		      .byte.b	4	; MIDI Program #3	"100"	 0000010011111011
+     57  a8d9		       06		      .byte.b	6	; MIDI Program #4	"110"	 0000011011111001
+     58  a8da		       08		      .byte.b	8	; MIDI Program #5	"1000"	 0000100011110111
+     59  a8db		       0a		      .byte.b	10	; MIDI Program #6	"1010"	 0000101011110101
+     60  a8dc		       0b		      .byte.b	11	; MIDI Program #7	"1011"	 0000110011110011
+     61  a8dd		       0e		      .byte.b	14	; MIDI Program #8	"1110"	 0000111011110001
+     62  a8de		       12		      .byte.b	18	; MIDI Program #9	"10010"  0001001011101101
+     63  a8df		       14		      .byte.b	20	; MIDI Program #10	"10100"  0001010011101011
+     64  a8e0		       16		      .byte.b	22	; MIDI Program #11	"10110"  0001011011101001
+     65  a8e1		       18		      .byte.b	24	; MIDI Program #12	"11000"  0001100011100111
+     66  a8e2		       1a		      .byte.b	26	; MIDI Program #13	"11010"  0001101011100101
+     67  a8e3		       24		      .byte.b	36	; MIDI Program #14	"100100" 0010010011011011
+     68  a8e4		       2a		      .byte.b	42	; MIDI Program #15	"101010" 0010101011010101
+     69  a8e5		       2c		      .byte.b	44	; MIDI Program #16	"101100" 0010110011010011
 ------- FILE vicmidi.asm
-    826  a8db
+    826  a8e6
 ------- FILE lookup-ntsc.asm LEVEL 2 PASS 2
-      0  a8db					      include	"lookup-ntsc.asm"
-      1  a8db							; --------------------------------------------------------------------------------------------------
-      2  a8db							; Note Lookups NTSC - 128 bytes each, map MIDI Note# to a VIC register value
-      3  a8db							; From http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?t=3643
-      4  a8db
-      5  a8db				   voice1lookup_ntsc
-      6  a8db		       00		      byte.b	0
-      7  a8dc		       00		      byte.b	0
-      8  a8dd		       00		      byte.b	0
-      9  a8de		       00		      byte.b	0
-     10  a8df		       00		      byte.b	0
-     11  a8e0		       00		      byte.b	0
-     12  a8e1		       00		      byte.b	0
-     13  a8e2		       00		      byte.b	0
-     14  a8e3		       00		      byte.b	0
-     15  a8e4		       00		      byte.b	0
-     16  a8e5		       00		      byte.b	0
-     17  a8e6		       00		      byte.b	0
-     18  a8e7		       00		      byte.b	0
-     19  a8e8		       00		      byte.b	0
-     20  a8e9		       00		      byte.b	0
-     21  a8ea		       00		      byte.b	0
-     22  a8eb		       00		      byte.b	0
-     23  a8ec		       00		      byte.b	0
-     24  a8ed		       00		      byte.b	0
-     25  a8ee		       00		      byte.b	0
-     26  a8ef		       00		      byte.b	0
-     27  a8f0		       00		      byte.b	0
-     28  a8f1		       00		      byte.b	0
-     29  a8f2		       00		      byte.b	0
-     30  a8f3		       85		      byte.b	133
-     31  a8f4		       8c		      byte.b	140
-     32  a8f5		       92		      byte.b	146
-     33  a8f6		       98		      byte.b	152
-     34  a8f7		       9e		      byte.b	158
-     35  a8f8		       a3		      byte.b	163
-     36  a8f9		       a9		      byte.b	169
-     37  a8fa		       ad		      byte.b	173
-     38  a8fb		       b2		      byte.b	178
-     39  a8fc		       b6		      byte.b	182
-     40  a8fd		       ba		      byte.b	186
-     41  a8fe		       be		      byte.b	190
-     42  a8ff		       c2		      byte.b	194
-     43  a900		       c5		      byte.b	197
-     44  a901		       c9		      byte.b	201
-     45  a902		       cc		      byte.b	204
-     46  a903		       cf		      byte.b	207
-     47  a904		       d1		      byte.b	209
-     48  a905		       d4		      byte.b	212
-     49  a906		       d6		      byte.b	214
-     50  a907		       d9		      byte.b	217
-     51  a908		       db		      byte.b	219
-     52  a909		       dd		      byte.b	221
-     53  a90a		       df		      byte.b	223
-     54  a90b		       e0		      byte.b	224
-     55  a90c		       e2		      byte.b	226
-     56  a90d		       e4		      byte.b	228
-     57  a90e		       e5		      byte.b	229
-     58  a90f		       e7		      byte.b	231
-     59  a910		       e8		      byte.b	232
-     60  a911		       e9		      byte.b	233
-     61  a912		       eb		      byte.b	235
-     62  a913		       ec		      byte.b	236
-     63  a914		       ed		      byte.b	237
-     64  a915		       ee		      byte.b	238
-     65  a916		       ef		      byte.b	239
-     66  a917		       f0		      byte.b	240
-     67  a918		       00		      byte.b	0
-     68  a919		       00		      byte.b	0
-     69  a91a		       00		      byte.b	0
-     70  a91b		       00		      byte.b	0
-     71  a91c		       00		      byte.b	0
-     72  a91d		       00		      byte.b	0
-     73  a91e		       00		      byte.b	0
-     74  a91f		       00		      byte.b	0
-     75  a920		       00		      byte.b	0
-     76  a921		       00		      byte.b	0
-     77  a922		       00		      byte.b	0
-     78  a923		       00		      byte.b	0
-     79  a924		       00		      byte.b	0
-     80  a925		       00		      byte.b	0
-     81  a926		       00		      byte.b	0
-     82  a927		       00		      byte.b	0
-     83  a928		       00		      byte.b	0
-     84  a929		       00		      byte.b	0
-     85  a92a		       00		      byte.b	0
-     86  a92b		       00		      byte.b	0
-     87  a92c		       00		      byte.b	0
-     88  a92d		       00		      byte.b	0
-     89  a92e		       00		      byte.b	0
-     90  a92f		       00		      byte.b	0
-     91  a930		       00		      byte.b	0
-     92  a931		       00		      byte.b	0
-     93  a932		       00		      byte.b	0
-     94  a933		       00		      byte.b	0
-     95  a934		       00		      byte.b	0
-     96  a935		       00		      byte.b	0
-     97  a936		       00		      byte.b	0
-     98  a937		       00		      byte.b	0
-     99  a938		       00		      byte.b	0
-    100  a939		       00		      byte.b	0
-    101  a93a		       00		      byte.b	0
-    102  a93b		       00		      byte.b	0
-    103  a93c		       00		      byte.b	0
-    104  a93d		       00		      byte.b	0
-    105  a93e		       00		      byte.b	0
-    106  a93f		       00		      byte.b	0
-    107  a940		       00		      byte.b	0
-    108  a941		       00		      byte.b	0
-    109  a942		       00		      byte.b	0
-    110  a943		       00		      byte.b	0
-    111  a944		       00		      byte.b	0
-    112  a945		       00		      byte.b	0
-    113  a946		       00		      byte.b	0
-    114  a947		       00		      byte.b	0
-    115  a948		       00		      byte.b	0
-    116  a949		       00		      byte.b	0
-    117  a94a		       00		      byte.b	0
-    118  a94b		       00		      byte.b	0
-    119  a94c		       00		      byte.b	0
-    120  a94d		       00		      byte.b	0
-    121  a94e		       00		      byte.b	0
-    122  a94f		       00		      byte.b	0
-    123  a950		       00		      byte.b	0
-    124  a951		       00		      byte.b	0
-    125  a952		       00		      byte.b	0
-    126  a953		       00		      byte.b	0
-    127  a954		       00		      byte.b	0
-    128  a955		       00		      byte.b	0
-    129  a956		       00		      byte.b	0
-    130  a957		       00		      byte.b	0
-    131  a958		       00		      byte.b	0
-    132  a959		       00		      byte.b	0
-    133  a95a		       00		      byte.b	0
-    134  a95b
-    135  a95b				   voice2lookup_ntsc
-    136  a95b		       00		      byte.b	0
-    137  a95c		       00		      byte.b	0
-    138  a95d		       00		      byte.b	0
-    139  a95e		       00		      byte.b	0
-    140  a95f		       00		      byte.b	0
-    141  a960		       00		      byte.b	0
-    142  a961		       00		      byte.b	0
-    143  a962		       00		      byte.b	0
-    144  a963		       00		      byte.b	0
-    145  a964		       00		      byte.b	0
-    146  a965		       00		      byte.b	0
-    147  a966		       00		      byte.b	0
-    148  a967		       00		      byte.b	0
-    149  a968		       00		      byte.b	0
-    150  a969		       00		      byte.b	0
-    151  a96a		       00		      byte.b	0
-    152  a96b		       00		      byte.b	0
-    153  a96c		       00		      byte.b	0
-    154  a96d		       00		      byte.b	0
-    155  a96e		       00		      byte.b	0
-    156  a96f		       00		      byte.b	0
-    157  a970		       00		      byte.b	0
-    158  a971		       00		      byte.b	0
-    159  a972		       00		      byte.b	0
-    160  a973		       00		      byte.b	0
-    161  a974		       00		      byte.b	0
-    162  a975		       00		      byte.b	0
-    163  a976		       00		      byte.b	0
-    164  a977		       00		      byte.b	0
-    165  a978		       00		      byte.b	0
-    166  a979		       00		      byte.b	0
-    167  a97a		       00		      byte.b	0
-    168  a97b		       00		      byte.b	0
-    169  a97c		       00		      byte.b	0
-    170  a97d		       00		      byte.b	0
-    171  a97e		       00		      byte.b	0
-    172  a97f		       85		      byte.b	133
-    173  a980		       8c		      byte.b	140
-    174  a981		       92		      byte.b	146
-    175  a982		       98		      byte.b	152
-    176  a983		       9e		      byte.b	158
-    177  a984		       a3		      byte.b	163
-    178  a985		       a9		      byte.b	169
-    179  a986		       ad		      byte.b	173
-    180  a987		       b2		      byte.b	178
-    181  a988		       b6		      byte.b	182
-    182  a989		       ba		      byte.b	186
-    183  a98a		       be		      byte.b	190
-    184  a98b		       c2		      byte.b	194
-    185  a98c		       c5		      byte.b	197
-    186  a98d		       c9		      byte.b	201
-    187  a98e		       cc		      byte.b	204
-    188  a98f		       cf		      byte.b	207
-    189  a990		       d1		      byte.b	209
-    190  a991		       d4		      byte.b	212
-    191  a992		       d6		      byte.b	214
-    192  a993		       d9		      byte.b	217
-    193  a994		       db		      byte.b	219
-    194  a995		       dd		      byte.b	221
-    195  a996		       df		      byte.b	223
-    196  a997		       e0		      byte.b	224
-    197  a998		       e2		      byte.b	226
-    198  a999		       e4		      byte.b	228
-    199  a99a		       e5		      byte.b	229
-    200  a99b		       e7		      byte.b	231
-    201  a99c		       e8		      byte.b	232
-    202  a99d		       e9		      byte.b	233
-    203  a99e		       eb		      byte.b	235
-    204  a99f		       ec		      byte.b	236
-    205  a9a0		       ed		      byte.b	237
-    206  a9a1		       ee		      byte.b	238
-    207  a9a2		       ef		      byte.b	239
-    208  a9a3		       f0		      byte.b	240
-    209  a9a4		       00		      byte.b	0
-    210  a9a5		       00		      byte.b	0
-    211  a9a6		       00		      byte.b	0
-    212  a9a7		       00		      byte.b	0
-    213  a9a8		       00		      byte.b	0
-    214  a9a9		       00		      byte.b	0
-    215  a9aa		       00		      byte.b	0
-    216  a9ab		       00		      byte.b	0
-    217  a9ac		       00		      byte.b	0
-    218  a9ad		       00		      byte.b	0
-    219  a9ae		       00		      byte.b	0
-    220  a9af		       00		      byte.b	0
-    221  a9b0		       00		      byte.b	0
-    222  a9b1		       00		      byte.b	0
-    223  a9b2		       00		      byte.b	0
-    224  a9b3		       00		      byte.b	0
-    225  a9b4		       00		      byte.b	0
-    226  a9b5		       00		      byte.b	0
-    227  a9b6		       00		      byte.b	0
-    228  a9b7		       00		      byte.b	0
-    229  a9b8		       00		      byte.b	0
-    230  a9b9		       00		      byte.b	0
-    231  a9ba		       00		      byte.b	0
-    232  a9bb		       00		      byte.b	0
-    233  a9bc		       00		      byte.b	0
-    234  a9bd		       00		      byte.b	0
-    235  a9be		       00		      byte.b	0
-    236  a9bf		       00		      byte.b	0
-    237  a9c0		       00		      byte.b	0
-    238  a9c1		       00		      byte.b	0
-    239  a9c2		       00		      byte.b	0
-    240  a9c3		       00		      byte.b	0
-    241  a9c4		       00		      byte.b	0
-    242  a9c5		       00		      byte.b	0
-    243  a9c6		       00		      byte.b	0
-    244  a9c7		       00		      byte.b	0
-    245  a9c8		       00		      byte.b	0
-    246  a9c9		       00		      byte.b	0
-    247  a9ca		       00		      byte.b	0
-    248  a9cb		       00		      byte.b	0
-    249  a9cc		       00		      byte.b	0
-    250  a9cd		       00		      byte.b	0
-    251  a9ce		       00		      byte.b	0
-    252  a9cf		       00		      byte.b	0
-    253  a9d0		       00		      byte.b	0
-    254  a9d1		       00		      byte.b	0
-    255  a9d2		       00		      byte.b	0
-    256  a9d3		       00		      byte.b	0
-    257  a9d4		       00		      byte.b	0
-    258  a9d5		       00		      byte.b	0
-    259  a9d6		       00		      byte.b	0
-    260  a9d7		       00		      byte.b	0
-    261  a9d8		       00		      byte.b	0
-    262  a9d9		       00		      byte.b	0
-    263  a9da		       00		      byte.b	0
-    264  a9db
-    265  a9db				   voice3lookup_ntsc
-    266  a9db		       00		      byte.b	0
-    267  a9dc		       00		      byte.b	0
-    268  a9dd		       00		      byte.b	0
-    269  a9de		       00		      byte.b	0
-    270  a9df		       00		      byte.b	0
-    271  a9e0		       00		      byte.b	0
-    272  a9e1		       00		      byte.b	0
-    273  a9e2		       00		      byte.b	0
-    274  a9e3		       00		      byte.b	0
-    275  a9e4		       00		      byte.b	0
-    276  a9e5		       00		      byte.b	0
-    277  a9e6		       00		      byte.b	0
-    278  a9e7		       00		      byte.b	0
-    279  a9e8		       00		      byte.b	0
-    280  a9e9		       00		      byte.b	0
-    281  a9ea		       00		      byte.b	0
-    282  a9eb		       00		      byte.b	0
-    283  a9ec		       00		      byte.b	0
-    284  a9ed		       00		      byte.b	0
-    285  a9ee		       00		      byte.b	0
-    286  a9ef		       00		      byte.b	0
-    287  a9f0		       00		      byte.b	0
-    288  a9f1		       00		      byte.b	0
-    289  a9f2		       00		      byte.b	0
-    290  a9f3		       00		      byte.b	0
-    291  a9f4		       00		      byte.b	0
-    292  a9f5		       00		      byte.b	0
-    293  a9f6		       00		      byte.b	0
-    294  a9f7		       00		      byte.b	0
-    295  a9f8		       00		      byte.b	0
-    296  a9f9		       00		      byte.b	0
-    297  a9fa		       00		      byte.b	0
-    298  a9fb		       00		      byte.b	0
-    299  a9fc		       00		      byte.b	0
-    300  a9fd		       00		      byte.b	0
-    301  a9fe		       00		      byte.b	0
-    302  a9ff		       00		      byte.b	0
-    303  aa00		       00		      byte.b	0
-    304  aa01		       00		      byte.b	0
-    305  aa02		       00		      byte.b	0
-    306  aa03		       00		      byte.b	0
-    307  aa04		       00		      byte.b	0
-    308  aa05		       00		      byte.b	0
-    309  aa06		       00		      byte.b	0
-    310  aa07		       00		      byte.b	0
-    311  aa08		       00		      byte.b	0
-    312  aa09		       00		      byte.b	0
-    313  aa0a		       00		      byte.b	0
-    314  aa0b		       85		      byte.b	133
-    315  aa0c		       8c		      byte.b	140
-    316  aa0d		       92		      byte.b	146
-    317  aa0e		       98		      byte.b	152
-    318  aa0f		       9e		      byte.b	158
-    319  aa10		       a3		      byte.b	163
-    320  aa11		       a9		      byte.b	169
-    321  aa12		       ad		      byte.b	173
-    322  aa13		       b2		      byte.b	178
-    323  aa14		       b6		      byte.b	182
-    324  aa15		       ba		      byte.b	186
-    325  aa16		       be		      byte.b	190
-    326  aa17		       c2		      byte.b	194
-    327  aa18		       c5		      byte.b	197
-    328  aa19		       c9		      byte.b	201
-    329  aa1a		       cc		      byte.b	204
-    330  aa1b		       cf		      byte.b	207
-    331  aa1c		       d1		      byte.b	209
-    332  aa1d		       d4		      byte.b	212
-    333  aa1e		       d6		      byte.b	214
-    334  aa1f		       d9		      byte.b	217
-    335  aa20		       db		      byte.b	219
-    336  aa21		       dd		      byte.b	221
-    337  aa22		       df		      byte.b	223
-    338  aa23		       e0		      byte.b	224
-    339  aa24		       e2		      byte.b	226
-    340  aa25		       e4		      byte.b	228
-    341  aa26		       e5		      byte.b	229
-    342  aa27		       e7		      byte.b	231
-    343  aa28		       e8		      byte.b	232
-    344  aa29		       e9		      byte.b	233
-    345  aa2a		       eb		      byte.b	235
-    346  aa2b		       ec		      byte.b	236
-    347  aa2c		       ed		      byte.b	237
-    348  aa2d		       ee		      byte.b	238
-    349  aa2e		       ef		      byte.b	239
-    350  aa2f		       f0		      byte.b	240
-    351  aa30		       00		      byte.b	0
-    352  aa31		       00		      byte.b	0
-    353  aa32		       00		      byte.b	0
-    354  aa33		       00		      byte.b	0
-    355  aa34		       00		      byte.b	0
-    356  aa35		       00		      byte.b	0
-    357  aa36		       00		      byte.b	0
-    358  aa37		       00		      byte.b	0
-    359  aa38		       00		      byte.b	0
-    360  aa39		       00		      byte.b	0
-    361  aa3a		       00		      byte.b	0
-    362  aa3b		       00		      byte.b	0
-    363  aa3c		       00		      byte.b	0
-    364  aa3d		       00		      byte.b	0
-    365  aa3e		       00		      byte.b	0
-    366  aa3f		       00		      byte.b	0
-    367  aa40		       00		      byte.b	0
-    368  aa41		       00		      byte.b	0
-    369  aa42		       00		      byte.b	0
-    370  aa43		       00		      byte.b	0
-    371  aa44		       00		      byte.b	0
-    372  aa45		       00		      byte.b	0
-    373  aa46		       00		      byte.b	0
-    374  aa47		       00		      byte.b	0
-    375  aa48		       00		      byte.b	0
-    376  aa49		       00		      byte.b	0
-    377  aa4a		       00		      byte.b	0
-    378  aa4b		       00		      byte.b	0
-    379  aa4c		       00		      byte.b	0
-    380  aa4d		       00		      byte.b	0
-    381  aa4e		       00		      byte.b	0
-    382  aa4f		       00		      byte.b	0
-    383  aa50		       00		      byte.b	0
-    384  aa51		       00		      byte.b	0
-    385  aa52		       00		      byte.b	0
-    386  aa53		       00		      byte.b	0
-    387  aa54		       00		      byte.b	0
-    388  aa55		       00		      byte.b	0
-    389  aa56		       00		      byte.b	0
-    390  aa57		       00		      byte.b	0
-    391  aa58		       00		      byte.b	0
-    392  aa59		       00		      byte.b	0
-    393  aa5a		       00		      byte.b	0
-    394  aa5b
-    395  aa5b
-    396  aa5b				   voice4lookup_ntsc
-    397  aa5b		       00		      byte.b	0
-    398  aa5c		       00		      byte.b	0
-    399  aa5d		       00		      byte.b	0
-    400  aa5e		       00		      byte.b	0
-    401  aa5f		       00		      byte.b	0
-    402  aa60		       00		      byte.b	0
-    403  aa61		       00		      byte.b	0
-    404  aa62		       00		      byte.b	0
-    405  aa63		       00		      byte.b	0
-    406  aa64		       00		      byte.b	0
-    407  aa65		       00		      byte.b	0
-    408  aa66		       00		      byte.b	0
-    409  aa67		       00		      byte.b	0
-    410  aa68		       00		      byte.b	0
-    411  aa69		       00		      byte.b	0
-    412  aa6a		       00		      byte.b	0
-    413  aa6b		       00		      byte.b	0
-    414  aa6c		       00		      byte.b	0
-    415  aa6d		       00		      byte.b	0
-    416  aa6e		       00		      byte.b	0
-    417  aa6f		       00		      byte.b	0
-    418  aa70		       00		      byte.b	0
-    419  aa71		       00		      byte.b	0
-    420  aa72		       00		      byte.b	0
-    421  aa73		       00		      byte.b	0
-    422  aa74		       00		      byte.b	0
-    423  aa75		       00		      byte.b	0
-    424  aa76		       00		      byte.b	0
-    425  aa77		       00		      byte.b	0
-    426  aa78		       00		      byte.b	0
-    427  aa79		       00		      byte.b	0
-    428  aa7a		       00		      byte.b	0
-    429  aa7b		       00		      byte.b	0
-    430  aa7c		       00		      byte.b	0
-    431  aa7d		       00		      byte.b	0
-    432  aa7e		       00		      byte.b	0
-    433  aa7f		       85		      byte.b	133
-    434  aa80		       8c		      byte.b	140
-    435  aa81		       92		      byte.b	146
-    436  aa82		       98		      byte.b	152
-    437  aa83		       9e		      byte.b	158
-    438  aa84		       a3		      byte.b	163
-    439  aa85		       a9		      byte.b	169
-    440  aa86		       ad		      byte.b	173
-    441  aa87		       b2		      byte.b	178
-    442  aa88		       b6		      byte.b	182
-    443  aa89		       ba		      byte.b	186
-    444  aa8a		       be		      byte.b	190
-    445  aa8b		       c2		      byte.b	194
-    446  aa8c		       c5		      byte.b	197
-    447  aa8d		       c9		      byte.b	201
-    448  aa8e		       cc		      byte.b	204
-    449  aa8f		       cf		      byte.b	207
-    450  aa90		       d1		      byte.b	209
-    451  aa91		       d4		      byte.b	212
-    452  aa92		       d6		      byte.b	214
-    453  aa93		       d9		      byte.b	217
-    454  aa94		       db		      byte.b	219
-    455  aa95		       dd		      byte.b	221
-    456  aa96		       df		      byte.b	223
-    457  aa97		       e0		      byte.b	224
-    458  aa98		       e2		      byte.b	226
-    459  aa99		       e4		      byte.b	228
-    460  aa9a		       e5		      byte.b	229
-    461  aa9b		       e7		      byte.b	231
-    462  aa9c		       e8		      byte.b	232
-    463  aa9d		       e9		      byte.b	233
-    464  aa9e		       eb		      byte.b	235
-    465  aa9f		       ec		      byte.b	236
-    466  aaa0		       ed		      byte.b	237
-    467  aaa1		       ee		      byte.b	238
-    468  aaa2		       ef		      byte.b	239
-    469  aaa3		       f0		      byte.b	240
-    470  aaa4		       00		      byte.b	0
-    471  aaa5		       00		      byte.b	0
-    472  aaa6		       00		      byte.b	0
-    473  aaa7		       00		      byte.b	0
-    474  aaa8		       00		      byte.b	0
-    475  aaa9		       00		      byte.b	0
-    476  aaaa		       00		      byte.b	0
-    477  aaab		       00		      byte.b	0
-    478  aaac		       00		      byte.b	0
-    479  aaad		       00		      byte.b	0
-    480  aaae		       00		      byte.b	0
-    481  aaaf		       00		      byte.b	0
-    482  aab0		       00		      byte.b	0
-    483  aab1		       00		      byte.b	0
-    484  aab2		       00		      byte.b	0
-    485  aab3		       00		      byte.b	0
-    486  aab4		       00		      byte.b	0
-    487  aab5		       00		      byte.b	0
-    488  aab6		       00		      byte.b	0
-    489  aab7		       00		      byte.b	0
-    490  aab8		       00		      byte.b	0
-    491  aab9		       00		      byte.b	0
-    492  aaba		       00		      byte.b	0
-    493  aabb		       00		      byte.b	0
-    494  aabc		       00		      byte.b	0
-    495  aabd		       00		      byte.b	0
-    496  aabe		       00		      byte.b	0
-    497  aabf		       00		      byte.b	0
-    498  aac0		       00		      byte.b	0
-    499  aac1		       00		      byte.b	0
-    500  aac2		       00		      byte.b	0
-    501  aac3		       00		      byte.b	0
-    502  aac4		       00		      byte.b	0
-    503  aac5		       00		      byte.b	0
-    504  aac6		       00		      byte.b	0
-    505  aac7		       00		      byte.b	0
-    506  aac8		       00		      byte.b	0
-    507  aac9		       00		      byte.b	0
-    508  aaca		       00		      byte.b	0
-    509  aacb		       00		      byte.b	0
-    510  aacc		       00		      byte.b	0
-    511  aacd		       00		      byte.b	0
-    512  aace		       00		      byte.b	0
-    513  aacf		       00		      byte.b	0
-    514  aad0		       00		      byte.b	0
-    515  aad1		       00		      byte.b	0
-    516  aad2		       00		      byte.b	0
-    517  aad3		       00		      byte.b	0
-    518  aad4		       00		      byte.b	0
-    519  aad5		       00		      byte.b	0
-    520  aad6		       00		      byte.b	0
-    521  aad7		       00		      byte.b	0
-    522  aad8		       00		      byte.b	0
-    523  aad9		       00		      byte.b	0
-    524  aada		       00		      byte.b	0
-    525  aadb
-    526  aadb							; EOF!
+      0  a8e6					      include	"lookup-ntsc.asm"
+      1  a8e6							; --------------------------------------------------------------------------------------------------
+      2  a8e6							; Note Lookups NTSC - 128 bytes each, map MIDI Note# to a VIC register value
+      3  a8e6							; From http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?t=3643
+      4  a8e6
+      5  a8e6				   voice1lookup_ntsc
+      6  a8e6		       00		      byte.b	0
+      7  a8e7		       00		      byte.b	0
+      8  a8e8		       00		      byte.b	0
+      9  a8e9		       00		      byte.b	0
+     10  a8ea		       00		      byte.b	0
+     11  a8eb		       00		      byte.b	0
+     12  a8ec		       00		      byte.b	0
+     13  a8ed		       00		      byte.b	0
+     14  a8ee		       00		      byte.b	0
+     15  a8ef		       00		      byte.b	0
+     16  a8f0		       00		      byte.b	0
+     17  a8f1		       00		      byte.b	0
+     18  a8f2		       00		      byte.b	0
+     19  a8f3		       00		      byte.b	0
+     20  a8f4		       00		      byte.b	0
+     21  a8f5		       00		      byte.b	0
+     22  a8f6		       00		      byte.b	0
+     23  a8f7		       00		      byte.b	0
+     24  a8f8		       00		      byte.b	0
+     25  a8f9		       00		      byte.b	0
+     26  a8fa		       00		      byte.b	0
+     27  a8fb		       00		      byte.b	0
+     28  a8fc		       00		      byte.b	0
+     29  a8fd		       00		      byte.b	0
+     30  a8fe		       85		      byte.b	133
+     31  a8ff		       8c		      byte.b	140
+     32  a900		       92		      byte.b	146
+     33  a901		       98		      byte.b	152
+     34  a902		       9e		      byte.b	158
+     35  a903		       a3		      byte.b	163
+     36  a904		       a9		      byte.b	169
+     37  a905		       ad		      byte.b	173
+     38  a906		       b2		      byte.b	178
+     39  a907		       b6		      byte.b	182
+     40  a908		       ba		      byte.b	186
+     41  a909		       be		      byte.b	190
+     42  a90a		       c2		      byte.b	194
+     43  a90b		       c5		      byte.b	197
+     44  a90c		       c9		      byte.b	201
+     45  a90d		       cc		      byte.b	204
+     46  a90e		       cf		      byte.b	207
+     47  a90f		       d1		      byte.b	209
+     48  a910		       d4		      byte.b	212
+     49  a911		       d6		      byte.b	214
+     50  a912		       d9		      byte.b	217
+     51  a913		       db		      byte.b	219
+     52  a914		       dd		      byte.b	221
+     53  a915		       df		      byte.b	223
+     54  a916		       e0		      byte.b	224
+     55  a917		       e2		      byte.b	226
+     56  a918		       e4		      byte.b	228
+     57  a919		       e5		      byte.b	229
+     58  a91a		       e7		      byte.b	231
+     59  a91b		       e8		      byte.b	232
+     60  a91c		       e9		      byte.b	233
+     61  a91d		       eb		      byte.b	235
+     62  a91e		       ec		      byte.b	236
+     63  a91f		       ed		      byte.b	237
+     64  a920		       ee		      byte.b	238
+     65  a921		       ef		      byte.b	239
+     66  a922		       f0		      byte.b	240
+     67  a923		       00		      byte.b	0
+     68  a924		       00		      byte.b	0
+     69  a925		       00		      byte.b	0
+     70  a926		       00		      byte.b	0
+     71  a927		       00		      byte.b	0
+     72  a928		       00		      byte.b	0
+     73  a929		       00		      byte.b	0
+     74  a92a		       00		      byte.b	0
+     75  a92b		       00		      byte.b	0
+     76  a92c		       00		      byte.b	0
+     77  a92d		       00		      byte.b	0
+     78  a92e		       00		      byte.b	0
+     79  a92f		       00		      byte.b	0
+     80  a930		       00		      byte.b	0
+     81  a931		       00		      byte.b	0
+     82  a932		       00		      byte.b	0
+     83  a933		       00		      byte.b	0
+     84  a934		       00		      byte.b	0
+     85  a935		       00		      byte.b	0
+     86  a936		       00		      byte.b	0
+     87  a937		       00		      byte.b	0
+     88  a938		       00		      byte.b	0
+     89  a939		       00		      byte.b	0
+     90  a93a		       00		      byte.b	0
+     91  a93b		       00		      byte.b	0
+     92  a93c		       00		      byte.b	0
+     93  a93d		       00		      byte.b	0
+     94  a93e		       00		      byte.b	0
+     95  a93f		       00		      byte.b	0
+     96  a940		       00		      byte.b	0
+     97  a941		       00		      byte.b	0
+     98  a942		       00		      byte.b	0
+     99  a943		       00		      byte.b	0
+    100  a944		       00		      byte.b	0
+    101  a945		       00		      byte.b	0
+    102  a946		       00		      byte.b	0
+    103  a947		       00		      byte.b	0
+    104  a948		       00		      byte.b	0
+    105  a949		       00		      byte.b	0
+    106  a94a		       00		      byte.b	0
+    107  a94b		       00		      byte.b	0
+    108  a94c		       00		      byte.b	0
+    109  a94d		       00		      byte.b	0
+    110  a94e		       00		      byte.b	0
+    111  a94f		       00		      byte.b	0
+    112  a950		       00		      byte.b	0
+    113  a951		       00		      byte.b	0
+    114  a952		       00		      byte.b	0
+    115  a953		       00		      byte.b	0
+    116  a954		       00		      byte.b	0
+    117  a955		       00		      byte.b	0
+    118  a956		       00		      byte.b	0
+    119  a957		       00		      byte.b	0
+    120  a958		       00		      byte.b	0
+    121  a959		       00		      byte.b	0
+    122  a95a		       00		      byte.b	0
+    123  a95b		       00		      byte.b	0
+    124  a95c		       00		      byte.b	0
+    125  a95d		       00		      byte.b	0
+    126  a95e		       00		      byte.b	0
+    127  a95f		       00		      byte.b	0
+    128  a960		       00		      byte.b	0
+    129  a961		       00		      byte.b	0
+    130  a962		       00		      byte.b	0
+    131  a963		       00		      byte.b	0
+    132  a964		       00		      byte.b	0
+    133  a965		       00		      byte.b	0
+    134  a966
+    135  a966				   voice2lookup_ntsc
+    136  a966		       00		      byte.b	0
+    137  a967		       00		      byte.b	0
+    138  a968		       00		      byte.b	0
+    139  a969		       00		      byte.b	0
+    140  a96a		       00		      byte.b	0
+    141  a96b		       00		      byte.b	0
+    142  a96c		       00		      byte.b	0
+    143  a96d		       00		      byte.b	0
+    144  a96e		       00		      byte.b	0
+    145  a96f		       00		      byte.b	0
+    146  a970		       00		      byte.b	0
+    147  a971		       00		      byte.b	0
+    148  a972		       00		      byte.b	0
+    149  a973		       00		      byte.b	0
+    150  a974		       00		      byte.b	0
+    151  a975		       00		      byte.b	0
+    152  a976		       00		      byte.b	0
+    153  a977		       00		      byte.b	0
+    154  a978		       00		      byte.b	0
+    155  a979		       00		      byte.b	0
+    156  a97a		       00		      byte.b	0
+    157  a97b		       00		      byte.b	0
+    158  a97c		       00		      byte.b	0
+    159  a97d		       00		      byte.b	0
+    160  a97e		       00		      byte.b	0
+    161  a97f		       00		      byte.b	0
+    162  a980		       00		      byte.b	0
+    163  a981		       00		      byte.b	0
+    164  a982		       00		      byte.b	0
+    165  a983		       00		      byte.b	0
+    166  a984		       00		      byte.b	0
+    167  a985		       00		      byte.b	0
+    168  a986		       00		      byte.b	0
+    169  a987		       00		      byte.b	0
+    170  a988		       00		      byte.b	0
+    171  a989		       00		      byte.b	0
+    172  a98a		       85		      byte.b	133
+    173  a98b		       8c		      byte.b	140
+    174  a98c		       92		      byte.b	146
+    175  a98d		       98		      byte.b	152
+    176  a98e		       9e		      byte.b	158
+    177  a98f		       a3		      byte.b	163
+    178  a990		       a9		      byte.b	169
+    179  a991		       ad		      byte.b	173
+    180  a992		       b2		      byte.b	178
+    181  a993		       b6		      byte.b	182
+    182  a994		       ba		      byte.b	186
+    183  a995		       be		      byte.b	190
+    184  a996		       c2		      byte.b	194
+    185  a997		       c5		      byte.b	197
+    186  a998		       c9		      byte.b	201
+    187  a999		       cc		      byte.b	204
+    188  a99a		       cf		      byte.b	207
+    189  a99b		       d1		      byte.b	209
+    190  a99c		       d4		      byte.b	212
+    191  a99d		       d6		      byte.b	214
+    192  a99e		       d9		      byte.b	217
+    193  a99f		       db		      byte.b	219
+    194  a9a0		       dd		      byte.b	221
+    195  a9a1		       df		      byte.b	223
+    196  a9a2		       e0		      byte.b	224
+    197  a9a3		       e2		      byte.b	226
+    198  a9a4		       e4		      byte.b	228
+    199  a9a5		       e5		      byte.b	229
+    200  a9a6		       e7		      byte.b	231
+    201  a9a7		       e8		      byte.b	232
+    202  a9a8		       e9		      byte.b	233
+    203  a9a9		       eb		      byte.b	235
+    204  a9aa		       ec		      byte.b	236
+    205  a9ab		       ed		      byte.b	237
+    206  a9ac		       ee		      byte.b	238
+    207  a9ad		       ef		      byte.b	239
+    208  a9ae		       f0		      byte.b	240
+    209  a9af		       00		      byte.b	0
+    210  a9b0		       00		      byte.b	0
+    211  a9b1		       00		      byte.b	0
+    212  a9b2		       00		      byte.b	0
+    213  a9b3		       00		      byte.b	0
+    214  a9b4		       00		      byte.b	0
+    215  a9b5		       00		      byte.b	0
+    216  a9b6		       00		      byte.b	0
+    217  a9b7		       00		      byte.b	0
+    218  a9b8		       00		      byte.b	0
+    219  a9b9		       00		      byte.b	0
+    220  a9ba		       00		      byte.b	0
+    221  a9bb		       00		      byte.b	0
+    222  a9bc		       00		      byte.b	0
+    223  a9bd		       00		      byte.b	0
+    224  a9be		       00		      byte.b	0
+    225  a9bf		       00		      byte.b	0
+    226  a9c0		       00		      byte.b	0
+    227  a9c1		       00		      byte.b	0
+    228  a9c2		       00		      byte.b	0
+    229  a9c3		       00		      byte.b	0
+    230  a9c4		       00		      byte.b	0
+    231  a9c5		       00		      byte.b	0
+    232  a9c6		       00		      byte.b	0
+    233  a9c7		       00		      byte.b	0
+    234  a9c8		       00		      byte.b	0
+    235  a9c9		       00		      byte.b	0
+    236  a9ca		       00		      byte.b	0
+    237  a9cb		       00		      byte.b	0
+    238  a9cc		       00		      byte.b	0
+    239  a9cd		       00		      byte.b	0
+    240  a9ce		       00		      byte.b	0
+    241  a9cf		       00		      byte.b	0
+    242  a9d0		       00		      byte.b	0
+    243  a9d1		       00		      byte.b	0
+    244  a9d2		       00		      byte.b	0
+    245  a9d3		       00		      byte.b	0
+    246  a9d4		       00		      byte.b	0
+    247  a9d5		       00		      byte.b	0
+    248  a9d6		       00		      byte.b	0
+    249  a9d7		       00		      byte.b	0
+    250  a9d8		       00		      byte.b	0
+    251  a9d9		       00		      byte.b	0
+    252  a9da		       00		      byte.b	0
+    253  a9db		       00		      byte.b	0
+    254  a9dc		       00		      byte.b	0
+    255  a9dd		       00		      byte.b	0
+    256  a9de		       00		      byte.b	0
+    257  a9df		       00		      byte.b	0
+    258  a9e0		       00		      byte.b	0
+    259  a9e1		       00		      byte.b	0
+    260  a9e2		       00		      byte.b	0
+    261  a9e3		       00		      byte.b	0
+    262  a9e4		       00		      byte.b	0
+    263  a9e5		       00		      byte.b	0
+    264  a9e6
+    265  a9e6				   voice3lookup_ntsc
+    266  a9e6		       00		      byte.b	0
+    267  a9e7		       00		      byte.b	0
+    268  a9e8		       00		      byte.b	0
+    269  a9e9		       00		      byte.b	0
+    270  a9ea		       00		      byte.b	0
+    271  a9eb		       00		      byte.b	0
+    272  a9ec		       00		      byte.b	0
+    273  a9ed		       00		      byte.b	0
+    274  a9ee		       00		      byte.b	0
+    275  a9ef		       00		      byte.b	0
+    276  a9f0		       00		      byte.b	0
+    277  a9f1		       00		      byte.b	0
+    278  a9f2		       00		      byte.b	0
+    279  a9f3		       00		      byte.b	0
+    280  a9f4		       00		      byte.b	0
+    281  a9f5		       00		      byte.b	0
+    282  a9f6		       00		      byte.b	0
+    283  a9f7		       00		      byte.b	0
+    284  a9f8		       00		      byte.b	0
+    285  a9f9		       00		      byte.b	0
+    286  a9fa		       00		      byte.b	0
+    287  a9fb		       00		      byte.b	0
+    288  a9fc		       00		      byte.b	0
+    289  a9fd		       00		      byte.b	0
+    290  a9fe		       00		      byte.b	0
+    291  a9ff		       00		      byte.b	0
+    292  aa00		       00		      byte.b	0
+    293  aa01		       00		      byte.b	0
+    294  aa02		       00		      byte.b	0
+    295  aa03		       00		      byte.b	0
+    296  aa04		       00		      byte.b	0
+    297  aa05		       00		      byte.b	0
+    298  aa06		       00		      byte.b	0
+    299  aa07		       00		      byte.b	0
+    300  aa08		       00		      byte.b	0
+    301  aa09		       00		      byte.b	0
+    302  aa0a		       00		      byte.b	0
+    303  aa0b		       00		      byte.b	0
+    304  aa0c		       00		      byte.b	0
+    305  aa0d		       00		      byte.b	0
+    306  aa0e		       00		      byte.b	0
+    307  aa0f		       00		      byte.b	0
+    308  aa10		       00		      byte.b	0
+    309  aa11		       00		      byte.b	0
+    310  aa12		       00		      byte.b	0
+    311  aa13		       00		      byte.b	0
+    312  aa14		       00		      byte.b	0
+    313  aa15		       00		      byte.b	0
+    314  aa16		       85		      byte.b	133
+    315  aa17		       8c		      byte.b	140
+    316  aa18		       92		      byte.b	146
+    317  aa19		       98		      byte.b	152
+    318  aa1a		       9e		      byte.b	158
+    319  aa1b		       a3		      byte.b	163
+    320  aa1c		       a9		      byte.b	169
+    321  aa1d		       ad		      byte.b	173
+    322  aa1e		       b2		      byte.b	178
+    323  aa1f		       b6		      byte.b	182
+    324  aa20		       ba		      byte.b	186
+    325  aa21		       be		      byte.b	190
+    326  aa22		       c2		      byte.b	194
+    327  aa23		       c5		      byte.b	197
+    328  aa24		       c9		      byte.b	201
+    329  aa25		       cc		      byte.b	204
+    330  aa26		       cf		      byte.b	207
+    331  aa27		       d1		      byte.b	209
+    332  aa28		       d4		      byte.b	212
+    333  aa29		       d6		      byte.b	214
+    334  aa2a		       d9		      byte.b	217
+    335  aa2b		       db		      byte.b	219
+    336  aa2c		       dd		      byte.b	221
+    337  aa2d		       df		      byte.b	223
+    338  aa2e		       e0		      byte.b	224
+    339  aa2f		       e2		      byte.b	226
+    340  aa30		       e4		      byte.b	228
+    341  aa31		       e5		      byte.b	229
+    342  aa32		       e7		      byte.b	231
+    343  aa33		       e8		      byte.b	232
+    344  aa34		       e9		      byte.b	233
+    345  aa35		       eb		      byte.b	235
+    346  aa36		       ec		      byte.b	236
+    347  aa37		       ed		      byte.b	237
+    348  aa38		       ee		      byte.b	238
+    349  aa39		       ef		      byte.b	239
+    350  aa3a		       f0		      byte.b	240
+    351  aa3b		       00		      byte.b	0
+    352  aa3c		       00		      byte.b	0
+    353  aa3d		       00		      byte.b	0
+    354  aa3e		       00		      byte.b	0
+    355  aa3f		       00		      byte.b	0
+    356  aa40		       00		      byte.b	0
+    357  aa41		       00		      byte.b	0
+    358  aa42		       00		      byte.b	0
+    359  aa43		       00		      byte.b	0
+    360  aa44		       00		      byte.b	0
+    361  aa45		       00		      byte.b	0
+    362  aa46		       00		      byte.b	0
+    363  aa47		       00		      byte.b	0
+    364  aa48		       00		      byte.b	0
+    365  aa49		       00		      byte.b	0
+    366  aa4a		       00		      byte.b	0
+    367  aa4b		       00		      byte.b	0
+    368  aa4c		       00		      byte.b	0
+    369  aa4d		       00		      byte.b	0
+    370  aa4e		       00		      byte.b	0
+    371  aa4f		       00		      byte.b	0
+    372  aa50		       00		      byte.b	0
+    373  aa51		       00		      byte.b	0
+    374  aa52		       00		      byte.b	0
+    375  aa53		       00		      byte.b	0
+    376  aa54		       00		      byte.b	0
+    377  aa55		       00		      byte.b	0
+    378  aa56		       00		      byte.b	0
+    379  aa57		       00		      byte.b	0
+    380  aa58		       00		      byte.b	0
+    381  aa59		       00		      byte.b	0
+    382  aa5a		       00		      byte.b	0
+    383  aa5b		       00		      byte.b	0
+    384  aa5c		       00		      byte.b	0
+    385  aa5d		       00		      byte.b	0
+    386  aa5e		       00		      byte.b	0
+    387  aa5f		       00		      byte.b	0
+    388  aa60		       00		      byte.b	0
+    389  aa61		       00		      byte.b	0
+    390  aa62		       00		      byte.b	0
+    391  aa63		       00		      byte.b	0
+    392  aa64		       00		      byte.b	0
+    393  aa65		       00		      byte.b	0
+    394  aa66
+    395  aa66
+    396  aa66				   voice4lookup_ntsc
+    397  aa66		       00		      byte.b	0
+    398  aa67		       00		      byte.b	0
+    399  aa68		       00		      byte.b	0
+    400  aa69		       00		      byte.b	0
+    401  aa6a		       00		      byte.b	0
+    402  aa6b		       00		      byte.b	0
+    403  aa6c		       00		      byte.b	0
+    404  aa6d		       00		      byte.b	0
+    405  aa6e		       00		      byte.b	0
+    406  aa6f		       00		      byte.b	0
+    407  aa70		       00		      byte.b	0
+    408  aa71		       00		      byte.b	0
+    409  aa72		       00		      byte.b	0
+    410  aa73		       00		      byte.b	0
+    411  aa74		       00		      byte.b	0
+    412  aa75		       00		      byte.b	0
+    413  aa76		       00		      byte.b	0
+    414  aa77		       00		      byte.b	0
+    415  aa78		       00		      byte.b	0
+    416  aa79		       00		      byte.b	0
+    417  aa7a		       00		      byte.b	0
+    418  aa7b		       00		      byte.b	0
+    419  aa7c		       00		      byte.b	0
+    420  aa7d		       00		      byte.b	0
+    421  aa7e		       00		      byte.b	0
+    422  aa7f		       00		      byte.b	0
+    423  aa80		       00		      byte.b	0
+    424  aa81		       00		      byte.b	0
+    425  aa82		       00		      byte.b	0
+    426  aa83		       00		      byte.b	0
+    427  aa84		       00		      byte.b	0
+    428  aa85		       00		      byte.b	0
+    429  aa86		       00		      byte.b	0
+    430  aa87		       00		      byte.b	0
+    431  aa88		       00		      byte.b	0
+    432  aa89		       00		      byte.b	0
+    433  aa8a		       85		      byte.b	133
+    434  aa8b		       8c		      byte.b	140
+    435  aa8c		       92		      byte.b	146
+    436  aa8d		       98		      byte.b	152
+    437  aa8e		       9e		      byte.b	158
+    438  aa8f		       a3		      byte.b	163
+    439  aa90		       a9		      byte.b	169
+    440  aa91		       ad		      byte.b	173
+    441  aa92		       b2		      byte.b	178
+    442  aa93		       b6		      byte.b	182
+    443  aa94		       ba		      byte.b	186
+    444  aa95		       be		      byte.b	190
+    445  aa96		       c2		      byte.b	194
+    446  aa97		       c5		      byte.b	197
+    447  aa98		       c9		      byte.b	201
+    448  aa99		       cc		      byte.b	204
+    449  aa9a		       cf		      byte.b	207
+    450  aa9b		       d1		      byte.b	209
+    451  aa9c		       d4		      byte.b	212
+    452  aa9d		       d6		      byte.b	214
+    453  aa9e		       d9		      byte.b	217
+    454  aa9f		       db		      byte.b	219
+    455  aaa0		       dd		      byte.b	221
+    456  aaa1		       df		      byte.b	223
+    457  aaa2		       e0		      byte.b	224
+    458  aaa3		       e2		      byte.b	226
+    459  aaa4		       e4		      byte.b	228
+    460  aaa5		       e5		      byte.b	229
+    461  aaa6		       e7		      byte.b	231
+    462  aaa7		       e8		      byte.b	232
+    463  aaa8		       e9		      byte.b	233
+    464  aaa9		       eb		      byte.b	235
+    465  aaaa		       ec		      byte.b	236
+    466  aaab		       ed		      byte.b	237
+    467  aaac		       ee		      byte.b	238
+    468  aaad		       ef		      byte.b	239
+    469  aaae		       f0		      byte.b	240
+    470  aaaf		       00		      byte.b	0
+    471  aab0		       00		      byte.b	0
+    472  aab1		       00		      byte.b	0
+    473  aab2		       00		      byte.b	0
+    474  aab3		       00		      byte.b	0
+    475  aab4		       00		      byte.b	0
+    476  aab5		       00		      byte.b	0
+    477  aab6		       00		      byte.b	0
+    478  aab7		       00		      byte.b	0
+    479  aab8		       00		      byte.b	0
+    480  aab9		       00		      byte.b	0
+    481  aaba		       00		      byte.b	0
+    482  aabb		       00		      byte.b	0
+    483  aabc		       00		      byte.b	0
+    484  aabd		       00		      byte.b	0
+    485  aabe		       00		      byte.b	0
+    486  aabf		       00		      byte.b	0
+    487  aac0		       00		      byte.b	0
+    488  aac1		       00		      byte.b	0
+    489  aac2		       00		      byte.b	0
+    490  aac3		       00		      byte.b	0
+    491  aac4		       00		      byte.b	0
+    492  aac5		       00		      byte.b	0
+    493  aac6		       00		      byte.b	0
+    494  aac7		       00		      byte.b	0
+    495  aac8		       00		      byte.b	0
+    496  aac9		       00		      byte.b	0
+    497  aaca		       00		      byte.b	0
+    498  aacb		       00		      byte.b	0
+    499  aacc		       00		      byte.b	0
+    500  aacd		       00		      byte.b	0
+    501  aace		       00		      byte.b	0
+    502  aacf		       00		      byte.b	0
+    503  aad0		       00		      byte.b	0
+    504  aad1		       00		      byte.b	0
+    505  aad2		       00		      byte.b	0
+    506  aad3		       00		      byte.b	0
+    507  aad4		       00		      byte.b	0
+    508  aad5		       00		      byte.b	0
+    509  aad6		       00		      byte.b	0
+    510  aad7		       00		      byte.b	0
+    511  aad8		       00		      byte.b	0
+    512  aad9		       00		      byte.b	0
+    513  aada		       00		      byte.b	0
+    514  aadb		       00		      byte.b	0
+    515  aadc		       00		      byte.b	0
+    516  aadd		       00		      byte.b	0
+    517  aade		       00		      byte.b	0
+    518  aadf		       00		      byte.b	0
+    519  aae0		       00		      byte.b	0
+    520  aae1		       00		      byte.b	0
+    521  aae2		       00		      byte.b	0
+    522  aae3		       00		      byte.b	0
+    523  aae4		       00		      byte.b	0
+    524  aae5		       00		      byte.b	0
+    525  aae6
+    526  aae6							; EOF!
 ------- FILE vicmidi.asm
 ------- FILE lookup-pal.asm LEVEL 2 PASS 2
-      0  aadb					      include	"lookup-pal.asm"
-      1  aadb							; --------------------------------------------------------------------------------------------------
-      2  aadb							; Note Lookups PAL - 128 bytes each, map MIDI Note# to a VIC register value
-      3  aadb							; From http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?t=3643
-      4  aadb
-      5  aadb				   voice1lookup_pal
-      6  aadb		       00		      byte.b	0
-      7  aadc		       00		      byte.b	0
-      8  aadd		       00		      byte.b	0
-      9  aade		       00		      byte.b	0
-     10  aadf		       00		      byte.b	0
-     11  aae0		       00		      byte.b	0
-     12  aae1		       00		      byte.b	0
-     13  aae2		       00		      byte.b	0
-     14  aae3		       00		      byte.b	0
-     15  aae4		       00		      byte.b	0
-     16  aae5		       00		      byte.b	0
-     17  aae6		       00		      byte.b	0
-     18  aae7		       00		      byte.b	0
-     19  aae8		       00		      byte.b	0
-     20  aae9		       00		      byte.b	0
-     21  aaea		       00		      byte.b	0
-     22  aaeb		       00		      byte.b	0
-     23  aaec		       00		      byte.b	0
-     24  aaed		       00		      byte.b	0
-     25  aaee		       00		      byte.b	0
-     26  aaef		       00		      byte.b	0
-     27  aaf0		       00		      byte.b	0
-     28  aaf1		       00		      byte.b	0
-     29  aaf2		       00		      byte.b	0
-     30  aaf3		       7b		      byte.b	123	; (122.60)  <- not reachable in PAL
-     31  aaf4		       82		      byte.b	130
-     32  aaf5		       89		      byte.b	137
-     33  aaf6		       90		      byte.b	144
-     34  aaf7		       96		      byte.b	150
-     35  aaf8		       9c		      byte.b	156
-     36  aaf9		       a1		      byte.b	161
-     37  aafa		       a7		      byte.b	167
-     38  aafb		       ac		      byte.b	172
-     39  aafc		       b0		      byte.b	176
-     40  aafd		       b5		      byte.b	181
-     41  aafe		       b9		      byte.b	185
-     42  aaff		       bd		      byte.b	189
-     43  ab00		       c1		      byte.b	193
-     44  ab01		       c4		      byte.b	196
-     45  ab02		       c7		      byte.b	199
-     46  ab03		       ca		      byte.b	202
-     47  ab04		       cd		      byte.b	205
-     48  ab05		       d0		      byte.b	208
-     49  ab06		       d3		      byte.b	211
-     50  ab07		       d5		      byte.b	213
-     51  ab08		       d8		      byte.b	216
-     52  ab09		       da		      byte.b	218
-     53  ab0a		       dc		      byte.b	220
-     54  ab0b		       de		      byte.b	222
-     55  ab0c		       e0		      byte.b	224
-     56  ab0d		       e2		      byte.b	226
-     57  ab0e		       e3		      byte.b	227
-     58  ab0f		       e5		      byte.b	229
-     59  ab10		       e6		      byte.b	230
-     60  ab11		       e8		      byte.b	232
-     61  ab12		       e9		      byte.b	233
-     62  ab13		       ea		      byte.b	234
-     63  ab14		       eb		      byte.b	235
-     64  ab15		       ec		      byte.b	236
-     65  ab16		       ed		      byte.b	237
-     66  ab17		       ee		      byte.b	238
-     67  ab18		       00		      byte.b	0
-     68  ab19		       00		      byte.b	0
-     69  ab1a		       00		      byte.b	0
-     70  ab1b		       00		      byte.b	0
-     71  ab1c		       00		      byte.b	0
-     72  ab1d		       00		      byte.b	0
-     73  ab1e		       00		      byte.b	0
-     74  ab1f		       00		      byte.b	0
-     75  ab20		       00		      byte.b	0
-     76  ab21		       00		      byte.b	0
-     77  ab22		       00		      byte.b	0
-     78  ab23		       00		      byte.b	0
-     79  ab24		       00		      byte.b	0
-     80  ab25		       00		      byte.b	0
-     81  ab26		       00		      byte.b	0
-     82  ab27		       00		      byte.b	0
-     83  ab28		       00		      byte.b	0
-     84  ab29		       00		      byte.b	0
-     85  ab2a		       00		      byte.b	0
-     86  ab2b		       00		      byte.b	0
-     87  ab2c		       00		      byte.b	0
-     88  ab2d		       00		      byte.b	0
-     89  ab2e		       00		      byte.b	0
-     90  ab2f		       00		      byte.b	0
-     91  ab30		       00		      byte.b	0
-     92  ab31		       00		      byte.b	0
-     93  ab32		       00		      byte.b	0
-     94  ab33		       00		      byte.b	0
-     95  ab34		       00		      byte.b	0
-     96  ab35		       00		      byte.b	0
-     97  ab36		       00		      byte.b	0
-     98  ab37		       00		      byte.b	0
-     99  ab38		       00		      byte.b	0
-    100  ab39		       00		      byte.b	0
-    101  ab3a		       00		      byte.b	0
-    102  ab3b		       00		      byte.b	0
-    103  ab3c		       00		      byte.b	0
-    104  ab3d		       00		      byte.b	0
-    105  ab3e		       00		      byte.b	0
-    106  ab3f		       00		      byte.b	0
-    107  ab40		       00		      byte.b	0
-    108  ab41		       00		      byte.b	0
-    109  ab42		       00		      byte.b	0
-    110  ab43		       00		      byte.b	0
-    111  ab44		       00		      byte.b	0
-    112  ab45		       00		      byte.b	0
-    113  ab46		       00		      byte.b	0
-    114  ab47		       00		      byte.b	0
-    115  ab48		       00		      byte.b	0
-    116  ab49		       00		      byte.b	0
-    117  ab4a		       00		      byte.b	0
-    118  ab4b		       00		      byte.b	0
-    119  ab4c		       00		      byte.b	0
-    120  ab4d		       00		      byte.b	0
-    121  ab4e		       00		      byte.b	0
-    122  ab4f		       00		      byte.b	0
-    123  ab50		       00		      byte.b	0
-    124  ab51		       00		      byte.b	0
-    125  ab52		       00		      byte.b	0
-    126  ab53		       00		      byte.b	0
-    127  ab54		       00		      byte.b	0
-    128  ab55		       00		      byte.b	0
-    129  ab56		       00		      byte.b	0
-    130  ab57		       00		      byte.b	0
-    131  ab58		       00		      byte.b	0
-    132  ab59		       00		      byte.b	0
-    133  ab5a		       00		      byte.b	0
-    134  ab5b
-    135  ab5b				   voice2lookup_pal
-    136  ab5b		       00		      byte.b	0
-    137  ab5c		       00		      byte.b	0
-    138  ab5d		       00		      byte.b	0
-    139  ab5e		       00		      byte.b	0
-    140  ab5f		       00		      byte.b	0
-    141  ab60		       00		      byte.b	0
-    142  ab61		       00		      byte.b	0
-    143  ab62		       00		      byte.b	0
-    144  ab63		       00		      byte.b	0
-    145  ab64		       00		      byte.b	0
-    146  ab65		       00		      byte.b	0
-    147  ab66		       00		      byte.b	0
-    148  ab67		       00		      byte.b	0
-    149  ab68		       00		      byte.b	0
-    150  ab69		       00		      byte.b	0
-    151  ab6a		       00		      byte.b	0
-    152  ab6b		       00		      byte.b	0
-    153  ab6c		       00		      byte.b	0
-    154  ab6d		       00		      byte.b	0
-    155  ab6e		       00		      byte.b	0
-    156  ab6f		       00		      byte.b	0
-    157  ab70		       00		      byte.b	0
-    158  ab71		       00		      byte.b	0
-    159  ab72		       00		      byte.b	0
-    160  ab73		       00		      byte.b	0
-    161  ab74		       00		      byte.b	0
-    162  ab75		       00		      byte.b	0
-    163  ab76		       00		      byte.b	0
-    164  ab77		       00		      byte.b	0
-    165  ab78		       00		      byte.b	0
-    166  ab79		       00		      byte.b	0
-    167  ab7a		       00		      byte.b	0
-    168  ab7b		       00		      byte.b	0
-    169  ab7c		       00		      byte.b	0
-    170  ab7d		       00		      byte.b	0
-    171  ab7e		       00		      byte.b	0
-    172  ab7f		       7b		      byte.b	123	; (122.60)  <- not reachable in PAL
-    173  ab80		       82		      byte.b	130
-    174  ab81		       89		      byte.b	137
-    175  ab82		       90		      byte.b	144
-    176  ab83		       96		      byte.b	150
-    177  ab84		       9c		      byte.b	156
-    178  ab85		       a1		      byte.b	161
-    179  ab86		       a7		      byte.b	167
-    180  ab87		       ac		      byte.b	172
-    181  ab88		       b0		      byte.b	176
-    182  ab89		       b5		      byte.b	181
-    183  ab8a		       b9		      byte.b	185
-    184  ab8b		       bd		      byte.b	189
-    185  ab8c		       c1		      byte.b	193
-    186  ab8d		       c4		      byte.b	196
-    187  ab8e		       c7		      byte.b	199
-    188  ab8f		       ca		      byte.b	202
-    189  ab90		       cd		      byte.b	205
-    190  ab91		       d0		      byte.b	208
-    191  ab92		       d3		      byte.b	211
-    192  ab93		       d5		      byte.b	213
-    193  ab94		       d8		      byte.b	216
-    194  ab95		       da		      byte.b	218
-    195  ab96		       dc		      byte.b	220
-    196  ab97		       de		      byte.b	222
-    197  ab98		       e0		      byte.b	224
-    198  ab99		       e2		      byte.b	226
-    199  ab9a		       e3		      byte.b	227
-    200  ab9b		       e5		      byte.b	229
-    201  ab9c		       e6		      byte.b	230
-    202  ab9d		       e8		      byte.b	232
-    203  ab9e		       e9		      byte.b	233
-    204  ab9f		       ea		      byte.b	234
-    205  aba0		       eb		      byte.b	235
-    206  aba1		       ec		      byte.b	236
-    207  aba2		       ed		      byte.b	237
-    208  aba3		       ee		      byte.b	238
-    209  aba4		       00		      byte.b	0
-    210  aba5		       00		      byte.b	0
-    211  aba6		       00		      byte.b	0
-    212  aba7		       00		      byte.b	0
-    213  aba8		       00		      byte.b	0
-    214  aba9		       00		      byte.b	0
-    215  abaa		       00		      byte.b	0
-    216  abab		       00		      byte.b	0
-    217  abac		       00		      byte.b	0
-    218  abad		       00		      byte.b	0
-    219  abae		       00		      byte.b	0
-    220  abaf		       00		      byte.b	0
-    221  abb0		       00		      byte.b	0
-    222  abb1		       00		      byte.b	0
-    223  abb2		       00		      byte.b	0
-    224  abb3		       00		      byte.b	0
-    225  abb4		       00		      byte.b	0
-    226  abb5		       00		      byte.b	0
-    227  abb6		       00		      byte.b	0
-    228  abb7		       00		      byte.b	0
-    229  abb8		       00		      byte.b	0
-    230  abb9		       00		      byte.b	0
-    231  abba		       00		      byte.b	0
-    232  abbb		       00		      byte.b	0
-    233  abbc		       00		      byte.b	0
-    234  abbd		       00		      byte.b	0
-    235  abbe		       00		      byte.b	0
-    236  abbf		       00		      byte.b	0
-    237  abc0		       00		      byte.b	0
-    238  abc1		       00		      byte.b	0
-    239  abc2		       00		      byte.b	0
-    240  abc3		       00		      byte.b	0
-    241  abc4		       00		      byte.b	0
-    242  abc5		       00		      byte.b	0
-    243  abc6		       00		      byte.b	0
-    244  abc7		       00		      byte.b	0
-    245  abc8		       00		      byte.b	0
-    246  abc9		       00		      byte.b	0
-    247  abca		       00		      byte.b	0
-    248  abcb		       00		      byte.b	0
-    249  abcc		       00		      byte.b	0
-    250  abcd		       00		      byte.b	0
-    251  abce		       00		      byte.b	0
-    252  abcf		       00		      byte.b	0
-    253  abd0		       00		      byte.b	0
-    254  abd1		       00		      byte.b	0
-    255  abd2		       00		      byte.b	0
-    256  abd3		       00		      byte.b	0
-    257  abd4		       00		      byte.b	0
-    258  abd5		       00		      byte.b	0
-    259  abd6		       00		      byte.b	0
-    260  abd7		       00		      byte.b	0
-    261  abd8		       00		      byte.b	0
-    262  abd9		       00		      byte.b	0
-    263  abda		       00		      byte.b	0
-    264  abdb
-    265  abdb				   voice3lookup_pal
-    266  abdb		       00		      byte.b	0
-    267  abdc		       00		      byte.b	0
-    268  abdd		       00		      byte.b	0
-    269  abde		       00		      byte.b	0
-    270  abdf		       00		      byte.b	0
-    271  abe0		       00		      byte.b	0
-    272  abe1		       00		      byte.b	0
-    273  abe2		       00		      byte.b	0
-    274  abe3		       00		      byte.b	0
-    275  abe4		       00		      byte.b	0
-    276  abe5		       00		      byte.b	0
-    277  abe6		       00		      byte.b	0
-    278  abe7		       00		      byte.b	0
-    279  abe8		       00		      byte.b	0
-    280  abe9		       00		      byte.b	0
-    281  abea		       00		      byte.b	0
-    282  abeb		       00		      byte.b	0
-    283  abec		       00		      byte.b	0
-    284  abed		       00		      byte.b	0
-    285  abee		       00		      byte.b	0
-    286  abef		       00		      byte.b	0
-    287  abf0		       00		      byte.b	0
-    288  abf1		       00		      byte.b	0
-    289  abf2		       00		      byte.b	0
-    290  abf3		       00		      byte.b	0
-    291  abf4		       00		      byte.b	0
-    292  abf5		       00		      byte.b	0
-    293  abf6		       00		      byte.b	0
-    294  abf7		       00		      byte.b	0
-    295  abf8		       00		      byte.b	0
-    296  abf9		       00		      byte.b	0
-    297  abfa		       00		      byte.b	0
-    298  abfb		       00		      byte.b	0
-    299  abfc		       00		      byte.b	0
-    300  abfd		       00		      byte.b	0
-    301  abfe		       00		      byte.b	0
-    302  abff		       00		      byte.b	0
-    303  ac00		       00		      byte.b	0
-    304  ac01		       00		      byte.b	0
-    305  ac02		       00		      byte.b	0
-    306  ac03		       00		      byte.b	0
-    307  ac04		       00		      byte.b	0
-    308  ac05		       00		      byte.b	0
-    309  ac06		       00		      byte.b	0
-    310  ac07		       00		      byte.b	0
-    311  ac08		       00		      byte.b	0
-    312  ac09		       00		      byte.b	0
-    313  ac0a		       00		      byte.b	0
-    314  ac0b		       7b		      byte.b	123	; (122.60)  <- not reachable in PAL
-    315  ac0c		       82		      byte.b	130
-    316  ac0d		       89		      byte.b	137
-    317  ac0e		       90		      byte.b	144
-    318  ac0f		       96		      byte.b	150
-    319  ac10		       9c		      byte.b	156
-    320  ac11		       a1		      byte.b	161
-    321  ac12		       a7		      byte.b	167
-    322  ac13		       ac		      byte.b	172
-    323  ac14		       b0		      byte.b	176
-    324  ac15		       b5		      byte.b	181
-    325  ac16		       b9		      byte.b	185
-    326  ac17		       bd		      byte.b	189
-    327  ac18		       c1		      byte.b	193
-    328  ac19		       c4		      byte.b	196
-    329  ac1a		       c7		      byte.b	199
-    330  ac1b		       ca		      byte.b	202
-    331  ac1c		       cd		      byte.b	205
-    332  ac1d		       d0		      byte.b	208
-    333  ac1e		       d3		      byte.b	211
-    334  ac1f		       d5		      byte.b	213
-    335  ac20		       d8		      byte.b	216
-    336  ac21		       da		      byte.b	218
-    337  ac22		       dc		      byte.b	220
-    338  ac23		       de		      byte.b	222
-    339  ac24		       e0		      byte.b	224
-    340  ac25		       e2		      byte.b	226
-    341  ac26		       e3		      byte.b	227
-    342  ac27		       e5		      byte.b	229
-    343  ac28		       e6		      byte.b	230
-    344  ac29		       e8		      byte.b	232
-    345  ac2a		       e9		      byte.b	233
-    346  ac2b		       ea		      byte.b	234
-    347  ac2c		       eb		      byte.b	235
-    348  ac2d		       ec		      byte.b	236
-    349  ac2e		       ed		      byte.b	237
-    350  ac2f		       ee		      byte.b	238
-    351  ac30		       00		      byte.b	0
-    352  ac31		       00		      byte.b	0
-    353  ac32		       00		      byte.b	0
-    354  ac33		       00		      byte.b	0
-    355  ac34		       00		      byte.b	0
-    356  ac35		       00		      byte.b	0
-    357  ac36		       00		      byte.b	0
-    358  ac37		       00		      byte.b	0
-    359  ac38		       00		      byte.b	0
-    360  ac39		       00		      byte.b	0
-    361  ac3a		       00		      byte.b	0
-    362  ac3b		       00		      byte.b	0
-    363  ac3c		       00		      byte.b	0
-    364  ac3d		       00		      byte.b	0
-    365  ac3e		       00		      byte.b	0
-    366  ac3f		       00		      byte.b	0
-    367  ac40		       00		      byte.b	0
-    368  ac41		       00		      byte.b	0
-    369  ac42		       00		      byte.b	0
-    370  ac43		       00		      byte.b	0
-    371  ac44		       00		      byte.b	0
-    372  ac45		       00		      byte.b	0
-    373  ac46		       00		      byte.b	0
-    374  ac47		       00		      byte.b	0
-    375  ac48		       00		      byte.b	0
-    376  ac49		       00		      byte.b	0
-    377  ac4a		       00		      byte.b	0
-    378  ac4b		       00		      byte.b	0
-    379  ac4c		       00		      byte.b	0
-    380  ac4d		       00		      byte.b	0
-    381  ac4e		       00		      byte.b	0
-    382  ac4f		       00		      byte.b	0
-    383  ac50		       00		      byte.b	0
-    384  ac51		       00		      byte.b	0
-    385  ac52		       00		      byte.b	0
-    386  ac53		       00		      byte.b	0
-    387  ac54		       00		      byte.b	0
-    388  ac55		       00		      byte.b	0
-    389  ac56		       00		      byte.b	0
-    390  ac57		       00		      byte.b	0
-    391  ac58		       00		      byte.b	0
-    392  ac59		       00		      byte.b	0
-    393  ac5a		       00		      byte.b	0
-    394  ac5b
-    395  ac5b
-    396  ac5b				   voice4lookup_pal
-    397  ac5b		       00		      byte.b	0
-    398  ac5c		       00		      byte.b	0
-    399  ac5d		       00		      byte.b	0
-    400  ac5e		       00		      byte.b	0
-    401  ac5f		       00		      byte.b	0
-    402  ac60		       00		      byte.b	0
-    403  ac61		       00		      byte.b	0
-    404  ac62		       00		      byte.b	0
-    405  ac63		       00		      byte.b	0
-    406  ac64		       00		      byte.b	0
-    407  ac65		       00		      byte.b	0
-    408  ac66		       00		      byte.b	0
-    409  ac67		       00		      byte.b	0
-    410  ac68		       00		      byte.b	0
-    411  ac69		       00		      byte.b	0
-    412  ac6a		       00		      byte.b	0
-    413  ac6b		       00		      byte.b	0
-    414  ac6c		       00		      byte.b	0
-    415  ac6d		       00		      byte.b	0
-    416  ac6e		       00		      byte.b	0
-    417  ac6f		       00		      byte.b	0
-    418  ac70		       00		      byte.b	0
-    419  ac71		       00		      byte.b	0
-    420  ac72		       00		      byte.b	0
-    421  ac73		       00		      byte.b	0
-    422  ac74		       00		      byte.b	0
-    423  ac75		       00		      byte.b	0
-    424  ac76		       00		      byte.b	0
-    425  ac77		       00		      byte.b	0
-    426  ac78		       00		      byte.b	0
-    427  ac79		       00		      byte.b	0
-    428  ac7a		       00		      byte.b	0
-    429  ac7b		       00		      byte.b	0
-    430  ac7c		       00		      byte.b	0
-    431  ac7d		       00		      byte.b	0
-    432  ac7e		       00		      byte.b	0
-    433  ac7f		       85		      byte.b	133	; (122.60)  <- not reachable in PAL
-    434  ac80		       8c		      byte.b	140
-    435  ac81		       92		      byte.b	146
-    436  ac82		       98		      byte.b	152
-    437  ac83		       9e		      byte.b	158
-    438  ac84		       a3		      byte.b	163
-    439  ac85		       a9		      byte.b	169
-    440  ac86		       ad		      byte.b	173
-    441  ac87		       b2		      byte.b	178
-    442  ac88		       b6		      byte.b	182
-    443  ac89		       ba		      byte.b	186
-    444  ac8a		       be		      byte.b	190
-    445  ac8b		       c2		      byte.b	194
-    446  ac8c		       c5		      byte.b	197
-    447  ac8d		       c9		      byte.b	201
-    448  ac8e		       cc		      byte.b	204
-    449  ac8f		       cf		      byte.b	207
-    450  ac90		       d1		      byte.b	209
-    451  ac91		       d4		      byte.b	212
-    452  ac92		       d6		      byte.b	214
-    453  ac93		       d9		      byte.b	217
-    454  ac94		       db		      byte.b	219
-    455  ac95		       dd		      byte.b	221
-    456  ac96		       df		      byte.b	223
-    457  ac97		       e0		      byte.b	224
-    458  ac98		       e2		      byte.b	226
-    459  ac99		       e4		      byte.b	228
-    460  ac9a		       e5		      byte.b	229
-    461  ac9b		       e7		      byte.b	231
-    462  ac9c		       e8		      byte.b	232
-    463  ac9d		       e9		      byte.b	233
-    464  ac9e		       eb		      byte.b	235
-    465  ac9f		       ec		      byte.b	236
-    466  aca0		       ed		      byte.b	237
-    467  aca1		       ee		      byte.b	238
-    468  aca2		       ef		      byte.b	239
-    469  aca3		       f0		      byte.b	240
-    470  aca4		       00		      byte.b	0
-    471  aca5		       00		      byte.b	0
-    472  aca6		       00		      byte.b	0
-    473  aca7		       00		      byte.b	0
-    474  aca8		       00		      byte.b	0
-    475  aca9		       00		      byte.b	0
-    476  acaa		       00		      byte.b	0
-    477  acab		       00		      byte.b	0
-    478  acac		       00		      byte.b	0
-    479  acad		       00		      byte.b	0
-    480  acae		       00		      byte.b	0
-    481  acaf		       00		      byte.b	0
-    482  acb0		       00		      byte.b	0
-    483  acb1		       00		      byte.b	0
-    484  acb2		       00		      byte.b	0
-    485  acb3		       00		      byte.b	0
-    486  acb4		       00		      byte.b	0
-    487  acb5		       00		      byte.b	0
-    488  acb6		       00		      byte.b	0
-    489  acb7		       00		      byte.b	0
-    490  acb8		       00		      byte.b	0
-    491  acb9		       00		      byte.b	0
-    492  acba		       00		      byte.b	0
-    493  acbb		       00		      byte.b	0
-    494  acbc		       00		      byte.b	0
-    495  acbd		       00		      byte.b	0
-    496  acbe		       00		      byte.b	0
-    497  acbf		       00		      byte.b	0
-    498  acc0		       00		      byte.b	0
-    499  acc1		       00		      byte.b	0
-    500  acc2		       00		      byte.b	0
-    501  acc3		       00		      byte.b	0
-    502  acc4		       00		      byte.b	0
-    503  acc5		       00		      byte.b	0
-    504  acc6		       00		      byte.b	0
-    505  acc7		       00		      byte.b	0
-    506  acc8		       00		      byte.b	0
-    507  acc9		       00		      byte.b	0
-    508  acca		       00		      byte.b	0
-    509  accb		       00		      byte.b	0
-    510  accc		       00		      byte.b	0
-    511  accd		       00		      byte.b	0
-    512  acce		       00		      byte.b	0
-    513  accf		       00		      byte.b	0
-    514  acd0		       00		      byte.b	0
-    515  acd1		       00		      byte.b	0
-    516  acd2		       00		      byte.b	0
-    517  acd3		       00		      byte.b	0
-    518  acd4		       00		      byte.b	0
-    519  acd5		       00		      byte.b	0
-    520  acd6		       00		      byte.b	0
-    521  acd7		       00		      byte.b	0
-    522  acd8		       00		      byte.b	0
-    523  acd9		       00		      byte.b	0
-    524  acda		       00		      byte.b	0
-    525  acdb
-    526  acdb							; EOF!
+      0  aae6					      include	"lookup-pal.asm"
+      1  aae6							; --------------------------------------------------------------------------------------------------
+      2  aae6							; Note Lookups PAL - 128 bytes each, map MIDI Note# to a VIC register value
+      3  aae6							; From http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?t=3643
+      4  aae6
+      5  aae6				   voice1lookup_pal
+      6  aae6		       00		      byte.b	0
+      7  aae7		       00		      byte.b	0
+      8  aae8		       00		      byte.b	0
+      9  aae9		       00		      byte.b	0
+     10  aaea		       00		      byte.b	0
+     11  aaeb		       00		      byte.b	0
+     12  aaec		       00		      byte.b	0
+     13  aaed		       00		      byte.b	0
+     14  aaee		       00		      byte.b	0
+     15  aaef		       00		      byte.b	0
+     16  aaf0		       00		      byte.b	0
+     17  aaf1		       00		      byte.b	0
+     18  aaf2		       00		      byte.b	0
+     19  aaf3		       00		      byte.b	0
+     20  aaf4		       00		      byte.b	0
+     21  aaf5		       00		      byte.b	0
+     22  aaf6		       00		      byte.b	0
+     23  aaf7		       00		      byte.b	0
+     24  aaf8		       00		      byte.b	0
+     25  aaf9		       00		      byte.b	0
+     26  aafa		       00		      byte.b	0
+     27  aafb		       00		      byte.b	0
+     28  aafc		       00		      byte.b	0
+     29  aafd		       00		      byte.b	0
+     30  aafe		       7b		      byte.b	123	; (122.60)  <- not reachable in PAL
+     31  aaff		       82		      byte.b	130
+     32  ab00		       89		      byte.b	137
+     33  ab01		       90		      byte.b	144
+     34  ab02		       96		      byte.b	150
+     35  ab03		       9c		      byte.b	156
+     36  ab04		       a1		      byte.b	161
+     37  ab05		       a7		      byte.b	167
+     38  ab06		       ac		      byte.b	172
+     39  ab07		       b0		      byte.b	176
+     40  ab08		       b5		      byte.b	181
+     41  ab09		       b9		      byte.b	185
+     42  ab0a		       bd		      byte.b	189
+     43  ab0b		       c1		      byte.b	193
+     44  ab0c		       c4		      byte.b	196
+     45  ab0d		       c7		      byte.b	199
+     46  ab0e		       ca		      byte.b	202
+     47  ab0f		       cd		      byte.b	205
+     48  ab10		       d0		      byte.b	208
+     49  ab11		       d3		      byte.b	211
+     50  ab12		       d5		      byte.b	213
+     51  ab13		       d8		      byte.b	216
+     52  ab14		       da		      byte.b	218
+     53  ab15		       dc		      byte.b	220
+     54  ab16		       de		      byte.b	222
+     55  ab17		       e0		      byte.b	224
+     56  ab18		       e2		      byte.b	226
+     57  ab19		       e3		      byte.b	227
+     58  ab1a		       e5		      byte.b	229
+     59  ab1b		       e6		      byte.b	230
+     60  ab1c		       e8		      byte.b	232
+     61  ab1d		       e9		      byte.b	233
+     62  ab1e		       ea		      byte.b	234
+     63  ab1f		       eb		      byte.b	235
+     64  ab20		       ec		      byte.b	236
+     65  ab21		       ed		      byte.b	237
+     66  ab22		       ee		      byte.b	238
+     67  ab23		       00		      byte.b	0
+     68  ab24		       00		      byte.b	0
+     69  ab25		       00		      byte.b	0
+     70  ab26		       00		      byte.b	0
+     71  ab27		       00		      byte.b	0
+     72  ab28		       00		      byte.b	0
+     73  ab29		       00		      byte.b	0
+     74  ab2a		       00		      byte.b	0
+     75  ab2b		       00		      byte.b	0
+     76  ab2c		       00		      byte.b	0
+     77  ab2d		       00		      byte.b	0
+     78  ab2e		       00		      byte.b	0
+     79  ab2f		       00		      byte.b	0
+     80  ab30		       00		      byte.b	0
+     81  ab31		       00		      byte.b	0
+     82  ab32		       00		      byte.b	0
+     83  ab33		       00		      byte.b	0
+     84  ab34		       00		      byte.b	0
+     85  ab35		       00		      byte.b	0
+     86  ab36		       00		      byte.b	0
+     87  ab37		       00		      byte.b	0
+     88  ab38		       00		      byte.b	0
+     89  ab39		       00		      byte.b	0
+     90  ab3a		       00		      byte.b	0
+     91  ab3b		       00		      byte.b	0
+     92  ab3c		       00		      byte.b	0
+     93  ab3d		       00		      byte.b	0
+     94  ab3e		       00		      byte.b	0
+     95  ab3f		       00		      byte.b	0
+     96  ab40		       00		      byte.b	0
+     97  ab41		       00		      byte.b	0
+     98  ab42		       00		      byte.b	0
+     99  ab43		       00		      byte.b	0
+    100  ab44		       00		      byte.b	0
+    101  ab45		       00		      byte.b	0
+    102  ab46		       00		      byte.b	0
+    103  ab47		       00		      byte.b	0
+    104  ab48		       00		      byte.b	0
+    105  ab49		       00		      byte.b	0
+    106  ab4a		       00		      byte.b	0
+    107  ab4b		       00		      byte.b	0
+    108  ab4c		       00		      byte.b	0
+    109  ab4d		       00		      byte.b	0
+    110  ab4e		       00		      byte.b	0
+    111  ab4f		       00		      byte.b	0
+    112  ab50		       00		      byte.b	0
+    113  ab51		       00		      byte.b	0
+    114  ab52		       00		      byte.b	0
+    115  ab53		       00		      byte.b	0
+    116  ab54		       00		      byte.b	0
+    117  ab55		       00		      byte.b	0
+    118  ab56		       00		      byte.b	0
+    119  ab57		       00		      byte.b	0
+    120  ab58		       00		      byte.b	0
+    121  ab59		       00		      byte.b	0
+    122  ab5a		       00		      byte.b	0
+    123  ab5b		       00		      byte.b	0
+    124  ab5c		       00		      byte.b	0
+    125  ab5d		       00		      byte.b	0
+    126  ab5e		       00		      byte.b	0
+    127  ab5f		       00		      byte.b	0
+    128  ab60		       00		      byte.b	0
+    129  ab61		       00		      byte.b	0
+    130  ab62		       00		      byte.b	0
+    131  ab63		       00		      byte.b	0
+    132  ab64		       00		      byte.b	0
+    133  ab65		       00		      byte.b	0
+    134  ab66
+    135  ab66				   voice2lookup_pal
+    136  ab66		       00		      byte.b	0
+    137  ab67		       00		      byte.b	0
+    138  ab68		       00		      byte.b	0
+    139  ab69		       00		      byte.b	0
+    140  ab6a		       00		      byte.b	0
+    141  ab6b		       00		      byte.b	0
+    142  ab6c		       00		      byte.b	0
+    143  ab6d		       00		      byte.b	0
+    144  ab6e		       00		      byte.b	0
+    145  ab6f		       00		      byte.b	0
+    146  ab70		       00		      byte.b	0
+    147  ab71		       00		      byte.b	0
+    148  ab72		       00		      byte.b	0
+    149  ab73		       00		      byte.b	0
+    150  ab74		       00		      byte.b	0
+    151  ab75		       00		      byte.b	0
+    152  ab76		       00		      byte.b	0
+    153  ab77		       00		      byte.b	0
+    154  ab78		       00		      byte.b	0
+    155  ab79		       00		      byte.b	0
+    156  ab7a		       00		      byte.b	0
+    157  ab7b		       00		      byte.b	0
+    158  ab7c		       00		      byte.b	0
+    159  ab7d		       00		      byte.b	0
+    160  ab7e		       00		      byte.b	0
+    161  ab7f		       00		      byte.b	0
+    162  ab80		       00		      byte.b	0
+    163  ab81		       00		      byte.b	0
+    164  ab82		       00		      byte.b	0
+    165  ab83		       00		      byte.b	0
+    166  ab84		       00		      byte.b	0
+    167  ab85		       00		      byte.b	0
+    168  ab86		       00		      byte.b	0
+    169  ab87		       00		      byte.b	0
+    170  ab88		       00		      byte.b	0
+    171  ab89		       00		      byte.b	0
+    172  ab8a		       7b		      byte.b	123	; (122.60)  <- not reachable in PAL
+    173  ab8b		       82		      byte.b	130
+    174  ab8c		       89		      byte.b	137
+    175  ab8d		       90		      byte.b	144
+    176  ab8e		       96		      byte.b	150
+    177  ab8f		       9c		      byte.b	156
+    178  ab90		       a1		      byte.b	161
+    179  ab91		       a7		      byte.b	167
+    180  ab92		       ac		      byte.b	172
+    181  ab93		       b0		      byte.b	176
+    182  ab94		       b5		      byte.b	181
+    183  ab95		       b9		      byte.b	185
+    184  ab96		       bd		      byte.b	189
+    185  ab97		       c1		      byte.b	193
+    186  ab98		       c4		      byte.b	196
+    187  ab99		       c7		      byte.b	199
+    188  ab9a		       ca		      byte.b	202
+    189  ab9b		       cd		      byte.b	205
+    190  ab9c		       d0		      byte.b	208
+    191  ab9d		       d3		      byte.b	211
+    192  ab9e		       d5		      byte.b	213
+    193  ab9f		       d8		      byte.b	216
+    194  aba0		       da		      byte.b	218
+    195  aba1		       dc		      byte.b	220
+    196  aba2		       de		      byte.b	222
+    197  aba3		       e0		      byte.b	224
+    198  aba4		       e2		      byte.b	226
+    199  aba5		       e3		      byte.b	227
+    200  aba6		       e5		      byte.b	229
+    201  aba7		       e6		      byte.b	230
+    202  aba8		       e8		      byte.b	232
+    203  aba9		       e9		      byte.b	233
+    204  abaa		       ea		      byte.b	234
+    205  abab		       eb		      byte.b	235
+    206  abac		       ec		      byte.b	236
+    207  abad		       ed		      byte.b	237
+    208  abae		       ee		      byte.b	238
+    209  abaf		       00		      byte.b	0
+    210  abb0		       00		      byte.b	0
+    211  abb1		       00		      byte.b	0
+    212  abb2		       00		      byte.b	0
+    213  abb3		       00		      byte.b	0
+    214  abb4		       00		      byte.b	0
+    215  abb5		       00		      byte.b	0
+    216  abb6		       00		      byte.b	0
+    217  abb7		       00		      byte.b	0
+    218  abb8		       00		      byte.b	0
+    219  abb9		       00		      byte.b	0
+    220  abba		       00		      byte.b	0
+    221  abbb		       00		      byte.b	0
+    222  abbc		       00		      byte.b	0
+    223  abbd		       00		      byte.b	0
+    224  abbe		       00		      byte.b	0
+    225  abbf		       00		      byte.b	0
+    226  abc0		       00		      byte.b	0
+    227  abc1		       00		      byte.b	0
+    228  abc2		       00		      byte.b	0
+    229  abc3		       00		      byte.b	0
+    230  abc4		       00		      byte.b	0
+    231  abc5		       00		      byte.b	0
+    232  abc6		       00		      byte.b	0
+    233  abc7		       00		      byte.b	0
+    234  abc8		       00		      byte.b	0
+    235  abc9		       00		      byte.b	0
+    236  abca		       00		      byte.b	0
+    237  abcb		       00		      byte.b	0
+    238  abcc		       00		      byte.b	0
+    239  abcd		       00		      byte.b	0
+    240  abce		       00		      byte.b	0
+    241  abcf		       00		      byte.b	0
+    242  abd0		       00		      byte.b	0
+    243  abd1		       00		      byte.b	0
+    244  abd2		       00		      byte.b	0
+    245  abd3		       00		      byte.b	0
+    246  abd4		       00		      byte.b	0
+    247  abd5		       00		      byte.b	0
+    248  abd6		       00		      byte.b	0
+    249  abd7		       00		      byte.b	0
+    250  abd8		       00		      byte.b	0
+    251  abd9		       00		      byte.b	0
+    252  abda		       00		      byte.b	0
+    253  abdb		       00		      byte.b	0
+    254  abdc		       00		      byte.b	0
+    255  abdd		       00		      byte.b	0
+    256  abde		       00		      byte.b	0
+    257  abdf		       00		      byte.b	0
+    258  abe0		       00		      byte.b	0
+    259  abe1		       00		      byte.b	0
+    260  abe2		       00		      byte.b	0
+    261  abe3		       00		      byte.b	0
+    262  abe4		       00		      byte.b	0
+    263  abe5		       00		      byte.b	0
+    264  abe6
+    265  abe6				   voice3lookup_pal
+    266  abe6		       00		      byte.b	0
+    267  abe7		       00		      byte.b	0
+    268  abe8		       00		      byte.b	0
+    269  abe9		       00		      byte.b	0
+    270  abea		       00		      byte.b	0
+    271  abeb		       00		      byte.b	0
+    272  abec		       00		      byte.b	0
+    273  abed		       00		      byte.b	0
+    274  abee		       00		      byte.b	0
+    275  abef		       00		      byte.b	0
+    276  abf0		       00		      byte.b	0
+    277  abf1		       00		      byte.b	0
+    278  abf2		       00		      byte.b	0
+    279  abf3		       00		      byte.b	0
+    280  abf4		       00		      byte.b	0
+    281  abf5		       00		      byte.b	0
+    282  abf6		       00		      byte.b	0
+    283  abf7		       00		      byte.b	0
+    284  abf8		       00		      byte.b	0
+    285  abf9		       00		      byte.b	0
+    286  abfa		       00		      byte.b	0
+    287  abfb		       00		      byte.b	0
+    288  abfc		       00		      byte.b	0
+    289  abfd		       00		      byte.b	0
+    290  abfe		       00		      byte.b	0
+    291  abff		       00		      byte.b	0
+    292  ac00		       00		      byte.b	0
+    293  ac01		       00		      byte.b	0
+    294  ac02		       00		      byte.b	0
+    295  ac03		       00		      byte.b	0
+    296  ac04		       00		      byte.b	0
+    297  ac05		       00		      byte.b	0
+    298  ac06		       00		      byte.b	0
+    299  ac07		       00		      byte.b	0
+    300  ac08		       00		      byte.b	0
+    301  ac09		       00		      byte.b	0
+    302  ac0a		       00		      byte.b	0
+    303  ac0b		       00		      byte.b	0
+    304  ac0c		       00		      byte.b	0
+    305  ac0d		       00		      byte.b	0
+    306  ac0e		       00		      byte.b	0
+    307  ac0f		       00		      byte.b	0
+    308  ac10		       00		      byte.b	0
+    309  ac11		       00		      byte.b	0
+    310  ac12		       00		      byte.b	0
+    311  ac13		       00		      byte.b	0
+    312  ac14		       00		      byte.b	0
+    313  ac15		       00		      byte.b	0
+    314  ac16		       7b		      byte.b	123	; (122.60)  <- not reachable in PAL
+    315  ac17		       82		      byte.b	130
+    316  ac18		       89		      byte.b	137
+    317  ac19		       90		      byte.b	144
+    318  ac1a		       96		      byte.b	150
+    319  ac1b		       9c		      byte.b	156
+    320  ac1c		       a1		      byte.b	161
+    321  ac1d		       a7		      byte.b	167
+    322  ac1e		       ac		      byte.b	172
+    323  ac1f		       b0		      byte.b	176
+    324  ac20		       b5		      byte.b	181
+    325  ac21		       b9		      byte.b	185
+    326  ac22		       bd		      byte.b	189
+    327  ac23		       c1		      byte.b	193
+    328  ac24		       c4		      byte.b	196
+    329  ac25		       c7		      byte.b	199
+    330  ac26		       ca		      byte.b	202
+    331  ac27		       cd		      byte.b	205
+    332  ac28		       d0		      byte.b	208
+    333  ac29		       d3		      byte.b	211
+    334  ac2a		       d5		      byte.b	213
+    335  ac2b		       d8		      byte.b	216
+    336  ac2c		       da		      byte.b	218
+    337  ac2d		       dc		      byte.b	220
+    338  ac2e		       de		      byte.b	222
+    339  ac2f		       e0		      byte.b	224
+    340  ac30		       e2		      byte.b	226
+    341  ac31		       e3		      byte.b	227
+    342  ac32		       e5		      byte.b	229
+    343  ac33		       e6		      byte.b	230
+    344  ac34		       e8		      byte.b	232
+    345  ac35		       e9		      byte.b	233
+    346  ac36		       ea		      byte.b	234
+    347  ac37		       eb		      byte.b	235
+    348  ac38		       ec		      byte.b	236
+    349  ac39		       ed		      byte.b	237
+    350  ac3a		       ee		      byte.b	238
+    351  ac3b		       00		      byte.b	0
+    352  ac3c		       00		      byte.b	0
+    353  ac3d		       00		      byte.b	0
+    354  ac3e		       00		      byte.b	0
+    355  ac3f		       00		      byte.b	0
+    356  ac40		       00		      byte.b	0
+    357  ac41		       00		      byte.b	0
+    358  ac42		       00		      byte.b	0
+    359  ac43		       00		      byte.b	0
+    360  ac44		       00		      byte.b	0
+    361  ac45		       00		      byte.b	0
+    362  ac46		       00		      byte.b	0
+    363  ac47		       00		      byte.b	0
+    364  ac48		       00		      byte.b	0
+    365  ac49		       00		      byte.b	0
+    366  ac4a		       00		      byte.b	0
+    367  ac4b		       00		      byte.b	0
+    368  ac4c		       00		      byte.b	0
+    369  ac4d		       00		      byte.b	0
+    370  ac4e		       00		      byte.b	0
+    371  ac4f		       00		      byte.b	0
+    372  ac50		       00		      byte.b	0
+    373  ac51		       00		      byte.b	0
+    374  ac52		       00		      byte.b	0
+    375  ac53		       00		      byte.b	0
+    376  ac54		       00		      byte.b	0
+    377  ac55		       00		      byte.b	0
+    378  ac56		       00		      byte.b	0
+    379  ac57		       00		      byte.b	0
+    380  ac58		       00		      byte.b	0
+    381  ac59		       00		      byte.b	0
+    382  ac5a		       00		      byte.b	0
+    383  ac5b		       00		      byte.b	0
+    384  ac5c		       00		      byte.b	0
+    385  ac5d		       00		      byte.b	0
+    386  ac5e		       00		      byte.b	0
+    387  ac5f		       00		      byte.b	0
+    388  ac60		       00		      byte.b	0
+    389  ac61		       00		      byte.b	0
+    390  ac62		       00		      byte.b	0
+    391  ac63		       00		      byte.b	0
+    392  ac64		       00		      byte.b	0
+    393  ac65		       00		      byte.b	0
+    394  ac66
+    395  ac66
+    396  ac66				   voice4lookup_pal
+    397  ac66		       00		      byte.b	0
+    398  ac67		       00		      byte.b	0
+    399  ac68		       00		      byte.b	0
+    400  ac69		       00		      byte.b	0
+    401  ac6a		       00		      byte.b	0
+    402  ac6b		       00		      byte.b	0
+    403  ac6c		       00		      byte.b	0
+    404  ac6d		       00		      byte.b	0
+    405  ac6e		       00		      byte.b	0
+    406  ac6f		       00		      byte.b	0
+    407  ac70		       00		      byte.b	0
+    408  ac71		       00		      byte.b	0
+    409  ac72		       00		      byte.b	0
+    410  ac73		       00		      byte.b	0
+    411  ac74		       00		      byte.b	0
+    412  ac75		       00		      byte.b	0
+    413  ac76		       00		      byte.b	0
+    414  ac77		       00		      byte.b	0
+    415  ac78		       00		      byte.b	0
+    416  ac79		       00		      byte.b	0
+    417  ac7a		       00		      byte.b	0
+    418  ac7b		       00		      byte.b	0
+    419  ac7c		       00		      byte.b	0
+    420  ac7d		       00		      byte.b	0
+    421  ac7e		       00		      byte.b	0
+    422  ac7f		       00		      byte.b	0
+    423  ac80		       00		      byte.b	0
+    424  ac81		       00		      byte.b	0
+    425  ac82		       00		      byte.b	0
+    426  ac83		       00		      byte.b	0
+    427  ac84		       00		      byte.b	0
+    428  ac85		       00		      byte.b	0
+    429  ac86		       00		      byte.b	0
+    430  ac87		       00		      byte.b	0
+    431  ac88		       00		      byte.b	0
+    432  ac89		       00		      byte.b	0
+    433  ac8a		       85		      byte.b	133	; (122.60)  <- not reachable in PAL
+    434  ac8b		       8c		      byte.b	140
+    435  ac8c		       92		      byte.b	146
+    436  ac8d		       98		      byte.b	152
+    437  ac8e		       9e		      byte.b	158
+    438  ac8f		       a3		      byte.b	163
+    439  ac90		       a9		      byte.b	169
+    440  ac91		       ad		      byte.b	173
+    441  ac92		       b2		      byte.b	178
+    442  ac93		       b6		      byte.b	182
+    443  ac94		       ba		      byte.b	186
+    444  ac95		       be		      byte.b	190
+    445  ac96		       c2		      byte.b	194
+    446  ac97		       c5		      byte.b	197
+    447  ac98		       c9		      byte.b	201
+    448  ac99		       cc		      byte.b	204
+    449  ac9a		       cf		      byte.b	207
+    450  ac9b		       d1		      byte.b	209
+    451  ac9c		       d4		      byte.b	212
+    452  ac9d		       d6		      byte.b	214
+    453  ac9e		       d9		      byte.b	217
+    454  ac9f		       db		      byte.b	219
+    455  aca0		       dd		      byte.b	221
+    456  aca1		       df		      byte.b	223
+    457  aca2		       e0		      byte.b	224
+    458  aca3		       e2		      byte.b	226
+    459  aca4		       e4		      byte.b	228
+    460  aca5		       e5		      byte.b	229
+    461  aca6		       e7		      byte.b	231
+    462  aca7		       e8		      byte.b	232
+    463  aca8		       e9		      byte.b	233
+    464  aca9		       eb		      byte.b	235
+    465  acaa		       ec		      byte.b	236
+    466  acab		       ed		      byte.b	237
+    467  acac		       ee		      byte.b	238
+    468  acad		       ef		      byte.b	239
+    469  acae		       f0		      byte.b	240
+    470  acaf		       00		      byte.b	0
+    471  acb0		       00		      byte.b	0
+    472  acb1		       00		      byte.b	0
+    473  acb2		       00		      byte.b	0
+    474  acb3		       00		      byte.b	0
+    475  acb4		       00		      byte.b	0
+    476  acb5		       00		      byte.b	0
+    477  acb6		       00		      byte.b	0
+    478  acb7		       00		      byte.b	0
+    479  acb8		       00		      byte.b	0
+    480  acb9		       00		      byte.b	0
+    481  acba		       00		      byte.b	0
+    482  acbb		       00		      byte.b	0
+    483  acbc		       00		      byte.b	0
+    484  acbd		       00		      byte.b	0
+    485  acbe		       00		      byte.b	0
+    486  acbf		       00		      byte.b	0
+    487  acc0		       00		      byte.b	0
+    488  acc1		       00		      byte.b	0
+    489  acc2		       00		      byte.b	0
+    490  acc3		       00		      byte.b	0
+    491  acc4		       00		      byte.b	0
+    492  acc5		       00		      byte.b	0
+    493  acc6		       00		      byte.b	0
+    494  acc7		       00		      byte.b	0
+    495  acc8		       00		      byte.b	0
+    496  acc9		       00		      byte.b	0
+    497  acca		       00		      byte.b	0
+    498  accb		       00		      byte.b	0
+    499  accc		       00		      byte.b	0
+    500  accd		       00		      byte.b	0
+    501  acce		       00		      byte.b	0
+    502  accf		       00		      byte.b	0
+    503  acd0		       00		      byte.b	0
+    504  acd1		       00		      byte.b	0
+    505  acd2		       00		      byte.b	0
+    506  acd3		       00		      byte.b	0
+    507  acd4		       00		      byte.b	0
+    508  acd5		       00		      byte.b	0
+    509  acd6		       00		      byte.b	0
+    510  acd7		       00		      byte.b	0
+    511  acd8		       00		      byte.b	0
+    512  acd9		       00		      byte.b	0
+    513  acda		       00		      byte.b	0
+    514  acdb		       00		      byte.b	0
+    515  acdc		       00		      byte.b	0
+    516  acdd		       00		      byte.b	0
+    517  acde		       00		      byte.b	0
+    518  acdf		       00		      byte.b	0
+    519  ace0		       00		      byte.b	0
+    520  ace1		       00		      byte.b	0
+    521  ace2		       00		      byte.b	0
+    522  ace3		       00		      byte.b	0
+    523  ace4		       00		      byte.b	0
+    524  ace5		       00		      byte.b	0
+    525  ace6
+    526  ace6							; EOF!
 ------- FILE vicmidi.asm
 ------- FILE lookup-alt.asm LEVEL 2 PASS 2
-      0  acdb					      include	"lookup-alt.asm"
-      1  acdb							; --------------------------------------------------------------------------------------------------
-      2  acdb							; Note Lookups Alternate - 128 bytes each, map MIDI Note# to a VIC register value
-      3  acdb							; From http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?t=3643
-      4  acdb
-      5  acdb				   voice1lookup_alt
-      6  acdb		       00		      byte.b	0
-      7  acdc		       00		      byte.b	0
-      8  acdd		       00		      byte.b	0
-      9  acde		       00		      byte.b	0
-     10  acdf		       00		      byte.b	0
-     11  ace0		       00		      byte.b	0
-     12  ace1		       00		      byte.b	0
-     13  ace2		       00		      byte.b	0
-     14  ace3		       00		      byte.b	0
-     15  ace4		       00		      byte.b	0
-     16  ace5		       00		      byte.b	0
-     17  ace6		       00		      byte.b	0
-     18  ace7		       00		      byte.b	0
-     19  ace8		       00		      byte.b	0
-     20  ace9		       00		      byte.b	0
-     21  acea		       00		      byte.b	0
-     22  aceb		       00		      byte.b	0
-     23  acec		       00		      byte.b	0
-     24  aced		       00		      byte.b	0
-     25  acee		       00		      byte.b	0
-     26  acef		       00		      byte.b	0
-     27  acf0		       00		      byte.b	0
-     28  acf1		       00		      byte.b	0
-     29  acf2		       00		      byte.b	0
-     30  acf3		       ff		      byte.b	255
-     31  acf4		       86		      byte.b	134
-     32  acf5		       8d		      byte.b	141
-     33  acf6		       93		      byte.b	147
-     34  acf7		       99		      byte.b	153
-     35  acf8		       9f		      byte.b	159
-     36  acf9		       a4		      byte.b	164
-     37  acfa		       aa		      byte.b	170
-     38  acfb		       ae		      byte.b	174
-     39  acfc		       b3		      byte.b	179
-     40  acfd		       b7		      byte.b	183
-     41  acfe		       bb		      byte.b	187
-     42  acff		       bf		      byte.b	191
-     43  ad00		       c3		      byte.b	195
-     44  ad01		       c6		      byte.b	198
-     45  ad02		       c9		      byte.b	201
-     46  ad03		       cc		      byte.b	204
-     47  ad04		       cf		      byte.b	207
-     48  ad05		       d2		      byte.b	210
-     49  ad06		       d4		      byte.b	212
-     50  ad07		       d7		      byte.b	215
-     51  ad08		       d9		      byte.b	217
-     52  ad09		       db		      byte.b	219
-     53  ad0a		       dd		      byte.b	221
-     54  ad0b		       df		      byte.b	223
-     55  ad0c		       e1		      byte.b	225
-     56  ad0d		       e2		      byte.b	226
-     57  ad0e		       e4		      byte.b	228
-     58  ad0f		       e6		      byte.b	230
-     59  ad10		       e7		      byte.b	231
-     60  ad11		       e8		      byte.b	232
-     61  ad12		       ea		      byte.b	234
-     62  ad13		       eb		      byte.b	235
-     63  ad14		       ec		      byte.b	236
-     64  ad15		       ed		      byte.b	237
-     65  ad16		       ee		      byte.b	238
-     66  ad17		       ef		      byte.b	239
-     67  ad18		       00		      byte.b	0
-     68  ad19		       00		      byte.b	0
-     69  ad1a		       00		      byte.b	0
-     70  ad1b		       00		      byte.b	0
-     71  ad1c		       00		      byte.b	0
-     72  ad1d		       00		      byte.b	0
-     73  ad1e		       00		      byte.b	0
-     74  ad1f		       00		      byte.b	0
-     75  ad20		       00		      byte.b	0
-     76  ad21		       00		      byte.b	0
-     77  ad22		       00		      byte.b	0
-     78  ad23		       00		      byte.b	0
-     79  ad24		       00		      byte.b	0
-     80  ad25		       00		      byte.b	0
-     81  ad26		       00		      byte.b	0
-     82  ad27		       00		      byte.b	0
-     83  ad28		       00		      byte.b	0
-     84  ad29		       00		      byte.b	0
-     85  ad2a		       00		      byte.b	0
-     86  ad2b		       00		      byte.b	0
-     87  ad2c		       00		      byte.b	0
-     88  ad2d		       00		      byte.b	0
-     89  ad2e		       00		      byte.b	0
-     90  ad2f		       00		      byte.b	0
-     91  ad30		       00		      byte.b	0
-     92  ad31		       00		      byte.b	0
-     93  ad32		       00		      byte.b	0
-     94  ad33		       00		      byte.b	0
-     95  ad34		       00		      byte.b	0
-     96  ad35		       00		      byte.b	0
-     97  ad36		       00		      byte.b	0
-     98  ad37		       00		      byte.b	0
-     99  ad38		       00		      byte.b	0
-    100  ad39		       00		      byte.b	0
-    101  ad3a		       00		      byte.b	0
-    102  ad3b		       00		      byte.b	0
-    103  ad3c		       00		      byte.b	0
-    104  ad3d		       00		      byte.b	0
-    105  ad3e		       00		      byte.b	0
-    106  ad3f		       00		      byte.b	0
-    107  ad40		       00		      byte.b	0
-    108  ad41		       00		      byte.b	0
-    109  ad42		       00		      byte.b	0
-    110  ad43		       00		      byte.b	0
-    111  ad44		       00		      byte.b	0
-    112  ad45		       00		      byte.b	0
-    113  ad46		       00		      byte.b	0
-    114  ad47		       00		      byte.b	0
-    115  ad48		       00		      byte.b	0
-    116  ad49		       00		      byte.b	0
-    117  ad4a		       00		      byte.b	0
-    118  ad4b		       00		      byte.b	0
-    119  ad4c		       00		      byte.b	0
-    120  ad4d		       00		      byte.b	0
-    121  ad4e		       00		      byte.b	0
-    122  ad4f		       00		      byte.b	0
-    123  ad50		       00		      byte.b	0
-    124  ad51		       00		      byte.b	0
-    125  ad52		       00		      byte.b	0
-    126  ad53		       00		      byte.b	0
-    127  ad54		       00		      byte.b	0
-    128  ad55		       00		      byte.b	0
-    129  ad56		       00		      byte.b	0
-    130  ad57		       00		      byte.b	0
-    131  ad58		       00		      byte.b	0
-    132  ad59		       00		      byte.b	0
-    133  ad5a		       00		      byte.b	0
-    134  ad5b
-    135  ad5b				   voice2lookup_alt
-    136  ad5b		       00		      byte.b	0
-    137  ad5c		       00		      byte.b	0
-    138  ad5d		       00		      byte.b	0
-    139  ad5e		       00		      byte.b	0
-    140  ad5f		       00		      byte.b	0
-    141  ad60		       00		      byte.b	0
-    142  ad61		       00		      byte.b	0
-    143  ad62		       00		      byte.b	0
-    144  ad63		       00		      byte.b	0
-    145  ad64		       00		      byte.b	0
-    146  ad65		       00		      byte.b	0
-    147  ad66		       00		      byte.b	0
-    148  ad67		       00		      byte.b	0
-    149  ad68		       00		      byte.b	0
-    150  ad69		       00		      byte.b	0
-    151  ad6a		       00		      byte.b	0
-    152  ad6b		       00		      byte.b	0
-    153  ad6c		       00		      byte.b	0
-    154  ad6d		       00		      byte.b	0
-    155  ad6e		       00		      byte.b	0
-    156  ad6f		       00		      byte.b	0
-    157  ad70		       00		      byte.b	0
-    158  ad71		       00		      byte.b	0
-    159  ad72		       00		      byte.b	0
-    160  ad73		       00		      byte.b	0
-    161  ad74		       00		      byte.b	0
-    162  ad75		       00		      byte.b	0
-    163  ad76		       00		      byte.b	0
-    164  ad77		       00		      byte.b	0
-    165  ad78		       00		      byte.b	0
-    166  ad79		       00		      byte.b	0
-    167  ad7a		       00		      byte.b	0
-    168  ad7b		       00		      byte.b	0
-    169  ad7c		       00		      byte.b	0
-    170  ad7d		       00		      byte.b	0
-    171  ad7e		       00		      byte.b	0
-    172  ad7f		       ff		      byte.b	255
-    173  ad80		       86		      byte.b	134
-    174  ad81		       8d		      byte.b	141
-    175  ad82		       93		      byte.b	147
-    176  ad83		       99		      byte.b	153
-    177  ad84		       9f		      byte.b	159
-    178  ad85		       a4		      byte.b	164
-    179  ad86		       aa		      byte.b	170
-    180  ad87		       ae		      byte.b	174
-    181  ad88		       b3		      byte.b	179
-    182  ad89		       b7		      byte.b	183
-    183  ad8a		       bb		      byte.b	187
-    184  ad8b		       bf		      byte.b	191
-    185  ad8c		       c3		      byte.b	195
-    186  ad8d		       c6		      byte.b	198
-    187  ad8e		       c9		      byte.b	201
-    188  ad8f		       cc		      byte.b	204
-    189  ad90		       cf		      byte.b	207
-    190  ad91		       d2		      byte.b	210
-    191  ad92		       d4		      byte.b	212
-    192  ad93		       d7		      byte.b	215
-    193  ad94		       d9		      byte.b	217
-    194  ad95		       db		      byte.b	219
-    195  ad96		       dd		      byte.b	221
-    196  ad97		       df		      byte.b	223
-    197  ad98		       e1		      byte.b	225
-    198  ad99		       e2		      byte.b	226
-    199  ad9a		       e4		      byte.b	228
-    200  ad9b		       e6		      byte.b	230
-    201  ad9c		       e7		      byte.b	231
-    202  ad9d		       e8		      byte.b	232
-    203  ad9e		       ea		      byte.b	234
-    204  ad9f		       eb		      byte.b	235
-    205  ada0		       ec		      byte.b	236
-    206  ada1		       ed		      byte.b	237
-    207  ada2		       ee		      byte.b	238
-    208  ada3		       ef		      byte.b	239
-    209  ada4		       00		      byte.b	0
-    210  ada5		       00		      byte.b	0
-    211  ada6		       00		      byte.b	0
-    212  ada7		       00		      byte.b	0
-    213  ada8		       00		      byte.b	0
-    214  ada9		       00		      byte.b	0
-    215  adaa		       00		      byte.b	0
-    216  adab		       00		      byte.b	0
-    217  adac		       00		      byte.b	0
-    218  adad		       00		      byte.b	0
-    219  adae		       00		      byte.b	0
-    220  adaf		       00		      byte.b	0
-    221  adb0		       00		      byte.b	0
-    222  adb1		       00		      byte.b	0
-    223  adb2		       00		      byte.b	0
-    224  adb3		       00		      byte.b	0
-    225  adb4		       00		      byte.b	0
-    226  adb5		       00		      byte.b	0
-    227  adb6		       00		      byte.b	0
-    228  adb7		       00		      byte.b	0
-    229  adb8		       00		      byte.b	0
-    230  adb9		       00		      byte.b	0
-    231  adba		       00		      byte.b	0
-    232  adbb		       00		      byte.b	0
-    233  adbc		       00		      byte.b	0
-    234  adbd		       00		      byte.b	0
-    235  adbe		       00		      byte.b	0
-    236  adbf		       00		      byte.b	0
-    237  adc0		       00		      byte.b	0
-    238  adc1		       00		      byte.b	0
-    239  adc2		       00		      byte.b	0
-    240  adc3		       00		      byte.b	0
-    241  adc4		       00		      byte.b	0
-    242  adc5		       00		      byte.b	0
-    243  adc6		       00		      byte.b	0
-    244  adc7		       00		      byte.b	0
-    245  adc8		       00		      byte.b	0
-    246  adc9		       00		      byte.b	0
-    247  adca		       00		      byte.b	0
-    248  adcb		       00		      byte.b	0
-    249  adcc		       00		      byte.b	0
-    250  adcd		       00		      byte.b	0
-    251  adce		       00		      byte.b	0
-    252  adcf		       00		      byte.b	0
-    253  add0		       00		      byte.b	0
-    254  add1		       00		      byte.b	0
-    255  add2		       00		      byte.b	0
-    256  add3		       00		      byte.b	0
-    257  add4		       00		      byte.b	0
-    258  add5		       00		      byte.b	0
-    259  add6		       00		      byte.b	0
-    260  add7		       00		      byte.b	0
-    261  add8		       00		      byte.b	0
-    262  add9		       00		      byte.b	0
-    263  adda		       00		      byte.b	0
-    264  addb
-    265  addb				   voice3lookup_alt
-    266  addb		       00		      byte.b	0
-    267  addc		       00		      byte.b	0
-    268  addd		       00		      byte.b	0
-    269  adde		       00		      byte.b	0
-    270  addf		       00		      byte.b	0
-    271  ade0		       00		      byte.b	0
-    272  ade1		       00		      byte.b	0
-    273  ade2		       00		      byte.b	0
-    274  ade3		       00		      byte.b	0
-    275  ade4		       00		      byte.b	0
-    276  ade5		       00		      byte.b	0
-    277  ade6		       00		      byte.b	0
-    278  ade7		       00		      byte.b	0
-    279  ade8		       00		      byte.b	0
-    280  ade9		       00		      byte.b	0
-    281  adea		       00		      byte.b	0
-    282  adeb		       00		      byte.b	0
-    283  adec		       00		      byte.b	0
-    284  aded		       00		      byte.b	0
-    285  adee		       00		      byte.b	0
-    286  adef		       00		      byte.b	0
-    287  adf0		       00		      byte.b	0
-    288  adf1		       00		      byte.b	0
-    289  adf2		       00		      byte.b	0
-    290  adf3		       00		      byte.b	0
-    291  adf4		       00		      byte.b	0
-    292  adf5		       00		      byte.b	0
-    293  adf6		       00		      byte.b	0
-    294  adf7		       00		      byte.b	0
-    295  adf8		       00		      byte.b	0
-    296  adf9		       00		      byte.b	0
-    297  adfa		       00		      byte.b	0
-    298  adfb		       00		      byte.b	0
-    299  adfc		       00		      byte.b	0
-    300  adfd		       00		      byte.b	0
-    301  adfe		       00		      byte.b	0
-    302  adff		       00		      byte.b	0
-    303  ae00		       00		      byte.b	0
-    304  ae01		       00		      byte.b	0
-    305  ae02		       00		      byte.b	0
-    306  ae03		       00		      byte.b	0
-    307  ae04		       00		      byte.b	0
-    308  ae05		       00		      byte.b	0
-    309  ae06		       00		      byte.b	0
-    310  ae07		       00		      byte.b	0
-    311  ae08		       00		      byte.b	0
-    312  ae09		       00		      byte.b	0
-    313  ae0a		       00		      byte.b	0
-    314  ae0b		       ff		      byte.b	255
-    315  ae0c		       86		      byte.b	134
-    316  ae0d		       8d		      byte.b	141
-    317  ae0e		       93		      byte.b	147
-    318  ae0f		       99		      byte.b	153
-    319  ae10		       9f		      byte.b	159
-    320  ae11		       a4		      byte.b	164
-    321  ae12		       aa		      byte.b	170
-    322  ae13		       ae		      byte.b	174
-    323  ae14		       b3		      byte.b	179
-    324  ae15		       b7		      byte.b	183
-    325  ae16		       bb		      byte.b	187
-    326  ae17		       bf		      byte.b	191
-    327  ae18		       c3		      byte.b	195
-    328  ae19		       c6		      byte.b	198
-    329  ae1a		       c9		      byte.b	201
-    330  ae1b		       cc		      byte.b	204
-    331  ae1c		       cf		      byte.b	207
-    332  ae1d		       d2		      byte.b	210
-    333  ae1e		       d4		      byte.b	212
-    334  ae1f		       d7		      byte.b	215
-    335  ae20		       d9		      byte.b	217
-    336  ae21		       db		      byte.b	219
-    337  ae22		       dd		      byte.b	221
-    338  ae23		       df		      byte.b	223
-    339  ae24		       e1		      byte.b	225
-    340  ae25		       e2		      byte.b	226
-    341  ae26		       e4		      byte.b	228
-    342  ae27		       e6		      byte.b	230
-    343  ae28		       e7		      byte.b	231
-    344  ae29		       e8		      byte.b	232
-    345  ae2a		       ea		      byte.b	234
-    346  ae2b		       eb		      byte.b	235
-    347  ae2c		       ec		      byte.b	236
-    348  ae2d		       ed		      byte.b	237
-    349  ae2e		       ee		      byte.b	238
-    350  ae2f		       ef		      byte.b	239
-    351  ae30		       00		      byte.b	0
-    352  ae31		       00		      byte.b	0
-    353  ae32		       00		      byte.b	0
-    354  ae33		       00		      byte.b	0
-    355  ae34		       00		      byte.b	0
-    356  ae35		       00		      byte.b	0
-    357  ae36		       00		      byte.b	0
-    358  ae37		       00		      byte.b	0
-    359  ae38		       00		      byte.b	0
-    360  ae39		       00		      byte.b	0
-    361  ae3a		       00		      byte.b	0
-    362  ae3b		       00		      byte.b	0
-    363  ae3c		       00		      byte.b	0
-    364  ae3d		       00		      byte.b	0
-    365  ae3e		       00		      byte.b	0
-    366  ae3f		       00		      byte.b	0
-    367  ae40		       00		      byte.b	0
-    368  ae41		       00		      byte.b	0
-    369  ae42		       00		      byte.b	0
-    370  ae43		       00		      byte.b	0
-    371  ae44		       00		      byte.b	0
-    372  ae45		       00		      byte.b	0
-    373  ae46		       00		      byte.b	0
-    374  ae47		       00		      byte.b	0
-    375  ae48		       00		      byte.b	0
-    376  ae49		       00		      byte.b	0
-    377  ae4a		       00		      byte.b	0
-    378  ae4b		       00		      byte.b	0
-    379  ae4c		       00		      byte.b	0
-    380  ae4d		       00		      byte.b	0
-    381  ae4e		       00		      byte.b	0
-    382  ae4f		       00		      byte.b	0
-    383  ae50		       00		      byte.b	0
-    384  ae51		       00		      byte.b	0
-    385  ae52		       00		      byte.b	0
-    386  ae53		       00		      byte.b	0
-    387  ae54		       00		      byte.b	0
-    388  ae55		       00		      byte.b	0
-    389  ae56		       00		      byte.b	0
-    390  ae57		       00		      byte.b	0
-    391  ae58		       00		      byte.b	0
-    392  ae59		       00		      byte.b	0
-    393  ae5a		       00		      byte.b	0
-    394  ae5b
-    395  ae5b
-    396  ae5b				   voice4lookup_alt
-    397  ae5b		       00		      byte.b	0
-    398  ae5c		       00		      byte.b	0
-    399  ae5d		       00		      byte.b	0
-    400  ae5e		       00		      byte.b	0
-    401  ae5f		       00		      byte.b	0
-    402  ae60		       00		      byte.b	0
-    403  ae61		       00		      byte.b	0
-    404  ae62		       00		      byte.b	0
-    405  ae63		       00		      byte.b	0
-    406  ae64		       00		      byte.b	0
-    407  ae65		       00		      byte.b	0
-    408  ae66		       00		      byte.b	0
-    409  ae67		       00		      byte.b	0
-    410  ae68		       00		      byte.b	0
-    411  ae69		       00		      byte.b	0
-    412  ae6a		       00		      byte.b	0
-    413  ae6b		       00		      byte.b	0
-    414  ae6c		       00		      byte.b	0
-    415  ae6d		       00		      byte.b	0
-    416  ae6e		       00		      byte.b	0
-    417  ae6f		       00		      byte.b	0
-    418  ae70		       00		      byte.b	0
-    419  ae71		       00		      byte.b	0
-    420  ae72		       00		      byte.b	0
-    421  ae73		       00		      byte.b	0
-    422  ae74		       00		      byte.b	0
-    423  ae75		       00		      byte.b	0
-    424  ae76		       00		      byte.b	0
-    425  ae77		       00		      byte.b	0
-    426  ae78		       00		      byte.b	0
-    427  ae79		       00		      byte.b	0
-    428  ae7a		       00		      byte.b	0
-    429  ae7b		       00		      byte.b	0
-    430  ae7c		       00		      byte.b	0
-    431  ae7d		       00		      byte.b	0
-    432  ae7e		       00		      byte.b	0
-    433  ae7f		       ff		      byte.b	255
-    434  ae80		       86		      byte.b	134
-    435  ae81		       8d		      byte.b	141
-    436  ae82		       93		      byte.b	147
-    437  ae83		       99		      byte.b	153
-    438  ae84		       9f		      byte.b	159
-    439  ae85		       a4		      byte.b	164
-    440  ae86		       aa		      byte.b	170
-    441  ae87		       ae		      byte.b	174
-    442  ae88		       b3		      byte.b	179
-    443  ae89		       b7		      byte.b	183
-    444  ae8a		       bb		      byte.b	187
-    445  ae8b		       bf		      byte.b	191
-    446  ae8c		       c3		      byte.b	195
-    447  ae8d		       c6		      byte.b	198
-    448  ae8e		       c9		      byte.b	201
-    449  ae8f		       cc		      byte.b	204
-    450  ae90		       cf		      byte.b	207
-    451  ae91		       d2		      byte.b	210
-    452  ae92		       d4		      byte.b	212
-    453  ae93		       d7		      byte.b	215
-    454  ae94		       d9		      byte.b	217
-    455  ae95		       db		      byte.b	219
-    456  ae96		       dd		      byte.b	221
-    457  ae97		       df		      byte.b	223
-    458  ae98		       e1		      byte.b	225
-    459  ae99		       e2		      byte.b	226
-    460  ae9a		       e4		      byte.b	228
-    461  ae9b		       e6		      byte.b	230
-    462  ae9c		       e7		      byte.b	231
-    463  ae9d		       e8		      byte.b	232
-    464  ae9e		       ea		      byte.b	234
-    465  ae9f		       eb		      byte.b	235
-    466  aea0		       ec		      byte.b	236
-    467  aea1		       ed		      byte.b	237
-    468  aea2		       ee		      byte.b	238
-    469  aea3		       ef		      byte.b	239
-    470  aea4		       00		      byte.b	0
-    471  aea5		       00		      byte.b	0
-    472  aea6		       00		      byte.b	0
-    473  aea7		       00		      byte.b	0
-    474  aea8		       00		      byte.b	0
-    475  aea9		       00		      byte.b	0
-    476  aeaa		       00		      byte.b	0
-    477  aeab		       00		      byte.b	0
-    478  aeac		       00		      byte.b	0
-    479  aead		       00		      byte.b	0
-    480  aeae		       00		      byte.b	0
-    481  aeaf		       00		      byte.b	0
-    482  aeb0		       00		      byte.b	0
-    483  aeb1		       00		      byte.b	0
-    484  aeb2		       00		      byte.b	0
-    485  aeb3		       00		      byte.b	0
-    486  aeb4		       00		      byte.b	0
-    487  aeb5		       00		      byte.b	0
-    488  aeb6		       00		      byte.b	0
-    489  aeb7		       00		      byte.b	0
-    490  aeb8		       00		      byte.b	0
-    491  aeb9		       00		      byte.b	0
-    492  aeba		       00		      byte.b	0
-    493  aebb		       00		      byte.b	0
-    494  aebc		       00		      byte.b	0
-    495  aebd		       00		      byte.b	0
-    496  aebe		       00		      byte.b	0
-    497  aebf		       00		      byte.b	0
-    498  aec0		       00		      byte.b	0
-    499  aec1		       00		      byte.b	0
-    500  aec2		       00		      byte.b	0
-    501  aec3		       00		      byte.b	0
-    502  aec4		       00		      byte.b	0
-    503  aec5		       00		      byte.b	0
-    504  aec6		       00		      byte.b	0
-    505  aec7		       00		      byte.b	0
-    506  aec8		       00		      byte.b	0
-    507  aec9		       00		      byte.b	0
-    508  aeca		       00		      byte.b	0
-    509  aecb		       00		      byte.b	0
-    510  aecc		       00		      byte.b	0
-    511  aecd		       00		      byte.b	0
-    512  aece		       00		      byte.b	0
-    513  aecf		       00		      byte.b	0
-    514  aed0		       00		      byte.b	0
-    515  aed1		       00		      byte.b	0
-    516  aed2		       00		      byte.b	0
-    517  aed3		       00		      byte.b	0
-    518  aed4		       00		      byte.b	0
-    519  aed5		       00		      byte.b	0
-    520  aed6		       00		      byte.b	0
-    521  aed7		       00		      byte.b	0
-    522  aed8		       00		      byte.b	0
-    523  aed9		       00		      byte.b	0
-    524  aeda		       00		      byte.b	0
-    525  aedb
-    526  aedb							; EOF!
+      0  ace6					      include	"lookup-alt.asm"
+      1  ace6							; --------------------------------------------------------------------------------------------------
+      2  ace6							; Note Lookups Alternate - 128 bytes each, map MIDI Note# to a VIC register value
+      3  ace6							; From http://sleepingelephant.com/ipw-web/bulletin/bb/viewtopic.php?t=3643
+      4  ace6
+      5  ace6				   voice1lookup_alt
+      6  ace6		       00		      byte.b	0
+      7  ace7		       00		      byte.b	0
+      8  ace8		       00		      byte.b	0
+      9  ace9		       00		      byte.b	0
+     10  acea		       00		      byte.b	0
+     11  aceb		       00		      byte.b	0
+     12  acec		       00		      byte.b	0
+     13  aced		       00		      byte.b	0
+     14  acee		       00		      byte.b	0
+     15  acef		       00		      byte.b	0
+     16  acf0		       00		      byte.b	0
+     17  acf1		       00		      byte.b	0
+     18  acf2		       00		      byte.b	0
+     19  acf3		       00		      byte.b	0
+     20  acf4		       00		      byte.b	0
+     21  acf5		       00		      byte.b	0
+     22  acf6		       00		      byte.b	0
+     23  acf7		       00		      byte.b	0
+     24  acf8		       00		      byte.b	0
+     25  acf9		       00		      byte.b	0
+     26  acfa		       00		      byte.b	0
+     27  acfb		       00		      byte.b	0
+     28  acfc		       00		      byte.b	0
+     29  acfd		       00		      byte.b	0
+     30  acfe		       ff		      byte.b	255
+     31  acff		       86		      byte.b	134
+     32  ad00		       8d		      byte.b	141
+     33  ad01		       93		      byte.b	147
+     34  ad02		       99		      byte.b	153
+     35  ad03		       9f		      byte.b	159
+     36  ad04		       a4		      byte.b	164
+     37  ad05		       aa		      byte.b	170
+     38  ad06		       ae		      byte.b	174
+     39  ad07		       b3		      byte.b	179
+     40  ad08		       b7		      byte.b	183
+     41  ad09		       bb		      byte.b	187
+     42  ad0a		       bf		      byte.b	191
+     43  ad0b		       c3		      byte.b	195
+     44  ad0c		       c6		      byte.b	198
+     45  ad0d		       c9		      byte.b	201
+     46  ad0e		       cc		      byte.b	204
+     47  ad0f		       cf		      byte.b	207
+     48  ad10		       d2		      byte.b	210
+     49  ad11		       d4		      byte.b	212
+     50  ad12		       d7		      byte.b	215
+     51  ad13		       d9		      byte.b	217
+     52  ad14		       db		      byte.b	219
+     53  ad15		       dd		      byte.b	221
+     54  ad16		       df		      byte.b	223
+     55  ad17		       e1		      byte.b	225
+     56  ad18		       e2		      byte.b	226
+     57  ad19		       e4		      byte.b	228
+     58  ad1a		       e6		      byte.b	230
+     59  ad1b		       e7		      byte.b	231
+     60  ad1c		       e8		      byte.b	232
+     61  ad1d		       ea		      byte.b	234
+     62  ad1e		       eb		      byte.b	235
+     63  ad1f		       ec		      byte.b	236
+     64  ad20		       ed		      byte.b	237
+     65  ad21		       ee		      byte.b	238
+     66  ad22		       ef		      byte.b	239
+     67  ad23		       00		      byte.b	0
+     68  ad24		       00		      byte.b	0
+     69  ad25		       00		      byte.b	0
+     70  ad26		       00		      byte.b	0
+     71  ad27		       00		      byte.b	0
+     72  ad28		       00		      byte.b	0
+     73  ad29		       00		      byte.b	0
+     74  ad2a		       00		      byte.b	0
+     75  ad2b		       00		      byte.b	0
+     76  ad2c		       00		      byte.b	0
+     77  ad2d		       00		      byte.b	0
+     78  ad2e		       00		      byte.b	0
+     79  ad2f		       00		      byte.b	0
+     80  ad30		       00		      byte.b	0
+     81  ad31		       00		      byte.b	0
+     82  ad32		       00		      byte.b	0
+     83  ad33		       00		      byte.b	0
+     84  ad34		       00		      byte.b	0
+     85  ad35		       00		      byte.b	0
+     86  ad36		       00		      byte.b	0
+     87  ad37		       00		      byte.b	0
+     88  ad38		       00		      byte.b	0
+     89  ad39		       00		      byte.b	0
+     90  ad3a		       00		      byte.b	0
+     91  ad3b		       00		      byte.b	0
+     92  ad3c		       00		      byte.b	0
+     93  ad3d		       00		      byte.b	0
+     94  ad3e		       00		      byte.b	0
+     95  ad3f		       00		      byte.b	0
+     96  ad40		       00		      byte.b	0
+     97  ad41		       00		      byte.b	0
+     98  ad42		       00		      byte.b	0
+     99  ad43		       00		      byte.b	0
+    100  ad44		       00		      byte.b	0
+    101  ad45		       00		      byte.b	0
+    102  ad46		       00		      byte.b	0
+    103  ad47		       00		      byte.b	0
+    104  ad48		       00		      byte.b	0
+    105  ad49		       00		      byte.b	0
+    106  ad4a		       00		      byte.b	0
+    107  ad4b		       00		      byte.b	0
+    108  ad4c		       00		      byte.b	0
+    109  ad4d		       00		      byte.b	0
+    110  ad4e		       00		      byte.b	0
+    111  ad4f		       00		      byte.b	0
+    112  ad50		       00		      byte.b	0
+    113  ad51		       00		      byte.b	0
+    114  ad52		       00		      byte.b	0
+    115  ad53		       00		      byte.b	0
+    116  ad54		       00		      byte.b	0
+    117  ad55		       00		      byte.b	0
+    118  ad56		       00		      byte.b	0
+    119  ad57		       00		      byte.b	0
+    120  ad58		       00		      byte.b	0
+    121  ad59		       00		      byte.b	0
+    122  ad5a		       00		      byte.b	0
+    123  ad5b		       00		      byte.b	0
+    124  ad5c		       00		      byte.b	0
+    125  ad5d		       00		      byte.b	0
+    126  ad5e		       00		      byte.b	0
+    127  ad5f		       00		      byte.b	0
+    128  ad60		       00		      byte.b	0
+    129  ad61		       00		      byte.b	0
+    130  ad62		       00		      byte.b	0
+    131  ad63		       00		      byte.b	0
+    132  ad64		       00		      byte.b	0
+    133  ad65		       00		      byte.b	0
+    134  ad66
+    135  ad66				   voice2lookup_alt
+    136  ad66		       00		      byte.b	0
+    137  ad67		       00		      byte.b	0
+    138  ad68		       00		      byte.b	0
+    139  ad69		       00		      byte.b	0
+    140  ad6a		       00		      byte.b	0
+    141  ad6b		       00		      byte.b	0
+    142  ad6c		       00		      byte.b	0
+    143  ad6d		       00		      byte.b	0
+    144  ad6e		       00		      byte.b	0
+    145  ad6f		       00		      byte.b	0
+    146  ad70		       00		      byte.b	0
+    147  ad71		       00		      byte.b	0
+    148  ad72		       00		      byte.b	0
+    149  ad73		       00		      byte.b	0
+    150  ad74		       00		      byte.b	0
+    151  ad75		       00		      byte.b	0
+    152  ad76		       00		      byte.b	0
+    153  ad77		       00		      byte.b	0
+    154  ad78		       00		      byte.b	0
+    155  ad79		       00		      byte.b	0
+    156  ad7a		       00		      byte.b	0
+    157  ad7b		       00		      byte.b	0
+    158  ad7c		       00		      byte.b	0
+    159  ad7d		       00		      byte.b	0
+    160  ad7e		       00		      byte.b	0
+    161  ad7f		       00		      byte.b	0
+    162  ad80		       00		      byte.b	0
+    163  ad81		       00		      byte.b	0
+    164  ad82		       00		      byte.b	0
+    165  ad83		       00		      byte.b	0
+    166  ad84		       00		      byte.b	0
+    167  ad85		       00		      byte.b	0
+    168  ad86		       00		      byte.b	0
+    169  ad87		       00		      byte.b	0
+    170  ad88		       00		      byte.b	0
+    171  ad89		       00		      byte.b	0
+    172  ad8a		       ff		      byte.b	255
+    173  ad8b		       86		      byte.b	134
+    174  ad8c		       8d		      byte.b	141
+    175  ad8d		       93		      byte.b	147
+    176  ad8e		       99		      byte.b	153
+    177  ad8f		       9f		      byte.b	159
+    178  ad90		       a4		      byte.b	164
+    179  ad91		       aa		      byte.b	170
+    180  ad92		       ae		      byte.b	174
+    181  ad93		       b3		      byte.b	179
+    182  ad94		       b7		      byte.b	183
+    183  ad95		       bb		      byte.b	187
+    184  ad96		       bf		      byte.b	191
+    185  ad97		       c3		      byte.b	195
+    186  ad98		       c6		      byte.b	198
+    187  ad99		       c9		      byte.b	201
+    188  ad9a		       cc		      byte.b	204
+    189  ad9b		       cf		      byte.b	207
+    190  ad9c		       d2		      byte.b	210
+    191  ad9d		       d4		      byte.b	212
+    192  ad9e		       d7		      byte.b	215
+    193  ad9f		       d9		      byte.b	217
+    194  ada0		       db		      byte.b	219
+    195  ada1		       dd		      byte.b	221
+    196  ada2		       df		      byte.b	223
+    197  ada3		       e1		      byte.b	225
+    198  ada4		       e2		      byte.b	226
+    199  ada5		       e4		      byte.b	228
+    200  ada6		       e6		      byte.b	230
+    201  ada7		       e7		      byte.b	231
+    202  ada8		       e8		      byte.b	232
+    203  ada9		       ea		      byte.b	234
+    204  adaa		       eb		      byte.b	235
+    205  adab		       ec		      byte.b	236
+    206  adac		       ed		      byte.b	237
+    207  adad		       ee		      byte.b	238
+    208  adae		       ef		      byte.b	239
+    209  adaf		       00		      byte.b	0
+    210  adb0		       00		      byte.b	0
+    211  adb1		       00		      byte.b	0
+    212  adb2		       00		      byte.b	0
+    213  adb3		       00		      byte.b	0
+    214  adb4		       00		      byte.b	0
+    215  adb5		       00		      byte.b	0
+    216  adb6		       00		      byte.b	0
+    217  adb7		       00		      byte.b	0
+    218  adb8		       00		      byte.b	0
+    219  adb9		       00		      byte.b	0
+    220  adba		       00		      byte.b	0
+    221  adbb		       00		      byte.b	0
+    222  adbc		       00		      byte.b	0
+    223  adbd		       00		      byte.b	0
+    224  adbe		       00		      byte.b	0
+    225  adbf		       00		      byte.b	0
+    226  adc0		       00		      byte.b	0
+    227  adc1		       00		      byte.b	0
+    228  adc2		       00		      byte.b	0
+    229  adc3		       00		      byte.b	0
+    230  adc4		       00		      byte.b	0
+    231  adc5		       00		      byte.b	0
+    232  adc6		       00		      byte.b	0
+    233  adc7		       00		      byte.b	0
+    234  adc8		       00		      byte.b	0
+    235  adc9		       00		      byte.b	0
+    236  adca		       00		      byte.b	0
+    237  adcb		       00		      byte.b	0
+    238  adcc		       00		      byte.b	0
+    239  adcd		       00		      byte.b	0
+    240  adce		       00		      byte.b	0
+    241  adcf		       00		      byte.b	0
+    242  add0		       00		      byte.b	0
+    243  add1		       00		      byte.b	0
+    244  add2		       00		      byte.b	0
+    245  add3		       00		      byte.b	0
+    246  add4		       00		      byte.b	0
+    247  add5		       00		      byte.b	0
+    248  add6		       00		      byte.b	0
+    249  add7		       00		      byte.b	0
+    250  add8		       00		      byte.b	0
+    251  add9		       00		      byte.b	0
+    252  adda		       00		      byte.b	0
+    253  addb		       00		      byte.b	0
+    254  addc		       00		      byte.b	0
+    255  addd		       00		      byte.b	0
+    256  adde		       00		      byte.b	0
+    257  addf		       00		      byte.b	0
+    258  ade0		       00		      byte.b	0
+    259  ade1		       00		      byte.b	0
+    260  ade2		       00		      byte.b	0
+    261  ade3		       00		      byte.b	0
+    262  ade4		       00		      byte.b	0
+    263  ade5		       00		      byte.b	0
+    264  ade6
+    265  ade6				   voice3lookup_alt
+    266  ade6		       00		      byte.b	0
+    267  ade7		       00		      byte.b	0
+    268  ade8		       00		      byte.b	0
+    269  ade9		       00		      byte.b	0
+    270  adea		       00		      byte.b	0
+    271  adeb		       00		      byte.b	0
+    272  adec		       00		      byte.b	0
+    273  aded		       00		      byte.b	0
+    274  adee		       00		      byte.b	0
+    275  adef		       00		      byte.b	0
+    276  adf0		       00		      byte.b	0
+    277  adf1		       00		      byte.b	0
+    278  adf2		       00		      byte.b	0
+    279  adf3		       00		      byte.b	0
+    280  adf4		       00		      byte.b	0
+    281  adf5		       00		      byte.b	0
+    282  adf6		       00		      byte.b	0
+    283  adf7		       00		      byte.b	0
+    284  adf8		       00		      byte.b	0
+    285  adf9		       00		      byte.b	0
+    286  adfa		       00		      byte.b	0
+    287  adfb		       00		      byte.b	0
+    288  adfc		       00		      byte.b	0
+    289  adfd		       00		      byte.b	0
+    290  adfe		       00		      byte.b	0
+    291  adff		       00		      byte.b	0
+    292  ae00		       00		      byte.b	0
+    293  ae01		       00		      byte.b	0
+    294  ae02		       00		      byte.b	0
+    295  ae03		       00		      byte.b	0
+    296  ae04		       00		      byte.b	0
+    297  ae05		       00		      byte.b	0
+    298  ae06		       00		      byte.b	0
+    299  ae07		       00		      byte.b	0
+    300  ae08		       00		      byte.b	0
+    301  ae09		       00		      byte.b	0
+    302  ae0a		       00		      byte.b	0
+    303  ae0b		       00		      byte.b	0
+    304  ae0c		       00		      byte.b	0
+    305  ae0d		       00		      byte.b	0
+    306  ae0e		       00		      byte.b	0
+    307  ae0f		       00		      byte.b	0
+    308  ae10		       00		      byte.b	0
+    309  ae11		       00		      byte.b	0
+    310  ae12		       00		      byte.b	0
+    311  ae13		       00		      byte.b	0
+    312  ae14		       00		      byte.b	0
+    313  ae15		       00		      byte.b	0
+    314  ae16		       ff		      byte.b	255
+    315  ae17		       86		      byte.b	134
+    316  ae18		       8d		      byte.b	141
+    317  ae19		       93		      byte.b	147
+    318  ae1a		       99		      byte.b	153
+    319  ae1b		       9f		      byte.b	159
+    320  ae1c		       a4		      byte.b	164
+    321  ae1d		       aa		      byte.b	170
+    322  ae1e		       ae		      byte.b	174
+    323  ae1f		       b3		      byte.b	179
+    324  ae20		       b7		      byte.b	183
+    325  ae21		       bb		      byte.b	187
+    326  ae22		       bf		      byte.b	191
+    327  ae23		       c3		      byte.b	195
+    328  ae24		       c6		      byte.b	198
+    329  ae25		       c9		      byte.b	201
+    330  ae26		       cc		      byte.b	204
+    331  ae27		       cf		      byte.b	207
+    332  ae28		       d2		      byte.b	210
+    333  ae29		       d4		      byte.b	212
+    334  ae2a		       d7		      byte.b	215
+    335  ae2b		       d9		      byte.b	217
+    336  ae2c		       db		      byte.b	219
+    337  ae2d		       dd		      byte.b	221
+    338  ae2e		       df		      byte.b	223
+    339  ae2f		       e1		      byte.b	225
+    340  ae30		       e2		      byte.b	226
+    341  ae31		       e4		      byte.b	228
+    342  ae32		       e6		      byte.b	230
+    343  ae33		       e7		      byte.b	231
+    344  ae34		       e8		      byte.b	232
+    345  ae35		       ea		      byte.b	234
+    346  ae36		       eb		      byte.b	235
+    347  ae37		       ec		      byte.b	236
+    348  ae38		       ed		      byte.b	237
+    349  ae39		       ee		      byte.b	238
+    350  ae3a		       ef		      byte.b	239
+    351  ae3b		       00		      byte.b	0
+    352  ae3c		       00		      byte.b	0
+    353  ae3d		       00		      byte.b	0
+    354  ae3e		       00		      byte.b	0
+    355  ae3f		       00		      byte.b	0
+    356  ae40		       00		      byte.b	0
+    357  ae41		       00		      byte.b	0
+    358  ae42		       00		      byte.b	0
+    359  ae43		       00		      byte.b	0
+    360  ae44		       00		      byte.b	0
+    361  ae45		       00		      byte.b	0
+    362  ae46		       00		      byte.b	0
+    363  ae47		       00		      byte.b	0
+    364  ae48		       00		      byte.b	0
+    365  ae49		       00		      byte.b	0
+    366  ae4a		       00		      byte.b	0
+    367  ae4b		       00		      byte.b	0
+    368  ae4c		       00		      byte.b	0
+    369  ae4d		       00		      byte.b	0
+    370  ae4e		       00		      byte.b	0
+    371  ae4f		       00		      byte.b	0
+    372  ae50		       00		      byte.b	0
+    373  ae51		       00		      byte.b	0
+    374  ae52		       00		      byte.b	0
+    375  ae53		       00		      byte.b	0
+    376  ae54		       00		      byte.b	0
+    377  ae55		       00		      byte.b	0
+    378  ae56		       00		      byte.b	0
+    379  ae57		       00		      byte.b	0
+    380  ae58		       00		      byte.b	0
+    381  ae59		       00		      byte.b	0
+    382  ae5a		       00		      byte.b	0
+    383  ae5b		       00		      byte.b	0
+    384  ae5c		       00		      byte.b	0
+    385  ae5d		       00		      byte.b	0
+    386  ae5e		       00		      byte.b	0
+    387  ae5f		       00		      byte.b	0
+    388  ae60		       00		      byte.b	0
+    389  ae61		       00		      byte.b	0
+    390  ae62		       00		      byte.b	0
+    391  ae63		       00		      byte.b	0
+    392  ae64		       00		      byte.b	0
+    393  ae65		       00		      byte.b	0
+    394  ae66
+    395  ae66
+    396  ae66				   voice4lookup_alt
+    397  ae66		       00		      byte.b	0
+    398  ae67		       00		      byte.b	0
+    399  ae68		       00		      byte.b	0
+    400  ae69		       00		      byte.b	0
+    401  ae6a		       00		      byte.b	0
+    402  ae6b		       00		      byte.b	0
+    403  ae6c		       00		      byte.b	0
+    404  ae6d		       00		      byte.b	0
+    405  ae6e		       00		      byte.b	0
+    406  ae6f		       00		      byte.b	0
+    407  ae70		       00		      byte.b	0
+    408  ae71		       00		      byte.b	0
+    409  ae72		       00		      byte.b	0
+    410  ae73		       00		      byte.b	0
+    411  ae74		       00		      byte.b	0
+    412  ae75		       00		      byte.b	0
+    413  ae76		       00		      byte.b	0
+    414  ae77		       00		      byte.b	0
+    415  ae78		       00		      byte.b	0
+    416  ae79		       00		      byte.b	0
+    417  ae7a		       00		      byte.b	0
+    418  ae7b		       00		      byte.b	0
+    419  ae7c		       00		      byte.b	0
+    420  ae7d		       00		      byte.b	0
+    421  ae7e		       00		      byte.b	0
+    422  ae7f		       00		      byte.b	0
+    423  ae80		       00		      byte.b	0
+    424  ae81		       00		      byte.b	0
+    425  ae82		       00		      byte.b	0
+    426  ae83		       00		      byte.b	0
+    427  ae84		       00		      byte.b	0
+    428  ae85		       00		      byte.b	0
+    429  ae86		       00		      byte.b	0
+    430  ae87		       00		      byte.b	0
+    431  ae88		       00		      byte.b	0
+    432  ae89		       00		      byte.b	0
+    433  ae8a		       ff		      byte.b	255
+    434  ae8b		       86		      byte.b	134
+    435  ae8c		       8d		      byte.b	141
+    436  ae8d		       93		      byte.b	147
+    437  ae8e		       99		      byte.b	153
+    438  ae8f		       9f		      byte.b	159
+    439  ae90		       a4		      byte.b	164
+    440  ae91		       aa		      byte.b	170
+    441  ae92		       ae		      byte.b	174
+    442  ae93		       b3		      byte.b	179
+    443  ae94		       b7		      byte.b	183
+    444  ae95		       bb		      byte.b	187
+    445  ae96		       bf		      byte.b	191
+    446  ae97		       c3		      byte.b	195
+    447  ae98		       c6		      byte.b	198
+    448  ae99		       c9		      byte.b	201
+    449  ae9a		       cc		      byte.b	204
+    450  ae9b		       cf		      byte.b	207
+    451  ae9c		       d2		      byte.b	210
+    452  ae9d		       d4		      byte.b	212
+    453  ae9e		       d7		      byte.b	215
+    454  ae9f		       d9		      byte.b	217
+    455  aea0		       db		      byte.b	219
+    456  aea1		       dd		      byte.b	221
+    457  aea2		       df		      byte.b	223
+    458  aea3		       e1		      byte.b	225
+    459  aea4		       e2		      byte.b	226
+    460  aea5		       e4		      byte.b	228
+    461  aea6		       e6		      byte.b	230
+    462  aea7		       e7		      byte.b	231
+    463  aea8		       e8		      byte.b	232
+    464  aea9		       ea		      byte.b	234
+    465  aeaa		       eb		      byte.b	235
+    466  aeab		       ec		      byte.b	236
+    467  aeac		       ed		      byte.b	237
+    468  aead		       ee		      byte.b	238
+    469  aeae		       ef		      byte.b	239
+    470  aeaf		       00		      byte.b	0
+    471  aeb0		       00		      byte.b	0
+    472  aeb1		       00		      byte.b	0
+    473  aeb2		       00		      byte.b	0
+    474  aeb3		       00		      byte.b	0
+    475  aeb4		       00		      byte.b	0
+    476  aeb5		       00		      byte.b	0
+    477  aeb6		       00		      byte.b	0
+    478  aeb7		       00		      byte.b	0
+    479  aeb8		       00		      byte.b	0
+    480  aeb9		       00		      byte.b	0
+    481  aeba		       00		      byte.b	0
+    482  aebb		       00		      byte.b	0
+    483  aebc		       00		      byte.b	0
+    484  aebd		       00		      byte.b	0
+    485  aebe		       00		      byte.b	0
+    486  aebf		       00		      byte.b	0
+    487  aec0		       00		      byte.b	0
+    488  aec1		       00		      byte.b	0
+    489  aec2		       00		      byte.b	0
+    490  aec3		       00		      byte.b	0
+    491  aec4		       00		      byte.b	0
+    492  aec5		       00		      byte.b	0
+    493  aec6		       00		      byte.b	0
+    494  aec7		       00		      byte.b	0
+    495  aec8		       00		      byte.b	0
+    496  aec9		       00		      byte.b	0
+    497  aeca		       00		      byte.b	0
+    498  aecb		       00		      byte.b	0
+    499  aecc		       00		      byte.b	0
+    500  aecd		       00		      byte.b	0
+    501  aece		       00		      byte.b	0
+    502  aecf		       00		      byte.b	0
+    503  aed0		       00		      byte.b	0
+    504  aed1		       00		      byte.b	0
+    505  aed2		       00		      byte.b	0
+    506  aed3		       00		      byte.b	0
+    507  aed4		       00		      byte.b	0
+    508  aed5		       00		      byte.b	0
+    509  aed6		       00		      byte.b	0
+    510  aed7		       00		      byte.b	0
+    511  aed8		       00		      byte.b	0
+    512  aed9		       00		      byte.b	0
+    513  aeda		       00		      byte.b	0
+    514  aedb		       00		      byte.b	0
+    515  aedc		       00		      byte.b	0
+    516  aedd		       00		      byte.b	0
+    517  aede		       00		      byte.b	0
+    518  aedf		       00		      byte.b	0
+    519  aee0		       00		      byte.b	0
+    520  aee1		       00		      byte.b	0
+    521  aee2		       00		      byte.b	0
+    522  aee3		       00		      byte.b	0
+    523  aee4		       00		      byte.b	0
+    524  aee5		       00		      byte.b	0
+    525  aee6
+    526  aee6							; EOF!
 ------- FILE vicmidi.asm
-    830  aedb
-    831  aedb							; ----------------------------------------------------------------------------
-    832  aedb							; Binary includes
-    833  aedb
-    834  aedb				   fontorg
-    835  aedb					      incbin	"font.bin"
-    836  b2db
-    837  b2db							; EOF!
+    830  aee6
+    831  aee6							; ----------------------------------------------------------------------------
+    832  aee6							; Binary includes
+    833  aee6
+    834  aee6				   fontorg
+    835  aee6					      incbin	"font.bin"
+    836  b2e6
+    837  b2e6							; EOF!
